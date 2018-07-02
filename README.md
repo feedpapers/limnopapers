@@ -24,3 +24,7 @@ pip install feedparser -t .
 	* runtime - python3.6
 	* code entry -> upload zip
 	* handler -> limnopapers.limnotoots
+
+## Prior art
+
+https://github.com/ropenscilabs/data-packages
