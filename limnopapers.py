@@ -4,19 +4,20 @@ import datetime
 import twitter
 
 def filter_limno(df):
-    mentions_limno = df['summary'].str.contains('lake')
+    mentions_limno = df['summary'].str.contains('lake') | df['title'].str.contains('lake')
     mentions_junk = df['summary'].str.contains('ocean')
     return(df.drop(df[mentions_limno == False & mentions_junk].index.values))
 
 def filter_today(df, day):
-    published_today = (df['updated'] > datetime.datetime.strptime(day, "%Y-%m-%d") - datetime.timedelta(days = 1)) & (df['updated'] < datetime.datetime.strptime(day, "%Y-%m-%d") + datetime.timedelta(days = 1))     
+    published_today = (df['updated'] > datetime.datetime.strptime(day, "%Y-%m-%d") - datetime.timedelta(days = 0.5)) & (df['updated'] < datetime.datetime.strptime(day, "%Y-%m-%d") + datetime.timedelta(days = 0.5))     
     return(df.drop(df[published_today == False].index.values))
 
-def get_papers(day = str(datetime.date.today())):
+def get_posts(day = str(datetime.date.today())):
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
     rawrss = [
         'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1939-5590',
-        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)2378-2242'
+        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)2378-2242',        
+        'https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=fws'
         ]
 
     posts = []
@@ -25,7 +26,12 @@ def get_papers(day = str(datetime.date.today())):
         for post in feed.entries:
             posts.append((post.title, post.summary, post.prism_url, post.dc_source, post.updated))
 
-    res = pd.DataFrame(posts, columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated'])
+    return(posts)
+
+def get_papers(day = str(datetime.date.today())):
+    posts = get_posts(day = day)
+    res = pd.DataFrame(posts)
+    res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     res['updated'] = pd.to_datetime(res['updated'])
     res = res.sort_values(by = ['updated'])
     res = filter_limno(res)
@@ -36,11 +42,12 @@ def get_papers(day = str(datetime.date.today())):
 
 def limnotoots(event, context):
     api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='',	access_token_secret='')
-
+    
     data = get_papers()    
     
     toots = data['title'] + ". " + data['dc_source']  + ". " + data['prism_url']    
     
     for toot in toots:
+        # print(toot)
         status = api.PostUpdate(toot)        
 
