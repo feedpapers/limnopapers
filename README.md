@@ -24,6 +24,7 @@ pip install feedparser -t .
 	* runtime - python3.6
 	* code entry -> upload zip
 	* handler -> limnopapers.limnotoots
+	* adjust timeout length as needed
 
 ## Prior art
 
