@@ -26,12 +26,11 @@ Specific feeds include:
 
 ### Python depedencies
 
-```
-pip install pandas -t . 
-pip install python-twitter -t .
-pip install datetime -t .
-pip install feedparser -t .
-```
+See [requirements.txt](requirements.txt)
+
+For AWS lambda, these need to be installed to the local `limnopapers` directory with: 
+
+`pip install foo -t .`
 
 ### Prep for AWS lambda
 
