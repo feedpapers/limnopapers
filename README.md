@@ -28,6 +28,10 @@ Specific feeds include:
 
 See [requirements.txt](requirements.txt)
 
+For local operation install these to the activated environment with:
+
+`pip install -r requirements.txt`
+
 For AWS lambda, these need to be installed to the local `limnopapers` directory with: 
 
 `pip install foo -t .`
