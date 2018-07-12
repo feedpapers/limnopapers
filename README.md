@@ -2,6 +2,16 @@
 
 Code for creating an AWS lambda function to monitor limnology RSS feeds and tweet new articles.
 
+Specific feeds include:
+
+* Limnology and Oceanography
+
+* Limnology and Oceanography Letters
+
+* Freshwater Science
+
+* Inland waters
+
 ## Setup
 
 ### Python depedencies
