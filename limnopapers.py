@@ -20,7 +20,8 @@ def get_posts(day = str(datetime.date.today())):
         'https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=fws',
         'https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tinw20',
         'http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1365-2427',
-        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1944-7973'        
+        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1944-7973',
+        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)2169-8961'        
         ]
 
     posts = []
