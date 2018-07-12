@@ -12,6 +12,16 @@ Specific feeds include:
 
 * Inland waters
 
+* Freshwater Biology
+
+* Water Resources Research
+
+* Journal of Geophysical Research: Biogeosciences
+
+* Hydrological processes
+
+* Ecological Applications
+
 ## Setup
 
 ### Python depedencies
