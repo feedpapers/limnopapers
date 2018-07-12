@@ -1,3 +1,5 @@
+from limnopapers import *
+
 day = '2018-06-26'
 day = '2018-04-11'
 day = '2018-04-10'
