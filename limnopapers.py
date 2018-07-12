@@ -22,14 +22,15 @@ def get_posts(day = str(datetime.date.today())):
         'http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1365-2427',
         'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1944-7973',
         'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)2169-8961',
-        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1099-1085'        
+        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1099-1085',
+        'http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1939-5582'                
         ]
 
     posts = []
     for url in rawrss:
         feed = feedparser.parse(url)
         for post in feed.entries:
-            posts.append((post.title, post.summary, post.prism_url, post.dc_source, post.updated))
+            posts.append((post.title, post.summary, post.link, post.dc_source, post.updated))
 
     return(posts)
 
