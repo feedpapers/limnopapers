@@ -7,7 +7,10 @@ import twitter_api
 def filter_limno(df):
     filter_for = ['lake', "reservoir"] 
     mentions_limno = df['summary'].str.contains('|'.join(filter_for)) | df['title'].str.contains('|'.join(filter_for))
-    mentions_junk = df['summary'].str.contains('ocean')
+
+    filter_against = ['ocean']
+    mentions_junk = df['summary'].str.contains('|'.join(filter_against))
+    
     return(df.drop(df[mentions_limno == False & mentions_junk].index.values))
 
 def filter_today(df, day):
