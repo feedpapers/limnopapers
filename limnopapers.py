@@ -2,9 +2,11 @@ import feedparser
 import pandas as pd
 import datetime
 import twitter
+import twitter_api
 
 def filter_limno(df):
-    mentions_limno = df['summary'].str.contains('lake') | df['title'].str.contains('lake')
+    filter_for = ['lake', "reservoir"] 
+    mentions_limno = df['summary'].str.contains('|'.join(filter_for)) | df['title'].str.contains('|'.join(filter_for))
     mentions_junk = df['summary'].str.contains('ocean')
     return(df.drop(df[mentions_limno == False & mentions_junk].index.values))
 
@@ -48,6 +50,8 @@ def get_papers(day = str(datetime.date.today())):
 
 def limnotoots(event, context):
     # api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='',	access_token_secret='')
+    api = twitter_api.api()    
+    # print(api.VerifyCredentials())
 
     data = get_papers()        
     toots = data['title'] + ". " + data['dc_source']  + ". " + data['prism_url']    
