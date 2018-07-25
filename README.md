@@ -24,11 +24,11 @@ Specific feeds include:
 
 ## Setup
 
-Create a `twitter_api.py` file with the following keys defined:
+* Create a _cron_ job. On Linux this can be done with the following commands:
 
 ```
-import twitter
-api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='',	access_token_secret='')
+crontab -e 
+* */15 * * * /path/to/limnopapers.py
 ```
 
 ### Python depedencies

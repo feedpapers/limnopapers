@@ -1,3 +1,4 @@
 .envrc
 test.csv
 twitter_api.py
+__pycache__/

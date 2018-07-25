@@ -2,7 +2,7 @@ import feedparser
 import pandas as pd
 import datetime
 import twitter
-import twitter_api
+import sys
 
 def filter_limno(df):
     filter_for = ['lake', "reservoir"] 
@@ -51,15 +51,19 @@ def get_papers(day = str(datetime.date.today())):
 
     return(res)
 
-def limnotoots(event, context):
-    # api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='',	access_token_secret='')
-    api = twitter_api.api()    
+def limnotoots(day = str(datetime.date.today())):
+    # api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='',	access_token_secret='')    
     # print(api.VerifyCredentials())
 
-    data = get_papers()        
+    data = get_papers(day)        
     toots = data['title'] + ". " + data['dc_source']  + ". " + data['prism_url']    
     
     for toot in toots:
-        # print(toot)
+        print(toot)
         status = api.PostUpdate(toot)        
 
+if(len(sys.argv) == 2):
+    # yyyy-mm-dd format
+    limnotoots(day = sys.argv[1])
+else:
+    limnotoots()
