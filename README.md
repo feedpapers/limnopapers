@@ -1,43 +1,39 @@
 # limnopapers
 
-Code to monitor limnology RSS feeds and tweet new articles.
+Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.com/limnopapers) new articles.
 
-Specific feeds include:
+## Usage
 
-* Limnology and Oceanography
+Tweet papers that came out today:
 
-* Limnology and Oceanography Letters
+`python limnopapers.py`
 
-* Freshwater Science
+Tweet papers that came out on an arbitrary day:
 
-* Inland waters
-
-* Freshwater Biology
-
-* Water Resources Research
-
-* Journal of Geophysical Research: Biogeosciences
-
-* Hydrological processes
-
-* Ecological Applications
+`python limnopapers.py '2018-07-29'`
 
 ## Setup
+
+* Create a file named `config.py` that stores your twitter API keys
 
 * Create a _cron_ job. On Linux this can be done with the following commands:
 
 ```
 crontab -e 
-* */15 * * * /path/to/limnopapers.py
+* */15 * * * python /path/to/limnopapers.py
 ```
 
 ### Python depedencies
 
 See [requirements.txt](requirements.txt)
 
-For local operation install these to the activated environment with:
+Install these to the activated environment with:
 
 `pip install -r requirements.txt`
+
+## Contributing
+
+Please help by adding missing journals to `journals.csv` or filing an [issue](https://github.com/jsta/limnopapers/issues)
 
 ## Prior art
 
