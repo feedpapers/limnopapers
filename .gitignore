@@ -3,3 +3,4 @@ test.csv
 twitter_api.py
 __pycache__/
 config.py
+.vscode
