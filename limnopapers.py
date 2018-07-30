@@ -15,7 +15,10 @@ def filter_limno(df):
     return(df.drop(df[mentions_limno == False & mentions_junk].index.values))
 
 def filter_today(df, day):
-    published_today = (df['updated'] > datetime.datetime.strptime(day, "%Y-%m-%d") - datetime.timedelta(days = 0.5)) & (df['updated'] < datetime.datetime.strptime(day, "%Y-%m-%d") + datetime.timedelta(days = 0.5))     
+    today_parsed = datetime.datetime.strptime(day + " 15:00:00", "%Y-%m-%d %H:%M:%S") 
+    yesterday = today_parsed - datetime.timedelta(days = 0.5)
+    tomorrow = today_parsed + datetime.timedelta(days = 0.5)
+    published_today = (df['updated'] > yesterday) & (df['updated'] < tomorrow)
     return(df.drop(df[published_today == False].index.values))
 
 def get_posts(day = str(datetime.date.today())):
