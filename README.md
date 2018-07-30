@@ -20,7 +20,7 @@ Tweet papers that came out on an arbitrary day:
 
 ```
 crontab -e 
-* */15 * * * python /path/to/limnopapers.py
+0 15 * * * python /path/to/limnopapers.py
 ```
 
 ### Python depedencies
