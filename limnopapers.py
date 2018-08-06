@@ -7,7 +7,7 @@ import config
 
 def filter_limno(df):
     filter_for = ['lake', "reservoir"] 
-    mentions_limno = df['summary'].str.contains('|'.join(filter_for)) | df['title'].str.contains('|'.join(filter_for))
+    mentions_limno = df['title'].str.contains('|'.join(filter_for))
 
     filter_against = ['ocean']
     mentions_junk = df['summary'].str.contains('|'.join(filter_against))
@@ -56,8 +56,12 @@ def limnotoots(day = str(datetime.date.today())):
         print(toot)
         status = api.PostUpdate(toot)        
 
-if(len(sys.argv) == 2):
-    # yyyy-mm-dd format
-    limnotoots(day = sys.argv[1])
-else:
-    limnotoots()
+def main():
+    if(len(sys.argv) == 2):
+        # yyyy-mm-dd format
+        limnotoots(day = sys.argv[1])
+    else:
+        limnotoots()
+
+if __name__ == "__main__":
+    main()

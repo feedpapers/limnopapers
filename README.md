@@ -4,6 +4,10 @@ Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.
 
 ## Usage
 
+Query papers without tweeting:
+
+`python test_fetch.py '2018-08-02'`
+
 Tweet papers that came out today:
 
 `python limnopapers.py`
