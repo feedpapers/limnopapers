@@ -33,15 +33,16 @@ def get_posts(day = str(datetime.date.today())):
 
     return(posts)
 
-def get_papers(day = str(datetime.date.today())):
+def get_papers(day = str(datetime.date.today()), to_csv = False):
     posts = get_posts(day = day)
     res = pd.DataFrame(posts)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     res['updated'] = pd.to_datetime(res['updated'])
     res = res.sort_values(by = ['updated'])
+    if to_csv is not False:
+      res.to_csv("test.csv")  
     res = filter_limno(res)
-    res = filter_today(res, day)
-    # res.to_csv("test.csv")
+    res = filter_today(res, day)    
 
     return(res)
 

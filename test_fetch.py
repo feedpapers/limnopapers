@@ -4,7 +4,7 @@ from limnopapers import *
 
 if(len(sys.argv) == 2):
     # yyyy-mm-dd format
-    data = get_papers(day = sys.argv[1])        
+    data = get_papers(day = sys.argv[1], to_csv=True)        
 else:
     data = get_papers()        
 
