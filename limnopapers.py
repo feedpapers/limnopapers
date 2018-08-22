@@ -6,45 +6,59 @@ import sys
 import config
 
 def filter_limno(df):
+    # df = res
     filter_for = ['lake', "reservoir"] 
     mentions_limno = df['title'].str.contains('|'.join(filter_for), case = False)
+    df = df[mentions_limno]
 
-    filter_against = ['ocean']
-    mentions_junk = df['summary'].str.contains('|'.join(filter_against))
+    filter_against = ['ocean', 'iran']
+    mentions_junk = df['summary'].str.contains('|'.join(filter_against), case= False)
+    df = df[mentions_junk == False]     
     
-    return(df.drop(df[mentions_limno == False & mentions_junk].index.values))
+    return(df)
 
 def filter_today(df, day):
     today_parsed = datetime.datetime.strptime(day + " 15:00:00", "%Y-%m-%d %H:%M:%S") 
     yesterday = today_parsed - datetime.timedelta(days = 0.5)
     tomorrow = today_parsed + datetime.timedelta(days = 0.5)
     published_today = (df['updated'] > yesterday) & (df['updated'] < tomorrow)
-    return(df.drop(df[published_today == False].index.values))
+    res_today = df[published_today]
+    return(res_today)
 
-def get_posts(day = str(datetime.date.today())):
+def get_posts_(title, url):
+    feed = feedparser.parse(url)
+    posts = []
+    for post in feed.entries:
+        posts.append((post.title, post.summary, post.link, title, post.updated))
+    res = pd.DataFrame(posts)
+    res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
+    return(res)
+
+def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
-    rawrss = pd.read_csv("journals.csv")["rawrss"].tolist()
+    rawrss = pd.read_csv("journals.csv")
     
     posts = []
-    for url in rawrss:
-        feed = feedparser.parse(url)
-        for post in feed.entries:
-            posts.append((post.title, post.summary, post.link, post.dc_source, post.updated))
+    for i in range(len(rawrss.index)):
+        single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
+        posts.append(single_posts)            
 
     return(posts)
 
 def get_papers(day = str(datetime.date.today()), to_csv = False):
-    posts = get_posts(day = day)
-    res = pd.DataFrame(posts)
-    res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
+    posts = get_posts()
+    res = pd.concat(posts)        
     res['updated'] = pd.to_datetime(res['updated'])
-    res = res.sort_values(by = ['updated'])
-    if to_csv is not False:
-      res.to_csv("test.csv")  
-    res = filter_limno(res)
-    res = filter_today(res, day)    
+    res = res.sort_values(by = ['updated'])    
+    res_limno = filter_limno(res)
+    res_today = filter_today(res_limno, day)
 
-    return(res)
+    if to_csv is not False:
+      res.to_csv("test.csv")      
+      res_limno.to_csv("test_limno.csv")
+      res_today.to_csv("test_today.csv")       
+
+    return(res_today)
 
 def limnotoots(day = str(datetime.date.today())):    
     api = twitter.Api(consumer_key=config.consumer_key, consumer_secret=config.consumer_secret, access_token_key=config.access_token_key, access_token_secret=config.access_token_secret)        
