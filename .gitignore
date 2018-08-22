@@ -4,3 +4,5 @@ twitter_api.py
 __pycache__/
 config.py
 .vscode
+test_limno.csv
+test_today.csv
