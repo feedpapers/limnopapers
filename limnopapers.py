@@ -29,7 +29,10 @@ def get_posts_(title, url):
     feed = feedparser.parse(url)
     posts = []
     for post in feed.entries:
-        posts.append((post.title, post.summary, post.link, title, post.updated))
+        try:
+            posts.append((post.title, post.summary, post.link, title, post.updated))
+        except AttributeError:
+            posts.append((post.title, post.summary, post.link, title, post.published))
     res = pd.DataFrame(posts)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     return(res)
@@ -49,7 +52,8 @@ def get_papers(day = str(datetime.date.today()), to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)        
     res['updated'] = pd.to_datetime(res['updated'])
-    res = res.sort_values(by = ['updated'])    
+    res = res.sort_values(by = ['updated'])
+    res = res.drop_duplicates(subset = ['title'], keep = 'first')    
     res_limno = filter_limno(res)
     res_today = filter_today(res_limno, day)
 
