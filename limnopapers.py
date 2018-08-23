@@ -43,6 +43,7 @@ def get_posts():
     
     posts = []
     for i in range(len(rawrss.index)):
+        print('Fetching papers from:' + rawrss['title'][i])
         single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
         posts.append(single_posts)            
 
