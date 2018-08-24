@@ -18,7 +18,7 @@ def filter_limno(df):
     return(df)
 
 def filter_today(df, day):
-    today_parsed = datetime.datetime.strptime(day + " 15:00:00", "%Y-%m-%d %H:%M:%S") 
+    today_parsed = datetime.datetime.strptime(day + " 09:00:00", "%Y-%m-%d %H:%M:%S") 
     yesterday = today_parsed - datetime.timedelta(days = 1)
     tomorrow = today_parsed + datetime.timedelta(days = 0)
     published_today = (df['updated'] > yesterday) & (df['updated'] < tomorrow)
