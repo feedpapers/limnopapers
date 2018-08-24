@@ -19,8 +19,8 @@ def filter_limno(df):
 
 def filter_today(df, day):
     today_parsed = datetime.datetime.strptime(day + " 15:00:00", "%Y-%m-%d %H:%M:%S") 
-    yesterday = today_parsed - datetime.timedelta(days = 0.5)
-    tomorrow = today_parsed + datetime.timedelta(days = 0.5)
+    yesterday = today_parsed - datetime.timedelta(days = 1)
+    tomorrow = today_parsed + datetime.timedelta(days = 0)
     published_today = (df['updated'] > yesterday) & (df['updated'] < tomorrow)
     res_today = df[published_today]
     return(res_today)
@@ -43,7 +43,7 @@ def get_posts():
     
     posts = []
     for i in range(len(rawrss.index)):
-        print('Fetching papers from:' + rawrss['title'][i])
+        print('Fetching papers from: ' + rawrss['title'][i])
         single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
         posts.append(single_posts)            
 
