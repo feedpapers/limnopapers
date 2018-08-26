@@ -61,15 +61,25 @@ def get_papers(day = str(datetime.date.today()), to_csv = False):
     if to_csv is not False:
       res.to_csv("test.csv")      
       res_limno.to_csv("test_limno.csv")
-      res_today.to_csv("test_today.csv")       
+      res_today.to_csv("test_today.csv")
 
+    # rm entries that are also in log
+    log = pd.read_csv("log.csv")
+    res_today = res_today[~res_today['title'].isin(log['title'])]
+    
     return(res_today)
 
 def limnotoots(day = str(datetime.date.today())):    
     api = twitter.Api(consumer_key=config.consumer_key, consumer_secret=config.consumer_secret, access_token_key=config.access_token_key, access_token_secret=config.access_token_secret)        
     # print(api.VerifyCredentials())
 
-    data = get_papers(day)        
+    data = get_papers(day)
+
+    # write to log
+    log = pd.read_csv("log.csv")
+    log = log.append(data)
+    log.to_csv("log.csv")
+
     toots = data['title'] + ". " + data['dc_source']  + ". " + data['prism_url']    
     
     for toot in toots:
