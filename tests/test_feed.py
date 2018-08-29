@@ -7,7 +7,7 @@ from limnopapers import *
 import feedparser
 import pandas as pd
 
-url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10533&channel-name=Biogeochemistry"
+url = "http://rss.sciencedirect.com/publication/science/03043800"
 posts = []
 
 feed = feedparser.parse(url)
@@ -18,4 +18,5 @@ res = pd.DataFrame(posts)
 print(res.columns)
 print(res['title'])
 print(res['link'])
+print(res['updated'])
 res.to_csv("test.csv")
