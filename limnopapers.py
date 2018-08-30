@@ -49,13 +49,17 @@ def get_posts():
 
     return(posts)
 
-def get_papers(day = str(datetime.date.today()), to_csv = False):
+def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)        
     res['updated'] = pd.to_datetime(res['updated'])
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')    
-    res_limno = filter_limno(res)
+    if limno is not False:
+        res_limno = filter_limno(res)
+    else:
+        res_limno = res
+
     res_today = filter_today(res_limno, day)
 
     if to_csv is not False:
