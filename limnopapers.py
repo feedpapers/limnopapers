@@ -11,7 +11,7 @@ def filter_limno(df):
     mentions_limno = df['title'].str.contains('|'.join(filter_for), case = False)
     df = df[mentions_limno]
 
-    filter_against = ['ocean', 'iran', 'fault']
+    filter_against = ['ocean', 'iran', 'fault','wetland']
     mentions_junk = df['summary'].str.contains('|'.join(filter_against), case= False)
     df = df[mentions_junk == False]     
     
