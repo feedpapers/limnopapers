@@ -46,9 +46,15 @@ def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
     rawrss = pd.read_csv("journals.csv")
 
+    # sort rawrss by increasing journal name nchar length
+    rawrss.index = rawrss['title'].str.len()
+    rawrss = rawrss.sort_index().reset_index(drop = True)
+
     posts = []
     for i in range(len(rawrss.index)):
-        print('Fetching papers from: ' + rawrss['title'][i])
+        sys.stdout.write('\b' * 1000)
+        sys.stdout.write('Fetching papers from: ' + rawrss['title'][i] + '\r')
+
         single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
         posts.append(single_posts)
 
