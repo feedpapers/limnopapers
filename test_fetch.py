@@ -1,17 +1,27 @@
 from limnopapers import *
+from colorama import Fore
 
 if(len(sys.argv) == 2):
-    data = get_papers(day = sys.argv[1], limno = False, to_csv=True)        
+    data = get_papers(day = sys.argv[1], limno = False, to_csv=True)
 else:
-    data = get_papers(day = str(datetime.date.today()), limno = False, to_csv=True)        
+    data = get_papers(day = str(datetime.date.today()), limno = False,
+                      to_csv = True)
 
-print("All papers: ")
-toots = data['title'] + ". " + data['dc_source']  + ". " + data['prism_url']
-for toot in toots:
-    print(toot)
-
-print("Filtered: ")
 filtered = filter_limno(data)
-toots = filtered['title'] + ". " + filtered['dc_source']  + ". " + filtered['prism_url']
+data = data.append(filtered)
+data = data.drop_duplicates(keep = False)
+
+print(Fore.RED + "Excluded: ")
+print()
+toots = data['title'] + ". " + data['dc_source'] + ". " + data['prism_url']
 for toot in toots:
-    print(toot)
+    print(Fore.RED + toot)
+    print()
+
+print(Fore.GREEN + "Filtered: ")
+print()
+toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
+    filtered['prism_url']
+for toot in toots:
+    print(Fore.GREEN + toot)
+    print()
