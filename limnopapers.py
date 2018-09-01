@@ -7,12 +7,13 @@ import config
 
 def filter_limno(df):
     # df = res
-    filter_for = ['lake', "reservoir"] 
+    filter_for = ['lake', "reservoir"]
     mentions_limno = df['title'].str.contains('|'.join(filter_for), case = False)
     df = df[mentions_limno]
 
-    filter_against = ['ocean', 'iran', 'fault','wetland']
-    mentions_junk = df['summary'].str.contains('|'.join(filter_against), case= False)
+    filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
+                      'hydroelectric', 'mining']
+    mentions_junk = df['summary'].str.contains('|'.join(filter_against), case = False)
     df = df[mentions_junk == False]     
     
     return(df)
