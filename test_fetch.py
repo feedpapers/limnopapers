@@ -11,17 +11,18 @@ filtered = filter_limno(data)
 data = data.append(filtered)
 data = data.drop_duplicates(keep = False)
 
-print(Fore.RED + "Excluded: ")
-print()
-toots = data['title'] + ". " + data['dc_source'] + ". " + data['prism_url']
-for toot in toots:
-    print(Fore.RED + toot)
+if(len(data.index) != 0):
+    print(Fore.RED + "Excluded: ")
     print()
+    toots = data['title'] + ". " + data['dc_source'] + ". " + data['prism_url']
+    for toot in toots:
+        print(Fore.RED + toot)
+        print()
 
-print(Fore.GREEN + "Filtered: ")
-print()
-toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
-    filtered['prism_url']
-for toot in toots:
-    print(Fore.GREEN + toot)
+    print(Fore.GREEN + "Filtered: ")
     print()
+    toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
+        filtered['prism_url']
+    for toot in toots:
+        print(Fore.GREEN + toot)
+        print()
