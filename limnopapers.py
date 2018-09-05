@@ -12,10 +12,14 @@ def filter_limno(df):
     df = df[mentions_limno]
 
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
-                      'hydroelectric', 'mining']
+                      'hydroelectric', 'mining', 'Great Lakes']
     mentions_junk = df['summary'].str.contains('|'.join(filter_against),
                                                case = False)
     df = df[mentions_junk == False]
+
+    junk_title = df['title'].str.contains('|'.join(filter_against),
+                                               case = False)
+    df = df[junk_title == False]
 
     return(df)
 
@@ -94,22 +98,27 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
 
     data = get_papers(day)
 
-    # write to log
-    log = pd.read_csv("log.csv")
-    log = log.append(data)
-    log.to_csv("log.csv")
-
     toots = data['title'] + ". " + data['dc_source'] + ". " + \
         data['prism_url']
 
     for toot in toots:
         print(toot)
         if(interactive is True):
-            post_toot = input("post limnotoot (y)?") or "y"
+            post_toot = input("post limnotoot (y)? ") or "y"
             if(post_toot in ["y"]):
                 status = api.PostUpdate(toot)
+
+                # write to log
+                # log = pd.read_csv("log.csv")
+                # log = log.append(toot)
+                # log.to_csv("log.csv")
         else:
             status = api.PostUpdate(toot)
+
+            # write to log
+            # log = pd.read_csv("log.csv")
+            # log = log.append(toot)
+            # log.to_csv("log.csv")
 
 def main():
     if(len(sys.argv) > 1):
