@@ -5,8 +5,8 @@ import twitter
 import sys
 import config
 
-def filter_limno(df):    
-    filter_for = ['lake', "reservoir"]
+def filter_limno(df):
+    filter_for = ['lake', "reservoir", "inland waters"]
     mentions_limno = df['title'].str.contains('|'.join(filter_for),
                                               case = False)
     df = df[mentions_limno]
@@ -85,7 +85,7 @@ def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
 
     return(res_today)
 
-def limnotoots(day = str(datetime.date.today())):
+def limnotoots(day = str(datetime.date.today()), interactive = False):
     api = twitter.Api(consumer_key=config.consumer_key,
                       consumer_secret=config.consumer_secret,
                       access_token_key = config.access_token_key,
@@ -104,12 +104,17 @@ def limnotoots(day = str(datetime.date.today())):
 
     for toot in toots:
         print(toot)
-        status = api.PostUpdate(toot)
+        if(interactive is True):
+            post_toot = input("post limnotoot (y)?") or "y"
+            if(post_toot in ["y"]):
+                status = api.PostUpdate(toot)
+        else:
+            status = api.PostUpdate(toot)
 
 def main():
-    if(len(sys.argv) == 2):
+    if(len(sys.argv) > 1):
         # yyyy-mm-dd format
-        limnotoots(day = sys.argv[1])
+        limnotoots(day = sys.argv[1], interactive = True)
     else:
         limnotoots()
 
