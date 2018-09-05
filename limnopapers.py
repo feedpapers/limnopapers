@@ -109,16 +109,26 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                 status = api.PostUpdate(toot)
 
                 # write to log
-                # log = pd.read_csv("log.csv")
-                # log = log.append(toot)
-                # log.to_csv("log.csv")
+                log = pd.read_csv("log.csv")
+                keys = ["title", "dc_source", "prism_url"]
+                title, dc_source, prism_url = toot.split(".")
+                d = dict(zip(keys, [list(title),
+                                    list(dc_source),
+                                    list(prism_url)]))
+                log = log.append(pd.DataFrame(data = d))
+                log.to_csv("log.csv")
         else:
             status = api.PostUpdate(toot)
 
             # write to log
-            # log = pd.read_csv("log.csv")
-            # log = log.append(toot)
-            # log.to_csv("log.csv")
+            log = pd.read_csv("log.csv")
+            keys = ["title", "dc_source", "prism_url"]
+            title, dc_source, prism_url = toot.split(".")
+            d = dict(zip(keys, [list(title),
+                                list(dc_source),
+                                list(prism_url)]))
+            log = log.append(pd.DataFrame(data = d))
+            log.to_csv("log.csv")
 
 def main():
     if(len(sys.argv) > 1):
