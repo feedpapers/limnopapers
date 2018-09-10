@@ -7,7 +7,7 @@ from limnopapers import *
 import feedparser
 import pandas as pd
 
-url = "http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1939-9170"
+url = "http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1944-9224"
 posts = []
 
 feed = feedparser.parse(url)
