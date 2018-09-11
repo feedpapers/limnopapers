@@ -5,6 +5,7 @@ import twitter
 import sys
 import config
 
+
 def filter_limno(df):
     filter_for = ['lake', "reservoir", "inland waters"]
     mentions_limno = df['title'].str.contains('|'.join(filter_for),
@@ -23,6 +24,7 @@ def filter_limno(df):
 
     return(df)
 
+
 def filter_today(df, day):
     today_parsed = datetime.datetime.strptime(
         day + " 09:00:00", "%Y-%m-%d %H:%M:%S")
@@ -31,6 +33,7 @@ def filter_today(df, day):
     published_today = (df['updated'] > yesterday) & (df['updated'] < tomorrow)
     res_today = df[published_today]
     return(res_today)
+
 
 def get_posts_(title, url):
     feed = feedparser.parse(url)
@@ -45,6 +48,7 @@ def get_posts_(title, url):
     res = pd.DataFrame(posts)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     return(res)
+
 
 def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
@@ -64,6 +68,7 @@ def get_posts():
 
     print('\n')
     return(posts)
+
 
 def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
     posts = get_posts()
@@ -88,6 +93,7 @@ def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
     res_today = res_today[~res_today['title'].isin(log['title'])]
 
     return(res_today)
+
 
 def limnotoots(day = str(datetime.date.today()), interactive = False):
     api = twitter.Api(consumer_key=config.consumer_key,
@@ -123,12 +129,13 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             # write to log
             log = pd.read_csv("log.csv")
             keys = ["title", "dc_source", "prism_url"]
-            title, dc_source, prism_url = toot.split(". ")          
+            title, dc_source, prism_url = toot.split(". ")
             d = dict(zip(keys, [list(title),
                                 list(dc_source),
                                 list(prism_url)]))
             log = log.append(pd.DataFrame(data = d))
             log.to_csv("log.csv")
+
 
 def main():
     if(len(sys.argv) > 1):
