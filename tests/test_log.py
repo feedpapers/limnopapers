@@ -1,6 +1,6 @@
 import pandas as pd
 
-toot = "Assessment of methane and carbon dioxide emissions in two sub‐basins of a small acidic bog lake artificially divided 30 years ago. Freshwater Biology. https://onlinelibrary.wiley.com/doi/abs/10.1111/fwb.13182?af=R"
+toot = "Effects of Bark Beetle Disturbance on Soil Nutrient Retention and Lake Chemistry in Glacial Catchment. Ecosystems. http://link.springer.com/10.1007/s10021-018-0298-1"
 
 log = pd.read_csv("log.csv")
 

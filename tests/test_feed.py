@@ -7,7 +7,7 @@ from limnopapers import *
 import feedparser
 import pandas as pd
 
-url = "http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1944-9224"
+url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=10021&channel-name=Ecosystems"
 posts = []
 
 feed = feedparser.parse(url)
@@ -18,7 +18,7 @@ res = pd.DataFrame(posts)
 try:
     if(len(set(list(res.columns)). \
            intersection(['title', 'link', 'published'])) != 3):
-        raise ValueError('Missing Field')       
+        raise ValueError('Missing Field')
 except:
     if(len(set(list(res.columns)). \
            intersection(['title', 'link', 'updated'])) != 3):
@@ -27,8 +27,7 @@ except:
 res.to_csv("test.csv")
 
 res = filter_limno(res)
-toots = res['title'] + ". " + res['dc_source'] + ". " + \
-    res['prism_url']
+toots = res['title'] + ". " + res['link']
 
 for toot in toots:
     print(toot)
