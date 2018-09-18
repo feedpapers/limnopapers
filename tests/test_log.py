@@ -12,7 +12,7 @@ d = dict(zip(keys, [title, dc_source, prism_url]))
 log.append(pd.DataFrame(data = d))
 
 
-            title, dc_source, prism_url = toot.split(".")
+            title, dc_source, prism_url = toot.split(". ")
             d = dict(zip(keys, [list(title),
                                 list(dc_source),
                                 list(prism_url)]))

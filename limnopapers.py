@@ -114,10 +114,10 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             if(post_toot in ["y"]):
                 status = api.PostUpdate(toot)
 
-                # write to log
+                # write to log                
                 log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url"]
-                title, dc_source, prism_url = toot.split(".")
+                title, dc_source, prism_url = toot.split(". ")
                 d = dict(zip(keys, [list(title),
                                     list(dc_source),
                                     list(prism_url)]))
