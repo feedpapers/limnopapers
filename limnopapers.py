@@ -13,7 +13,7 @@ def filter_limno(df):
     df = df[mentions_limno]
 
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
-                      'hydroelectric', 'mining', 'Great Lakes']
+                      'hydroelectric', '^mining$', 'Great Lakes']
     mentions_junk = df['summary'].str.contains('|'.join(filter_against),
                                                case = False)
     df = df[mentions_junk == False]
@@ -131,6 +131,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             keys = ["title", "dc_source", "prism_url"]
             title, dc_source, prism_url = toot.split(". ")
             d = dict(zip(keys, [title, dc_source, prism_url]))
+            d = pd.DataFrame.from_records(d)
             log = log.append(pd.DataFrame(data = d))
             log.to_csv("log.csv")
 
