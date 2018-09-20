@@ -11,7 +11,7 @@ sys.path.insert(0, parentdir)
 
 from limnopapers import *
 
-url = "http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1466-8238"
+url = "http://www.mdpi.com/rss/journal/water"
 posts = []
 
 feed = feedparser.parse(url)

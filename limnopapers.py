@@ -121,6 +121,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                 d = dict(zip(keys, [list(title),
                                     list(dc_source),
                                     list(prism_url)]))
+                d = pd.DataFrame.from_records(d, index=[0])
                 log = log.append(pd.DataFrame(data = d))
                 log.to_csv("log.csv")
         else:
@@ -131,7 +132,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             keys = ["title", "dc_source", "prism_url"]
             title, dc_source, prism_url = toot.split(". ")
             d = dict(zip(keys, [title, dc_source, prism_url]))
-            d = pd.DataFrame.from_records(d)
+            d = pd.DataFrame.from_records(d, index=[0])
             log = log.append(pd.DataFrame(data = d))
             log.to_csv("log.csv")
 
