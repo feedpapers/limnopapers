@@ -1,6 +1,6 @@
 # limnopapers
 
-Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.com/limnopapers) new articles.
+Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.com/limno_papers) new articles.
 
 ## Usage
 
