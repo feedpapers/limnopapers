@@ -1,3 +1,4 @@
+import pdb
 import feedparser
 import pandas as pd
 import datetime
@@ -7,22 +8,28 @@ import config
 
 
 def filter_limno(df):
+
+    df = df.reset_index()
+
     filter_for = ['lake', "reservoir", "inland waters"]
-    mentions_limno = df['title'].str.contains('|'.join(filter_for),
-                                              case = False)
-    df = df[mentions_limno]
+    has_limno_title = df['title'].str.contains('|'.join(filter_for),
+                                               case = False)
+    has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
+                                                   case = False)
 
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
                       'hydroelectric', '^mining$', 'Great Lakes']
-    mentions_junk = df['summary'].str.contains('|'.join(filter_against),
+    has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
+                                                   case = False)
+    has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
-    df = df[mentions_junk == False]
 
-    junk_title = df['title'].str.contains('|'.join(filter_against),
-                                               case = False)
-    df = df[junk_title == False]
+    is_limno = pd.DataFrame([has_limno_title, has_limno_summary,
+                             has_junk_summary, has_junk_title]) \
+        .transpose() \
+        .sum(axis = 1) > 2
 
-    return(df)
+    return(df[is_limno])
 
 
 def filter_today(df, day):
@@ -114,7 +121,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             if(post_toot in ["y"]):
                 status = api.PostUpdate(toot)
 
-                # write to log                
+                # write to log
                 log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url"]
                 title, dc_source, prism_url = toot.split(". ")
@@ -122,7 +129,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                                     list(dc_source),
                                     list(prism_url)]))
                 d = pd.DataFrame.from_records(d, index=[0])
-                log = log.append(pd.DataFrame(data = d))
+                log = log.append(pd.DataFrame(data = d), ignore_index = True)
                 log.to_csv("log.csv")
         else:
             status = api.PostUpdate(toot)

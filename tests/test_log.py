@@ -8,8 +8,8 @@ keys = ["title", "dc_source", "prism_url"]
 title, dc_source, prism_url = toot.split(". ")
 
 d = dict(zip(keys, [title, dc_source, prism_url]))
-d = pd.DataFrame.from_records(d, index=[0])
+d = pd.DataFrame.from_records(d, index = [0])
 
-log.append(pd.DataFrame(data = d))
+log.append(pd.DataFrame(data = d), ignore_index = True)
 
 print(log)
