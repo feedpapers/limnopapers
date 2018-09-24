@@ -124,10 +124,11 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                 # write to log
                 log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url"]
+
+                toot = "Linear‐Circular Statistical Modeling of Lake Ice‐Out Dates. Water Resources Research. https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2017WR021731?af=R"
+
                 title, dc_source, prism_url = toot.split(". ")
-                d = dict(zip(keys, [list(title),
-                                    list(dc_source),
-                                    list(prism_url)]))
+                d = dict(zip(keys, [title, dc_source, prism_url]))
                 d = pd.DataFrame.from_records(d, index=[0])
                 log = log.append(pd.DataFrame(data = d), ignore_index = True)
                 log.to_csv("log.csv")
