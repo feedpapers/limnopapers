@@ -18,7 +18,7 @@ def filter_limno(df):
                                                    case = False)
 
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
-                      'hydroelectric', '^mining$', 'Great Lakes']
+                      'hydroelectric', '^mining$', 'Great Lakes', '^sea$']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
@@ -124,8 +124,6 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                 # write to log
                 log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url"]
-
-                toot = "Linear‐Circular Statistical Modeling of Lake Ice‐Out Dates. Water Resources Research. https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2017WR021731?af=R"
 
                 title, dc_source, prism_url = toot.split(". ")
                 d = dict(zip(keys, [title, dc_source, prism_url]))
