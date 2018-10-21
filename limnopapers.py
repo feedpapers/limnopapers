@@ -129,7 +129,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
                 d = dict(zip(keys, [title, dc_source, prism_url]))
                 d = pd.DataFrame.from_records(d, index=[0])
                 log = log.append(pd.DataFrame(data = d), ignore_index = True)
-                log.to_csv("log.csv")
+                log.to_csv("log.csv", index = False)
         else:
             status = api.PostUpdate(toot)
 
@@ -140,7 +140,7 @@ def limnotoots(day = str(datetime.date.today()), interactive = False):
             d = dict(zip(keys, [title, dc_source, prism_url]))
             d = pd.DataFrame.from_records(d, index=[0])
             log = log.append(pd.DataFrame(data = d))
-            log.to_csv("log.csv")
+            log.to_csv("log.csv", index = False)
 
 
 def main():

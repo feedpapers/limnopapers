@@ -1,11 +1,13 @@
-,Unnamed: 0,Unnamed: 0.1,Unnamed: 0.1.1,Unnamed: 0.1.1.1,Unnamed: 0.1.1.1.1,Unnamed: 0.1.1.1.1.1,dc_source,prism_url,title
-0,0.0,0.0,0.0,0.0,0.0,0.0,Journal of Geophysical Research: Biogeosciences,https://onlinelibrary.wiley.com/doi/abs/10.1029/2018JG004622?af=R,Carbon Dioxide and Methane Dynamics in a Small Boreal Lake During Winter and Spring Melt Events
-1,1.0,1.0,1.0,1.0,1.0,1.0,Ecological Applications,https://onlinelibrary.wiley.com/doi/abs/10.1002/eap.1786?af=R,Riverine regime shifts through reservoir dams reveal options for ecological management
-2,2.0,2.0,2.0,2.0,2.0,2.0,Biogeochemistry,http://link.springer.com/10.1007/s10533-018-0490-6,The importance of nutrient supply by fish excretion and watershed streams to a eutrophic lake varies with temporal scale over 19 years
-3,3.0,3.0,3.0,3.0,3.0,3.0,Freshwater Biology,https://onlinelibrary.wiley.com/doi/abs/10.1111/fwb.13170?af=R,Chironomid incorporation of methane‐derived carbon in plankton‐ and macrophyte‐dominated habitats in a large shallow lake
-4,4.0,4.0,4.0,4.0,4.0,,Water Resources Research,https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2017WR021731?af=R,Linear‐Circular Statistical Modeling of Lake Ice‐Out Dates
-5,5.0,5.0,5.0,5.0,,,Water Resources Research,https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018WR022615?af=R,A thermally‐stratified reservoir module for large‐scale distributed stream temperature models with application in the Tennessee River Basin
-6,6.0,6.0,6.0,,,,JAWRA,https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12688?af=R,"Integrated, Regional‐Scale Hydrologic Modeling of Inland Lakes"
-7,7.0,7.0,,,,,Inland Waters,https://www.tandfonline.com/doi/full/10.1080/20442041.2018.1474686?af=R,Zooplankton is more strongly controlled by nutrients than predation in a vegetation-free Mediterranean shallow lake: a mesocosm experiment
-8,8.0,,,,,,Hydrobiologia,http://link.springer.com/10.1007/s10750-018-3793-7,"Old sins have long shadows: climate change weakens efficiency of trophic coupling of phyto- and zooplankton in a deep oligo-mesotrophic lowland lake (Stechlin, Germany)—a causality analysis"
-9,,,,,,,Ecological Applications,https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1813?af=R,Pelagic food webs of humic lakes show low short‐term response to forest harvesting
+dc_source,prism_url,title
+Journal of Geophysical Research: Biogeosciences,https://onlinelibrary.wiley.com/doi/abs/10.1029/2018JG004622?af=R,Carbon Dioxide and Methane Dynamics in a Small Boreal Lake During Winter and Spring Melt Events
+Ecological Applications,https://onlinelibrary.wiley.com/doi/abs/10.1002/eap.1786?af=R,Riverine regime shifts through reservoir dams reveal options for ecological management
+Biogeochemistry,http://link.springer.com/10.1007/s10533-018-0490-6,The importance of nutrient supply by fish excretion and watershed streams to a eutrophic lake varies with temporal scale over 19 years
+Freshwater Biology,https://onlinelibrary.wiley.com/doi/abs/10.1111/fwb.13170?af=R,Chironomid incorporation of methane‐derived carbon in plankton‐ and macrophyte‐dominated habitats in a large shallow lake
+Water Resources Research,https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2017WR021731?af=R,Linear‐Circular Statistical Modeling of Lake Ice‐Out Dates
+Water Resources Research,https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018WR022615?af=R,A thermally‐stratified reservoir module for large‐scale distributed stream temperature models with application in the Tennessee River Basin
+JAWRA,https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12688?af=R,"Integrated, Regional‐Scale Hydrologic Modeling of Inland Lakes"
+Inland Waters,https://www.tandfonline.com/doi/full/10.1080/20442041.2018.1474686?af=R,Zooplankton is more strongly controlled by nutrients than predation in a vegetation-free Mediterranean shallow lake: a mesocosm experiment
+Hydrobiologia,http://link.springer.com/10.1007/s10750-018-3793-7,"Old sins have long shadows: climate change weakens efficiency of trophic coupling of phyto- and zooplankton in a deep oligo-mesotrophic lowland lake (Stechlin, Germany)—a causality analysis"
+Ecological Applications,https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1813?af=R,Pelagic food webs of humic lakes show low short‐term response to forest harvesting
+HESS,https://doi.org/10.5194/hess-22-5281-2018,"The importance of small artificial water bodies as sources of methane emissions in Queensland, Australia"
+Freshwater Science,https://www.journals.uchicago.edu/doi/abs/10.1086/700885?af=R,Lakeshore modification reduces secondary production of macroinvertebrates in littoral but not deeper zones
