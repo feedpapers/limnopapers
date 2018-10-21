@@ -11,7 +11,7 @@ sys.path.insert(0, parentdir)
 
 from limnopapers import *
 
-url = "https://www.hydrol-earth-syst-sci.net/xml/rss2_0.xml"
+url = "http://www.publish.csiro.au/RSS_Feed/CSIRO_Publishing_Recent_MF.xml"
 posts = []
 
 feed = feedparser.parse(url)
