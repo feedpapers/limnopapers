@@ -17,19 +17,25 @@ def filter_limno(df):
     has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
                                                    case = False)
 
+    is_limno = pd.DataFrame([has_limno_title, has_limno_summary]) \
+        .transpose() \
+        .sum(axis = 1) > 0
+
+    df = df[is_limno]
+
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
-                      'hydroelectric', '^mining$', 'Great Lakes', '^sea$']
+                      'hydroelectric', '^mining$', 'Great Lakes', '^sea$',
+                      'hydropower', '^ Part ', 'woolly']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
 
-    is_limno = pd.DataFrame([has_limno_title, has_limno_summary,
-                             has_junk_summary, has_junk_title]) \
+    not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
-        .sum(axis = 1) > 2
+        .sum(axis = 1) == 2
 
-    return(df[is_limno])
+    return(df[not_junk])
 
 
 def filter_today(df, day):
