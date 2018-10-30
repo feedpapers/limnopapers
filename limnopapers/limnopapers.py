@@ -5,6 +5,14 @@ import datetime
 import twitter
 import sys
 import config
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--tweet', default = False,
+                    action='store_true')
+parser.add_argument('--interactive', default = False,
+                    action='store_true')
+args = parser.parse_args()
 
 
 def filter_limno(df):
@@ -94,8 +102,6 @@ def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
     else:
         res_limno = res
 
-    res_today = filter_today(res_limno, day)
-
     if to_csv is not False:
         res.to_csv("test.csv")
         res_limno.to_csv("test_limno.csv")
@@ -103,12 +109,12 @@ def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
 
     # rm entries that are also in log
     log = pd.read_csv("log.csv")
-    res_today = res_today[~res_today['title'].isin(log['title'])]
+    res = res[~res['title'].isin(log['title'])]
 
     return(res_today)
 
 
-def limnotoots(day = str(datetime.date.today()), interactive = False):
+def limnotoots(day = str(datetime.date.today()), interactive = interactive):
     api = twitter.Api(consumer_key=config.consumer_key,
                       consumer_secret=config.consumer_secret,
                       access_token_key = config.access_token_key,

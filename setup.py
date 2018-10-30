@@ -15,6 +15,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jsta/limnopapers",
+    scripts=["bin/limnopapers"],
     include_package_data=True,
     packages=setuptools.find_packages(exclude=['tests']),
     classifiers=(

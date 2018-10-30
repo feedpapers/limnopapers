@@ -14,14 +14,6 @@ Tweet papers that came out prior to today:
 
 `python limnopapers.py`
 
-Query papers that came out on an arbitrary day without tweeting:
-
-`python test_fetch.py '2018-08-02'`
-
-Tweet papers that came out on an arbitrary day (8 am prior day to 8 am):
-
-`python limnopapers.py '2018-07-29'`
-
 ## Setup
 
 * Create a file named `config.py` that stores your twitter API keys
