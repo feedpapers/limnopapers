@@ -1,18 +1,24 @@
 # limnopapers
 
+[![Build Status](https://api.travis-ci.org/jsta/limnopapers.png)](https://travis-ci.org/jsta/limnopapers)
+
 Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.com/limno_papers) new articles.
 
 ## Usage
 
-Query papers without tweeting:
+Query papers that came out prior to today without tweeting:
 
-`python test_fetch.py '2018-08-02'`
+`python test_fetch.py`
 
-Tweet papers that came out today:
+Tweet papers that came out prior to today:
 
 `python limnopapers.py`
 
-Tweet papers that came out on an arbitrary day:
+Query papers that came out on an arbitrary day without tweeting:
+
+`python test_fetch.py '2018-08-02'`
+
+Tweet papers that came out on an arbitrary day (8 am prior day to 8 am):
 
 `python limnopapers.py '2018-07-29'`
 
