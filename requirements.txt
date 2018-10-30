@@ -2,3 +2,4 @@ pandas
 python-twitter
 datetime
 feedparser
+colorama
