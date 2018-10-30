@@ -1,6 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('--square', help="display a square of a given number",
-                    type=int, default = 2)
+parser.add_argument('--tweet', help="Publish limnopapers tweets? Boolean \
+                                    defaults to False.",
+                    type = bool, default = False)
 args = parser.parse_args()
-print(args.square**2)
+print(args.tweet)
