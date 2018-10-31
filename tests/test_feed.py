@@ -4,12 +4,11 @@ import inspect
 import feedparser
 import pandas as pd
 
-currentdir = os.path.dirname(
-    os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
-
-from limnopapers import *
+import importlib.util
+spec = importlib.util.spec_from_file_location("limnopapers",
+                                              "../limnopapers/limnopapers.py")
+limnopapers = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(limnopapers)
 
 url = "http://www.publish.csiro.au/RSS_Feed/CSIRO_Publishing_Recent_MF.xml"
 posts = []
