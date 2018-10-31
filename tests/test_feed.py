@@ -3,6 +3,7 @@ import sys
 import inspect
 import feedparser
 import pandas as pd
+import pytest
 
 import importlib.util
 spec = importlib.util.spec_from_file_location("limnopapers",
@@ -18,14 +19,14 @@ for post in feed.entries:
     posts.append(post)
 
 res = pd.DataFrame(posts)
-try:
-    if(len(set(list(res.columns)).
-           intersection(['title', 'link', 'published'])) != 3):
-        raise ValueError('Missing Field')
-except:
-    if(len(set(list(res.columns)).
-           intersection(['title', 'link', 'updated'])) != 3):
-        raise ValueError('Missing Field')
+
+
+def test_fields():
+    has_published = len(set(list(res.columns)).
+                        intersection(['title', 'link', 'published'])) == 3
+    has_updated = len(set(list(res.columns)).
+                      intersection(['title', 'link', 'updated'])) == 3
+    assert has_published or has_updated
 
 res.to_csv("test.csv")
 

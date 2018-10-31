@@ -6,3 +6,4 @@ config.py
 .vscode
 test_limno.csv
 test_today.csv
+.cache/
