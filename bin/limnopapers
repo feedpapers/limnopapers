@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python ../limnopapers/limnopapers.py $1 $2

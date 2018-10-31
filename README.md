@@ -8,11 +8,15 @@ Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.
 
 Query papers that came out prior to today without tweeting:
 
-`python test_fetch.py`
-
-Tweet papers that came out prior to today:
-
 `python limnopapers.py`
+
+Manually approve tweeting of papers that came out prior to today:
+
+`python limnopapers.py --tweet --interactive`
+
+Unsupervised tweeting of papers that came out prior to today:
+
+`python limnopapers.py --tweet`
 
 ## Setup
 

@@ -1,11 +1,20 @@
+import os
+import sys
+import inspect
 import pdb
 import feedparser
 import pandas as pd
 import datetime
 import twitter
-import sys
-import config
+from colorama import Fore
 import argparse
+
+currentdir = os.path.dirname(
+    os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
+import config
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--tweet', default = False,
@@ -73,7 +82,7 @@ def get_posts_(title, url):
 
 def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
-    rawrss = pd.read_csv("journals.csv")
+    rawrss = pd.read_csv("../journals.csv")
 
     # sort rawrss by increasing journal name nchar length for pretty printing
     rawrss.index = rawrss['title'].str.len()
@@ -91,76 +100,93 @@ def get_posts():
     return(posts)
 
 
-def get_papers(day = str(datetime.date.today()), limno = True, to_csv = False):
+def get_papers(to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)
     res['updated'] = pd.to_datetime(res['updated'])
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
-    if limno is not False:
-        res_limno = filter_limno(res)
-    else:
-        res_limno = res
-
-    if to_csv is not False:
-        res.to_csv("test.csv")
-        res_limno.to_csv("test_limno.csv")
-        res_today.to_csv("test_today.csv")
-
     # rm entries that are also in log
-    log = pd.read_csv("log.csv")
+    log = pd.read_csv("../log.csv")
     res = res[~res['title'].isin(log['title'])]
 
-    return(res_today)
+    res_limno = filter_limno(res)
+
+    if to_csv is not False:
+        res_limno.to_csv("test_limno.csv")
+        res.to_csv("test.csv")
+
+    dfs = {}
+    dfs['res'] = res
+    dfs['res_limno'] = res_limno
+
+    return(dfs)
 
 
-def limnotoots(day = str(datetime.date.today()), interactive = interactive):
+def limnotoots(tweet, interactive):
     api = twitter.Api(consumer_key=config.consumer_key,
                       consumer_secret=config.consumer_secret,
                       access_token_key = config.access_token_key,
                       access_token_secret=config.access_token_secret)
     # print(api.VerifyCredentials())
 
-    data = get_papers(day)
+    data = get_papers()
+    filtered = data["res_limno"]
+    data = data["res"]
 
-    toots = data['title'] + ". " + data['dc_source'] + ". " + \
-        data['prism_url']
+    if(len(data.index) != 0):
+        print(Fore.RED + "Excluded: ")
+        print()
+        toots = data['title'] + ". " + data['dc_source'] + ". " + \
+            data['prism_url']
+        for toot in toots:
+            print(Fore.RED + toot)
+            print()
 
-    for toot in toots:
-        print(toot)
-        if(interactive is True):
-            post_toot = input("post limnotoot (y)? ") or "y"
-            if(post_toot in ["y"]):
+        print(Fore.GREEN + "Filtered: ")
+        print()
+        toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
+            filtered['prism_url']
+        for toot in toots:
+            print(Fore.GREEN + toot)
+            print()
+
+    if(tweet is True):
+        for toot in toots:
+            print(toot)
+            if(interactive is True):
+                post_toot = input("post limnotoot (y)/n/i? ") or "y"
+                if(post_toot in ["y"]):
+                    status = api.PostUpdate(toot)
+                    posted = "y"
+                if(post_toot in ["i"]):                    
+                    posted = "i"
+
+                # write to log
+                log = pd.read_csv("../log.csv")
+                keys = ["title", "dc_source", "prism_url", "posted"]
+
+                title, dc_source, prism_url = toot.split(". ")
+                d = dict(zip(keys, [title, dc_source, prism_url, posted]))
+                d = pd.DataFrame.from_records(d, index=[0])
+                log = log.append(pd.DataFrame(data = d),
+                                 ignore_index = True)
+                log.to_csv("../log.csv", index = False)
+            else:
                 status = api.PostUpdate(toot)
 
                 # write to log
                 log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url"]
-
                 title, dc_source, prism_url = toot.split(". ")
                 d = dict(zip(keys, [title, dc_source, prism_url]))
                 d = pd.DataFrame.from_records(d, index=[0])
-                log = log.append(pd.DataFrame(data = d), ignore_index = True)
+                log = log.append(pd.DataFrame(data = d))
                 log.to_csv("log.csv", index = False)
-        else:
-            status = api.PostUpdate(toot)
-
-            # write to log
-            log = pd.read_csv("log.csv")
-            keys = ["title", "dc_source", "prism_url"]
-            title, dc_source, prism_url = toot.split(". ")
-            d = dict(zip(keys, [title, dc_source, prism_url]))
-            d = pd.DataFrame.from_records(d, index=[0])
-            log = log.append(pd.DataFrame(data = d))
-            log.to_csv("log.csv", index = False)
 
 
 def main():
-    if(len(sys.argv) > 1):
-        # yyyy-mm-dd format
-        limnotoots(day = sys.argv[1], interactive = True)
-    else:
-        limnotoots()
+    limnotoots(tweet = args.tweet, interactive = args.interactive)
 
 if __name__ == "__main__":
     main()
