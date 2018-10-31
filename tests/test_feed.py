@@ -29,7 +29,7 @@ except:
 
 res.to_csv("test.csv")
 
-res = filter_limno(res)
+res = limnopapers.filter_limno(res)
 toots = res['title'] + ". " + res['link']
 
 for toot in toots:
