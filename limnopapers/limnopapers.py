@@ -16,13 +16,8 @@ sys.path.insert(0, parentdir)
 
 try:
     import config
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--tweet', default = False,
-                    action='store_true')
-parser.add_argument('--interactive', default = False,
-                    action='store_true')
-args = parser.parse_args()
+except:
+    print("No twitter keys found")
 
 
 def filter_limno(df):
@@ -187,6 +182,13 @@ def limnotoots(tweet, interactive):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--tweet', default = False,
+                        action='store_true')
+    parser.add_argument('--interactive', default = False,
+                        action='store_true')
+    args = parser.parse_args()
+
     limnotoots(tweet = args.tweet, interactive = args.interactive)
 
 if __name__ == "__main__":
