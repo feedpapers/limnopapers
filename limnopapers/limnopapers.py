@@ -14,7 +14,8 @@ currentdir = os.path.dirname(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-import config
+try:
+    import config
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--tweet', default = False,
@@ -124,12 +125,6 @@ def get_papers(to_csv = False):
 
 
 def limnotoots(tweet, interactive):
-    api = twitter.Api(consumer_key=config.consumer_key,
-                      consumer_secret=config.consumer_secret,
-                      access_token_key = config.access_token_key,
-                      access_token_secret=config.access_token_secret)
-    # print(api.VerifyCredentials())
-
     data = get_papers()
     filtered = data["res_limno"]
     data = data["res"]
@@ -152,6 +147,12 @@ def limnotoots(tweet, interactive):
             print()
 
     if(tweet is True):
+        api = twitter.Api(consumer_key=config.consumer_key,
+                          consumer_secret=config.consumer_secret,
+                          access_token_key = config.access_token_key,
+                          access_token_secret=config.access_token_secret)
+        # print(api.VerifyCredentials())
+
         for toot in toots:
             print(toot)
             if(interactive is True):
