@@ -78,7 +78,7 @@ def get_posts_(title, url):
 
 def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
-    rawrss = pd.read_csv("../journals.csv")
+    rawrss = pd.read_csv("journals.csv")
 
     # sort rawrss by increasing journal name nchar length for pretty printing
     rawrss.index = rawrss['title'].str.len()
@@ -103,7 +103,7 @@ def get_papers(to_csv = False):
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
     # rm entries that are also in log
-    log = pd.read_csv("../log.csv")
+    log = pd.read_csv("log.csv")
     res = res[~res['title'].isin(log['title'])]
 
     res_limno = filter_limno(res)
@@ -159,7 +159,7 @@ def limnotoots(tweet, interactive):
                     posted = "i"
 
                 # write to log
-                log = pd.read_csv("../log.csv")
+                log = pd.read_csv("log.csv")
                 keys = ["title", "dc_source", "prism_url", "posted"]
 
                 title, dc_source, prism_url = toot.split(". ")
@@ -167,7 +167,7 @@ def limnotoots(tweet, interactive):
                 d = pd.DataFrame.from_records(d, index=[0])
                 log = log.append(pd.DataFrame(data = d),
                                  ignore_index = True)
-                log.to_csv("../log.csv", index = False)
+                log.to_csv("log.csv", index = False)
             else:
                 status = api.PostUpdate(toot)
 

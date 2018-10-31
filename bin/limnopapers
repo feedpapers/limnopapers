@@ -1,3 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-python ../limnopapers/limnopapers.py $1 $2
+import argparse
+from limnopapers import limnopapers as lp
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--tweet', default = False,
+                    action='store_true')
+parser.add_argument('--interactive', default = False,
+                    action='store_true')
+args = parser.parse_args()
+
+lp.limnotoots(tweet = args.tweet, interactive = args.interactive)
