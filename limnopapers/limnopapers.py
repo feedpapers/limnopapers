@@ -160,7 +160,7 @@ def limnotoots(tweet, interactive):
                 if(post_toot in ["y"]):
                     status = api.PostUpdate(toot)
                     posted = "y"
-                if(post_toot in ["i"]):                    
+                if(post_toot in ["i"]):
                     posted = "i"
 
                 # write to log
