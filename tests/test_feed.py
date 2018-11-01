@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://www.publish.csiro.au/RSS_Feed/CSIRO_Publishing_Recent_MF.xml"
+url = "http://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)2378-2242"
 posts = []
 
 feed = feedparser.parse(url)

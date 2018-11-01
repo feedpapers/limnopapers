@@ -122,7 +122,7 @@ def get_papers(to_csv = False):
 def limnotoots(tweet, interactive):
     data = get_papers()
     filtered = data["res_limno"]
-    data = data["res"]
+    data = filter_today(data["res"], day = str(datetime.date.today()))
 
     if(len(data.index) != 0):
         print(Fore.RED + "Excluded: ")
