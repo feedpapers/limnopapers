@@ -37,8 +37,10 @@ def filter_limno(df):
     df = df[is_limno]
 
     filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
-                      'hydroelectric', '^mining$', 'Great Lakes', '^sea$',
-                      'hydropower', '^ Part ', 'woolly', 'Lake Erie']
+                      'hydroelectric', ' mining ', 'Great Lakes', '^sea$',
+                      'hydropower', '^ Part ', 'woolly', 'Lake Erie',
+                      'Lake Michigan', 'russia', 'spawning', 'salmon', 'trout',
+                      'walleye', 'coastal', 'fish diet', 'arctic char']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
