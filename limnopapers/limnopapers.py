@@ -127,7 +127,7 @@ def limnotoots(tweet, interactive):
     filtered = data["res_limno"]
     data = filter_today(data["res"], day = str(datetime.date.today()))
 
-    if(len(data.index) != 0):
+    if(len(data.index) != 0 or len(filtered.index) != 0):
         print(Fore.RED + "Excluded: ")
         print()
         toots = data['title'] + ". " + data['dc_source'] + ". " + \
@@ -144,44 +144,44 @@ def limnotoots(tweet, interactive):
             print(Fore.GREEN + toot)
             print()
 
-    if(tweet is True):
-        api = twitter.Api(consumer_key=config.consumer_key,
-                          consumer_secret=config.consumer_secret,
-                          access_token_key = config.access_token_key,
-                          access_token_secret=config.access_token_secret)
-        # print(api.VerifyCredentials())
+        if(tweet is True):
+            api = twitter.Api(consumer_key=config.consumer_key,
+                              consumer_secret=config.consumer_secret,
+                              access_token_key = config.access_token_key,
+                              access_token_secret=config.access_token_secret)
+            # print(api.VerifyCredentials())
 
-        for toot in toots:
-            print(toot)
-            if(interactive is True):
-                post_toot = input("post limnotoot (y)/n/i? ") or "y"
-                if(post_toot in ["y"]):
+            for toot in toots:
+                print(toot)
+                if(interactive is True):
+                    post_toot = input("post limnotoot (y)/n/i? ") or "y"
+                    if(post_toot in ["y"]):
+                        status = api.PostUpdate(toot)
+                        posted = "y"
+                    if(post_toot in ["i"]):
+                        posted = "i"
+
+                    # write to log
+                    log = pd.read_csv("log.csv")
+                    keys = ["title", "dc_source", "prism_url", "posted"]
+
+                    title, dc_source, prism_url = toot.split(". ")
+                    d = dict(zip(keys, [title, dc_source, prism_url, posted]))
+                    d = pd.DataFrame.from_records(d, index=[0])
+                    log = log.append(pd.DataFrame(data = d),
+                                     ignore_index = True)
+                    log.to_csv("log.csv", index = False)
+                else:
                     status = api.PostUpdate(toot)
-                    posted = "y"
-                if(post_toot in ["i"]):
-                    posted = "i"
 
-                # write to log
-                log = pd.read_csv("log.csv")
-                keys = ["title", "dc_source", "prism_url", "posted"]
-
-                title, dc_source, prism_url = toot.split(". ")
-                d = dict(zip(keys, [title, dc_source, prism_url, posted]))
-                d = pd.DataFrame.from_records(d, index=[0])
-                log = log.append(pd.DataFrame(data = d),
-                                 ignore_index = True)
-                log.to_csv("log.csv", index = False)
-            else:
-                status = api.PostUpdate(toot)
-
-                # write to log
-                log = pd.read_csv("log.csv")
-                keys = ["title", "dc_source", "prism_url"]
-                title, dc_source, prism_url = toot.split(". ")
-                d = dict(zip(keys, [title, dc_source, prism_url]))
-                d = pd.DataFrame.from_records(d, index=[0])
-                log = log.append(pd.DataFrame(data = d))
-                log.to_csv("log.csv", index = False)
+                    # write to log
+                    log = pd.read_csv("log.csv")
+                    keys = ["title", "dc_source", "prism_url"]
+                    title, dc_source, prism_url = toot.split(". ")
+                    d = dict(zip(keys, [title, dc_source, prism_url]))
+                    d = pd.DataFrame.from_records(d, index=[0])
+                    log = log.append(pd.DataFrame(data = d))
+                    log.to_csv("log.csv", index = False)
 
 
 def main():
