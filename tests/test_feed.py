@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "https://www.biogeosciences.net/xml/rss2_0.xml"
+url = "http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1600-0706"
 posts = []
 
 feed = feedparser.parse(url)
