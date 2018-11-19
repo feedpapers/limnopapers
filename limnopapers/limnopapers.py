@@ -43,7 +43,9 @@ def filter_limno(df):
                       'walleye', 'coastal', 'fish diet', 'arctic char',
                       'estuaries', 'hydroxide', 'fluid injection',
                       'cover image', 'economic value', 'google earth',
-                      'alewife', 'largemouth bass', 'fish metapopulations']
+                      'alewife', 'largemouth bass', 'fish metapopulations',
+                      'antibiotic', 'acetaminophen', 'viruses', 'evolutionary',
+                      'china']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
@@ -74,8 +76,13 @@ def get_posts_(title, url):
             posts.append((post.title, post.summary, post.link,
                           title, post.updated))
         except AttributeError:
-            posts.append((post.title, post.summary, post.link,
-                          title, post.published))
+            try:
+                posts.append((post.title, post.summary, post.link,
+                              title, post.published))
+            except AttributeError:
+                posts.append((post.title, post.summary, post.link,
+                              title, None))
+
     res = pd.DataFrame(posts)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     return(res)
