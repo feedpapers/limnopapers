@@ -1,7 +1,7 @@
 import os
 import sys
 import inspect
-import feedparser
+import feedparser as fp
 import pandas as pd
 import pytest
 
@@ -14,7 +14,7 @@ spec.loader.exec_module(limnopapers)
 url = "http://rss.sciencedirect.com/publication/science/03043800"
 posts = []
 
-feed = feedparser.parse(url)
+feed = fp.parse(url)
 for post in feed.entries:
     posts.append(post)
 
@@ -23,9 +23,9 @@ res = pd.DataFrame(posts)
 
 def test_fields():
     has_published = len(set(list(res.columns)).
-                        intersection(['title', 'link', 'published'])) == 3
+                        intersection(['title', 'link'])) == 2
     has_updated = len(set(list(res.columns)).
-                      intersection(['title', 'link', 'updated'])) == 3
+                      intersection(['title', 'link'])) == 2
     assert has_published or has_updated
 
 res.to_csv("test.csv")
