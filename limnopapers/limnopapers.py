@@ -131,8 +131,8 @@ def get_papers(to_csv = False):
     return(dfs)
 
 
-def limnotoots(tweet, interactive):
-    data = get_papers()
+def limnotoots(tweet, interactive, to_csv = False):
+    data = get_papers(to_csv)
     filtered = data["res_limno"]
     data = filter_today(data["res"], day = str(datetime.date.today()))
 
