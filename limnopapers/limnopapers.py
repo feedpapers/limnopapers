@@ -45,7 +45,7 @@ def filter_limno(df):
                       'cover image', 'economic value', 'google earth',
                       'alewife', 'largemouth bass', 'fish metapopulations',
                       'antibiotic', 'acetaminophen', 'viruses', 'evolutionary',
-                      'china']
+                      'china', 'italy', 'unmanned aerial']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
