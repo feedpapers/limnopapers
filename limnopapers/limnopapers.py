@@ -47,7 +47,7 @@ def filter_limno(df):
                       'antibiotic', 'acetaminophen', 'viruses', 'evolutionary',
                       'china', 'italy', 'unmanned aerial', 'cohort',
                       'capillary tubes', 'water security', 'spillway',
-                      'near .* Lake']
+                      'near .{1,17} Lake']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
