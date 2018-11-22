@@ -24,7 +24,8 @@ def filter_limno(df):
 
     df = df.reset_index()
 
-    filter_for = ['lake', "reservoir", "inland waters"]
+    filter_for = ["lake", "reservoir", "inland waters", "stream water",
+                  "water quality"]
     has_limno_title = df['title'].str.contains('|'.join(filter_for),
                                                case = False)
     has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
@@ -47,7 +48,13 @@ def filter_limno(df):
                       'antibiotic', 'acetaminophen', 'viruses', 'evolutionary',
                       'china', 'italy', 'unmanned aerial', 'cohort',
                       'capillary tubes', 'water security', 'spillway',
-                      'near .{1,17} Lake']
+                      'near .{1,17} Lake', 'environmental DNA', 'indonesia',
+                      'water utility', 'phages', 'microbiome',
+                      'water distribution systems', 'raindrop',
+                      'emerging technologies', 'microbial abundance',
+                      'video mapping', 'community garden',
+                      'student monitoring', 'hydrograph separation',
+                      'slovenia']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
@@ -162,6 +169,8 @@ def limnotoots(tweet, interactive, to_csv = False):
                               access_token_secret=config.access_token_secret)
             # print(api.VerifyCredentials())
 
+            # toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
+            # filtered['prism_url'] + filtered['updated']
             for toot in toots:
                 print(toot)
                 if(interactive is True):
