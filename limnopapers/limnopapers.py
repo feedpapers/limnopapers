@@ -169,8 +169,8 @@ def limnotoots(tweet, interactive, to_csv = False):
                               access_token_secret=config.access_token_secret)
             # print(api.VerifyCredentials())
 
-            # toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
-            # filtered['prism_url'] + filtered['updated']
+            # toots = filtered['title'] + ". " + filtered['dc_source'] + ". " \
+            # + filtered['prism_url'] + filtered['updated']
             for toot in toots:
                 print(toot)
                 if(interactive is True):
