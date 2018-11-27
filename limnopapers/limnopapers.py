@@ -37,7 +37,7 @@ def filter_limno(df):
 
     df = df[is_limno]
 
-    filter_against = ['ocean', 'iran', 'fault', 'wetland', 'correction',
+    filter_against = ['ocean', 'iran', 'fault', 'wetland',
                       'hydroelectric', ' mining ', 'Great Lakes', '^sea$',
                       'hydropower', '^ Part ', 'woolly', 'Lake Erie',
                       'Lake Michigan', 'russia', 'spawning', 'salmon', 'trout',
@@ -54,7 +54,8 @@ def filter_limno(df):
                       'emerging technologies', 'microbial abundance',
                       'video mapping', 'community garden',
                       'student monitoring', 'hydrograph separation',
-                      'slovenia', 'mongolia', 'individual stones']
+                      'slovenia', 'mongolia', 'individual stones',
+                      'drinking water']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
