@@ -28,10 +28,10 @@ def test_fields():
                       intersection(['title', 'link'])) == 2
     assert has_published or has_updated
 
-res.to_csv("test.csv")
+# res.to_csv("test.csv")
 
-res = limnopapers.filter_limno(res)
-toots = res['title'] + ". " + res['link']
+# res = limnopapers.filter_limno(res)
+# toots = res['title'] + ". " + res['link']
 
-for toot in toots:
-    print(toot)
+# for toot in toots:
+#     print(toot)
