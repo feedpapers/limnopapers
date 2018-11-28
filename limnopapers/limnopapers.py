@@ -55,7 +55,7 @@ def filter_limno(df):
                       'video mapping', 'community garden',
                       'student monitoring', 'hydrograph separation',
                       'slovenia', 'mongolia', 'individual stones',
-                      'drinking water']
+                      'drinking water', 'correction to\:']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
