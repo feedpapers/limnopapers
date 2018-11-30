@@ -57,7 +57,8 @@ def filter_limno(df):
                       'slovenia', 'mongolia', 'individual stones',
                       'drinking water', 'correction to\:', 'polymerase',
                       'mud carp', 'groundwater status', 'water system planner',
-                      'agribusiness']
+                      'agribusiness', 'amplicon', 'gene expression',
+                      '16S rRNA']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
@@ -186,11 +187,13 @@ def limnotoots(tweet, interactive, to_csv = False):
 
                     # write to log
                     log = pd.read_csv("log.csv")
-                    keys = ["title", "dc_source", "prism_url", "posted"]
+                    keys = ["title", "dc_source", "prism_url", "posted", "date"]
 
                     title, dc_source, prism_url = toot.split(". ")
-                    d = dict(zip(keys, [title, dc_source, prism_url, posted]))
-                    d = pd.DataFrame.from_records(d, index=[0])
+                    date = str(datetime.date.today())
+                    d = dict(zip(keys, [title, dc_source, prism_url,
+                                        posted, date]))
+                    d = pd.DataFrame.from_records(d, index=[0])                    
                     log = log.append(pd.DataFrame(data = d),
                                      ignore_index = True)
                     log.to_csv("log.csv", index = False)
