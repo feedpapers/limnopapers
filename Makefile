@@ -3,3 +3,4 @@ test:
 
 dashboard:
 	echo dashboard created
+	pandoc dashboard.md -o dashboard.html
