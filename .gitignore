@@ -8,3 +8,4 @@ test_limno.csv
 test_today.csv
 .cache/
 limnopapers.egg-info/
+dashboard.md
