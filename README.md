@@ -1,6 +1,6 @@
 # limnopapers
 
-[![Build Status](https://api.travis-ci.org/jsta/limnopapers.png)](https://travis-ci.org/jsta/limnopapers)
+[![Build Status](https://api.travis-ci.org/jsta/limnopapers.png)](https://travis-ci.org/jsta/limnopapers)[![Feed Status](https://img.shields.io/badge/Feed%20Status-Good-green.svg)](https://jsta.github.io/limnopapers)
 
 Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.com/limno_papers) new articles.
 
