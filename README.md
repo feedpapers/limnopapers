@@ -6,7 +6,7 @@ Code to monitor [limnology RSS feeds](journals.csv) and [tweet](https://twitter.
 
 ## Feed status
 pad1|Last tweet|Last RSS entry|pad2
-|---|---|
+---|---|---|---
 |![alt text](https://img.shields.io/badge/Limnology and Oceanography: Letters-2018--11--05-green.svg)|![alt text](https://img.shields.io/badge/Limnology and Oceanography: Letters-2018--11--08-green.svg)|
 ||![alt text](https://img.shields.io/badge/CJFAS-2018--11--12-green.svg)|
 ||![alt text](https://img.shields.io/badge/Freshwater Science-2018--11--20-green.svg)|
