@@ -11,7 +11,7 @@ labels = log_raw.groupby('dc_source').date.idxmax()
 log = log_raw.loc[log_raw.index.intersection(labels)]
 log = log.reset_index(drop = True)
 log = log.loc[log['posted'] != "i"]
-log['date'] = log['date'].dt.strftime("%Y-%m")
+log['date'] = log['date'].dt.strftime("%Y-%m-%d")
 
 # get number of tweets per dc_source
 limnotoots(tweet = False, interactive = False, to_csv = True)
@@ -20,7 +20,7 @@ d['updated'] = pd.to_datetime(d['updated'])
 labels = d.groupby('dc_source').updated.idxmax()
 d = d.loc[d.index.intersection(labels)]
 d = d.reset_index(drop = True)
-d['updated'] = d['updated'].dt.strftime("%Y-%m")
+d['updated'] = d['updated'].dt.strftime("%Y-%m-%d")
 
 # create tables
 latest = log.assign(badge = "![alt text](https://img.shields.io/badge/" +
