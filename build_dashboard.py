@@ -23,33 +23,39 @@ d = d.reset_index(drop = True)
 d['updated'] = d['updated'].dt.strftime("%Y-%m-%d")
 
 # create tables
+# need to escape spaces in dc_source?
 latest = log.assign(badge = "![alt text](https://img.shields.io/badge/" +
-                    log['dc_source'] +
+                    log['dc_source'].replace(regex = " ", value = "\ ") +
                     "-" + log['date'].replace(regex = "-", value = "--") +
                     "-green.svg)")
-latest = latest[['badge']]
+latest = latest[['badge', 'dc_source']]
+latest = latest.rename(index=str, columns={"badge": "Last tweet"})
 
 state = d.assign(badge = "![alt text](https://img.shields.io/badge/" +
-                 d['dc_source'] +
+                 d['dc_source'].replace(regex = " ", value = "\ ") +
                  "-" + d['updated'].replace(regex = "-", value = "--") +
                  "-green.svg)")
-state = state[['badge']]
+state = state[['badge', 'dc_source']]
+state = state.rename(index=str, columns={"badge": "Last RSS entry"})
 
-cols = "| " + latest.columns + " |"
-blank_line = pd.Series([Nan], index=cols)
+table_raw = state.set_index('dc_source').join(latest.set_index('dc_source'))
+table_raw = table_raw.reset_index(drop = True)
+table_raw = table_raw[['Last tweet', 'Last RSS entry']]
+table_raw = table_raw.fillna('&nbsp;')
+
+cols = table_raw.columns
+blank_line = pd.Series([Nan, Nan], index=cols)
+# cols = "| " + " | ".join(table_raw.columns) + " |"
 header = pd.DataFrame([['---',] * len(cols)], columns = cols)
-table = pd.concat([header, latest])
+table = pd.concat([header, table_raw])
 table = table.append(blank_line, ignore_index=True)
-table = table.rename(index=str, columns={"badge": "Last tweet"})
-table.to_csv("dashboard.md", sep="|", index=False)
-
+table.to_csv("dashboard.md", sep = "|", index=False)
 table = open("dashboard.md", "a")
 table.write("\n")
 table.close()
 
-cols = "| " + state.columns + " |"
-blank_line = pd.Series([Nan], index=cols)
-header = pd.DataFrame([['---',] * len(cols)], columns=cols)
-table = pd.concat([header, state])
-table = table.rename(index=str, columns={"badge": "Last RSS entry"})
-table.to_csv("dashboard.md", sep="|", mode = "a", index=False)
+f = open("README.md", "w")
+f.write(open("README_header.md", "r").read())
+f.write(open("dashboard.md", "r").read())
+f.write(open("README_footer.md", "r").read())
+f.close()

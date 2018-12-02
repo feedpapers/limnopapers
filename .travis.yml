@@ -9,4 +9,4 @@ install:
 # command to run tests using py.test
 
 script:
-- pytest -v --ignore=scratch
+- pytest -v --ignore=scratch --ignore=build_dashboard.py

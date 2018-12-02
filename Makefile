@@ -4,4 +4,4 @@ test:
 dashboard:
 	echo dashboard created
 	python build_dashboard.py
-	pandoc dashboard.md -o index.html
+	pandoc README.md -o index.html
