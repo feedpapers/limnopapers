@@ -25,7 +25,7 @@ d['updated'] = d['updated'].dt.strftime("%Y-%m-%d")
 # create tables
 # need to escape spaces in dc_source?
 latest = log.assign(badge = "![alt text](https://img.shields.io/badge/" +
-                    log['dc_source'].replace(regex = " ", value = "\ ") +
+                    log['dc_source'].replace(regex = " ", value = "%20") +
                     "-" + log['date'].replace(regex = "-", value = "--") +
                     "-green.svg)")
 latest = latest[['badge', 'dc_source']]
