@@ -30,7 +30,6 @@ Last tweet|Last RSS entry
 &nbsp;|![alt text](https://img.shields.io/badge/Aquatic%20Ecology-2018--12--01-green.svg)
 &nbsp;|![alt text](https://img.shields.io/badge/Ecosystems-2018--12--01-green.svg)
 ![alt text](https://img.shields.io/badge/Hydrobiologia-2018--11--19-green.svg)|![alt text](https://img.shields.io/badge/Hydrobiologia-2019--01--01-green.svg)
-|
 
 ## Usage
 
