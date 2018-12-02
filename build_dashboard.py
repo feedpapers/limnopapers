@@ -32,7 +32,7 @@ latest = latest[['badge', 'dc_source']]
 latest = latest.rename(index=str, columns={"badge": "Last tweet"})
 
 state = d.assign(badge = "![alt text](https://img.shields.io/badge/" +
-                 d['dc_source'].replace(regex = " ", value = "\ ") +
+                 d['dc_source'].replace(regex = " ", value = "%20") +
                  "-" + d['updated'].replace(regex = "-", value = "--") +
                  "-green.svg)")
 state = state[['badge', 'dc_source']]
