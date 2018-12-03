@@ -102,7 +102,10 @@ def get_posts_(title, url):
 
     res = pd.DataFrame(posts)
     # print(res.columns)
-    res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
+    try:
+        res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
+    except AttributeError:
+        pass
     return(res)
 
 
@@ -119,8 +122,11 @@ def get_posts():
         sys.stdout.write('\b' * 1000)
         sys.stdout.write('Fetching papers from: ' + rawrss['title'][i] + '\r')
 
-        single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
-        posts.append(single_posts)
+        try:
+            single_posts = get_posts_(rawrss['title'][i], rawrss['rawrss'][i])
+            posts.append(single_posts)
+        except AttributeError:
+            pass
 
     print('\n')
     return(posts)
