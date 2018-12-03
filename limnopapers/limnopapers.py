@@ -58,7 +58,7 @@ def filter_limno(df):
                       'drinking water', 'correction to\:', 'polymerase',
                       'mud carp', 'groundwater status', 'water system planner',
                       'agribusiness', 'amplicon', 'gene expression',
-                      '16S rRNA']
+                      '16S rRNA', 'Enterococcus']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
@@ -82,6 +82,7 @@ def filter_today(df, day):
 
 
 def get_posts_(title, url):
+    # print(url)
     feed = feedparser.parse(url)
     posts = []
     for post in feed.entries:
