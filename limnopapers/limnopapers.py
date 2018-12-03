@@ -101,6 +101,7 @@ def get_posts_(title, url):
                     posts.append((None, None, None, None, None))
 
     res = pd.DataFrame(posts)
+    # print(res.columns)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
     return(res)
 
