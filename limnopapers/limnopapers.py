@@ -94,8 +94,11 @@ def get_posts_(title, url):
                 posts.append((post.title, post.summary, post.link,
                               title, post.published))
             except AttributeError:
-                posts.append((post.title, post.summary, post.link,
-                              title, None))
+                try:
+                    posts.append((post.title, post.summary, post.link,
+                                  title, None))
+                except AttributeError:
+                    posts.append((None, None, None, None, None))
 
     res = pd.DataFrame(posts)
     res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
@@ -194,7 +197,7 @@ def limnotoots(tweet, interactive, to_csv = False):
                     date = str(datetime.date.today())
                     d = dict(zip(keys, [title, dc_source, prism_url,
                                         posted, date]))
-                    d = pd.DataFrame.from_records(d, index=[0])                    
+                    d = pd.DataFrame.from_records(d, index=[0])
                     log = log.append(pd.DataFrame(data = d),
                                      ignore_index = True)
                     log.to_csv("log.csv", index = False)
