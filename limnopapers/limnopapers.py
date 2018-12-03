@@ -192,7 +192,8 @@ def limnotoots(tweet, interactive, to_csv = False):
 
                     # write to log
                     log = pd.read_csv("log.csv")
-                    keys = ["title", "dc_source", "prism_url", "posted", "date"]
+                    keys = ["title", "dc_source", "prism_url", "posted",
+                            "date"]
 
                     title, dc_source, prism_url = toot.split(". ")
                     date = str(datetime.date.today())
