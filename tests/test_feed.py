@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://journal.frontiersin.org/journal/ecology-and-evolution/rss"
+url = "http://feeds.nature.com/ngeo/rss/current"
 posts = []
 
 feed = fp.parse(url)
@@ -19,6 +19,8 @@ for post in feed.entries:
     posts.append(post)
 
 res = pd.DataFrame(posts)
+# res = res.rename(columns = {"link": "prism_url"})
+# print(res.columns)
 
 
 def test_fields():
@@ -30,8 +32,12 @@ def test_fields():
 
 # res.to_csv("test.csv")
 
+# print(res)
 # res = limnopapers.filter_limno(res)
-# toots = res['title'] + ". " + res['link']
+# print(res)
+# print(res['title'])
+# print(res['prism_url'])
+# toots = res['title'] + ". " + res['prism_url']
 
 # for toot in toots:
-#     print(toot)
+#    print(toot)
