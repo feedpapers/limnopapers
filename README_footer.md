@@ -35,7 +35,7 @@ Install these to the activated environment with:
 
 * Please help by adding missing journals to [journals.csv](journals.csv) or filing an [issue](https://github.com/jsta/limnopapers/issues)
 
-* Filtering keywords are located in the [limnopapers.filter_limno](limnopapers.py) function.
+* Filtering keywords are located in the [limnopapers.filter_limno](limnopapers/limnopapers.py) function.
 
 ## Prior art
 
