@@ -14,7 +14,7 @@ log = log.loc[log['posted'] != "i"]
 log['date'] = log['date'].dt.strftime("%Y-%m-%d")
 
 # get number of tweets per dc_source
-# limnotoots(tweet = False, interactive = False, to_csv = True)
+limnotoots(tweet = False, interactive = False, to_csv = True)
 d = pd.read_csv("test.csv")
 d['updated'] = pd.to_datetime(d['updated'])
 labels = d.groupby('dc_source').updated.idxmax()
