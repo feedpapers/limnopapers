@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://feeds.nature.com/ngeo/rss/current"
+url = "http://rss.sciencedirect.com/publication/science/25899155"
 posts = []
 
 feed = fp.parse(url)
@@ -30,14 +30,13 @@ def test_fields():
                       intersection(['title', 'link'])) == 2
     assert has_published or has_updated
 
-# res.to_csv("test.csv")
+res.to_csv("test.csv")
 
-# print(res)
-# res = limnopapers.filter_limno(res)
-# print(res)
-# print(res['title'])
-# print(res['prism_url'])
-# toots = res['title'] + ". " + res['prism_url']
+print(res)
+res = limnopapers.filter_limno(res)
+print(res)
+print(res['title'])
+toots = res['title'] + ". " + res['link']
 
-# for toot in toots:
-#    print(toot)
+for toot in toots:
+    print(toot)
