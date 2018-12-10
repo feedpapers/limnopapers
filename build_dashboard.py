@@ -46,7 +46,7 @@ table_raw = table_raw.fillna('&nbsp;')
 cols = table_raw.columns
 blank_line = pd.Series([Nan, Nan], index=cols)
 # cols = "| " + " | ".join(table_raw.columns) + " |"
-header = pd.DataFrame([['---',] * len(cols)], columns = cols)
+header = pd.DataFrame([['---', ] * len(cols)], columns = cols)
 table = pd.concat([header, table_raw])
 # table = table.append(blank_line, ignore_index=True)
 table.to_csv("dashboard.md", sep = "|", index=False)
