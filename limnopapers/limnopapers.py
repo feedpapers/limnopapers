@@ -99,7 +99,10 @@ def get_posts_(title, url):
                     posts.append((post.title, post.summary, post.link,
                                   title, None))
                 except AttributeError:
-                    posts.append((None, None, None, None, None))
+                    try:
+                        posts.append((None, None, None, None, None))
+                    except AttributeError:
+                        pass
 
     res = pd.DataFrame(posts)
     # print(res.columns)
