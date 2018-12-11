@@ -59,7 +59,8 @@ def filter_limno(df):
                       'mud carp', 'groundwater status', 'water system planner',
                       'agribusiness', 'amplicon', 'gene expression',
                       '16S rRNA', 'Enterococcus', 'lead service line',
-                      'Great Lakes']
+                      'nesting', 'hatching', 'and fish',
+                      'environmental literacy']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
