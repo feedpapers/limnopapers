@@ -21,6 +21,9 @@ except:
 
 
 def filter_limno(df):
+    r"""Filter limnology themed papers from a pandas DataFrame.
+    :param df: pandas DataFrame with 'title' and 'summary' columns
+    """
 
     df = df.reset_index()
 
@@ -71,7 +74,7 @@ def filter_limno(df):
         .transpose() \
         .sum(axis = 1) == 2
 
-    return(df[not_junk])
+    return {"papers": df[not_junk], "filter_against": filter_against}
 
 
 def filter_today(df, day):
@@ -148,7 +151,7 @@ def get_papers(to_csv = False):
     log = pd.read_csv("log.csv")
     res = res[~res['title'].isin(log['title'])]
 
-    res_limno = filter_limno(res)
+    res_limno = filter_limno(res)['papers']
 
     if to_csv is not False:
         res_limno.to_csv("test_limno.csv")
