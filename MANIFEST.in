@@ -1,0 +1,2 @@
+include LICENSE README.md limnopapers/journals.csv limnopapers/keywords.csv
+exclude MANIFEST.in

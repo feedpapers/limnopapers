@@ -8,6 +8,7 @@ import datetime
 import twitter
 from colorama import Fore
 import argparse
+import pkg_resources
 
 currentdir = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -25,10 +26,14 @@ def filter_limno(df):
     :param df: pandas DataFrame with 'title' and 'summary' columns
     """
 
+    keywords = pd.read_csv(pkg_resources.resource_filename('limnopapers',
+                                                           'keywords.csv'))
+    filter_for = keywords['filter_for'].tolist()
+    filter_for = [x for x in filter_for if str(x) != 'nan']
+    filter_against = keywords['filter_against'].tolist()
+
     df = df.reset_index()
 
-    filter_for = ["lake", "reservoir", "inland waters", "stream water",
-                  "water quality"]
     has_limno_title = df['title'].str.contains('|'.join(filter_for),
                                                case = False)
     has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
@@ -40,31 +45,6 @@ def filter_limno(df):
 
     df = df[is_limno]
 
-    filter_against = ['ocean', 'iran', 'fault', 'wetland',
-                      'hydroelectric', ' mining ', 'Great Lakes', '^sea$',
-                      'hydropower', '^ Part ', 'woolly', 'Lake Erie',
-                      'Lake Michigan', 'russia', 'spawning', 'salmon', 'trout',
-                      'walleye', 'coastal', 'fish diet', 'arctic char',
-                      'estuaries', 'hydroxide', 'fluid injection',
-                      'cover image', 'economic value', 'google earth',
-                      'alewife', 'largemouth bass', 'fish metapopulations',
-                      'antibiotic', 'acetaminophen', 'viruses', 'evolutionary',
-                      'china', 'italy', 'unmanned aerial', 'cohort',
-                      'capillary tubes', 'water security', 'spillway',
-                      'near .{1,17} Lake', 'environmental DNA', 'indonesia',
-                      'water utility', 'phages', 'microbiome',
-                      'water distribution systems', 'raindrop',
-                      'emerging technologies', 'microbial abundance',
-                      'video mapping', 'community garden',
-                      'student monitoring', 'hydrograph separation',
-                      'slovenia', 'mongolia', 'individual stones',
-                      'drinking water', 'correction to\:', 'polymerase',
-                      'mud carp', 'groundwater status', 'water system planner',
-                      'agribusiness', 'amplicon', 'gene expression',
-                      '16S rRNA', 'Enterococcus', 'lead service line',
-                      'nesting', 'hatching',
-                      'environmental literacy', 'adenosine', 'lithology',
-                      'nanotubes', 'magnetic']
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
                                                    case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
