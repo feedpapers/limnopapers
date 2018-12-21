@@ -145,6 +145,12 @@ def get_papers(to_csv = False):
 
 
 def limnotoots(tweet, interactive, to_csv = False):
+    r"""Filter limnology themed papers from a pandas DataFrame.
+    :param tweet: boolean. Post tweets of limnopapers
+    :param interactive: boolean. Ask for approval before tweeting.
+    :param to_csv: boolean. Save output to csv for debugging.
+    """
+
     data = get_papers(to_csv)
     filtered = data["res_limno"]
     data = filter_today(data["res"], day = str(datetime.date.today()))
