@@ -39,6 +39,8 @@ def filter_limno(df):
     has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
                                                    case = False)
 
+    # save matching filter_for
+
     is_limno = pd.DataFrame([has_limno_title, has_limno_summary]) \
         .transpose() \
         .sum(axis = 1) > 0
@@ -50,11 +52,14 @@ def filter_limno(df):
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
 
+    # save matching filter_against
+
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
         .sum(axis = 1) == 2
 
-    return {"papers": df[not_junk], "filter_against": filter_against}
+    return {"papers": df[not_junk],
+            "filter_against": filter_against}
 
 
 def filter_today(df, day):
