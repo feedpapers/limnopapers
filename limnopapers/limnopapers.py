@@ -105,7 +105,8 @@ def get_posts_(title, url):
 
 def get_posts():
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
-    rawrss = pd.read_csv("journals.csv")
+    rawrss = pd.read_csv(pkg_resources.resource_filename('limnopapers',
+                                                         'journals.csv'))
 
     # sort rawrss by increasing journal name nchar length for pretty printing
     rawrss.index = rawrss['title'].str.len()

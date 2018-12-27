@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://rss.sciencedirect.com/publication/science/25899155"
+url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=27&channel-name=Aquatic+Sciences"
 posts = []
 
 feed = fp.parse(url)
@@ -33,7 +33,7 @@ def test_fields():
 res.to_csv("test.csv")
 
 print(res)
-res = limnopapers.filter_limno(res)
+res = limnopapers.filter_limno(res)['papers']
 print(res)
 print(res['title'])
 toots = res['title'] + ". " + res['link']
