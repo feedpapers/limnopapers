@@ -98,9 +98,9 @@ def get_posts_(title, url):
     # print(res.columns)
     try:
         res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
+        return(res)
     except AttributeError:
         pass
-    return(res)
 
 
 def get_posts():
