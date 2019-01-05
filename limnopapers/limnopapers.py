@@ -9,6 +9,11 @@ import twitter
 from colorama import Fore
 import argparse
 import pkg_resources
+try:
+    import httplib
+except:
+    import http.client as httplib
+
 
 currentdir = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -19,6 +24,17 @@ try:
     import config
 except:
     print("No twitter keys found")
+
+
+def internet():
+    conn = httplib.HTTPConnection("www.google.com", timeout=5)
+    try:
+        conn.request("HEAD", "/")
+        conn.close()
+        return True
+    except:
+        conn.close()
+        return False
 
 
 def filter_limno(df):
@@ -105,6 +121,10 @@ def get_posts_(title, url):
 
 
 def get_posts():
+    # check for internet
+    if not internet():
+        raise Exception("limnopapers requires an internet connection.")
+
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
     rawrss = pd.read_csv(pkg_resources.resource_filename('limnopapers',
                                                          'journals.csv'))
