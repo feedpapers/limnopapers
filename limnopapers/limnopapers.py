@@ -96,10 +96,11 @@ def get_posts_(title, url):
 
     res = pd.DataFrame(posts)
     # print(res.columns)
+    # print(res)
     try:
         res.columns = ['title', 'summary', 'prism_url', 'dc_source', 'updated']
         return(res)
-    except AttributeError:
+    except Exception:
         pass
 
 
