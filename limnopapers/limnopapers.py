@@ -3,6 +3,7 @@ import sys
 import inspect
 import pdb
 import feedparser
+import webbrowser
 import pandas as pd
 import datetime
 import twitter
@@ -27,6 +28,7 @@ except:
 
 
 def internet():
+    # https://stackoverflow.com/a/29854274/3362993
     conn = httplib.HTTPConnection("www.google.com", timeout=5)
     try:
         conn.request("HEAD", "/")
@@ -171,11 +173,12 @@ def get_papers(to_csv = False):
     return(dfs)
 
 
-def limnotoots(tweet, interactive, to_csv = False):
+def limnotoots(tweet, interactive, to_csv = False, browser = False):
     r"""Filter limnology themed papers from a pandas DataFrame.
     :param tweet: boolean. Post tweets of limnopapers
     :param interactive: boolean. Ask for approval before tweeting.
     :param to_csv: boolean. Save output to csv for debugging.
+    :param browser: boolean. Open limnopapers in browser tabs.
     """
 
     data = get_papers(to_csv)
@@ -198,6 +201,9 @@ def limnotoots(tweet, interactive, to_csv = False):
         for toot in toots:
             print(Fore.GREEN + toot)
             print()
+        if(browser is True):
+            for url in filtered['prism_url']:
+                webbrowser.open(url)
 
         if(tweet is True):
             api = twitter.Api(consumer_key=config.consumer_key,
@@ -250,9 +256,12 @@ def main():
                         action='store_true')
     parser.add_argument('--interactive', default = False,
                         action='store_true')
+    parser.add_argument('--browser', default = False,
+                        action='store_true')
     args = parser.parse_args()
 
-    limnotoots(tweet = args.tweet, interactive = args.interactive)
+    limnotoots(tweet = args.tweet, interactive = args.interactive,
+               browser = args.browser)
 
 if __name__ == "__main__":
     main()

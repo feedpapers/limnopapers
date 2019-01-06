@@ -8,6 +8,9 @@ parser.add_argument('--tweet', default = False,
                     action='store_true')
 parser.add_argument('--interactive', default = False,
                     action='store_true')
+parser.add_argument('--browser', default = False,
+                    action='store_true')
 args = parser.parse_args()
 
-lp.limnotoots(tweet = args.tweet, interactive = args.interactive)
+lp.limnotoots(tweet = args.tweet, interactive = args.interactive,
+              browser = args.browser)
