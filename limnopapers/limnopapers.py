@@ -39,6 +39,14 @@ def internet():
         return False
 
 
+def toot_split(toot):
+    res = toot.split(". ")
+    prism_url = res[len(res) - 1]
+    dc_source = res[len(res) - 2]
+    title = '. '.join(res[0:len(res) - 2])
+    return([title, dc_source, prism_url])
+
+
 def filter_limno(df):
     r"""Filter limnology themed papers from a pandas DataFrame.
     :param df: pandas DataFrame with 'title' and 'summary' columns
@@ -229,7 +237,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                     keys = ["title", "dc_source", "prism_url", "posted",
                             "date"]
 
-                    title, dc_source, prism_url = toot.split(". ")
+                    title, dc_source, prism_url = toot_split(toot)
                     date = str(datetime.date.today())
                     d = dict(zip(keys, [title, dc_source, prism_url,
                                         posted, date]))
@@ -243,7 +251,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                     # write to log
                     log = pd.read_csv("log.csv")
                     keys = ["title", "dc_source", "prism_url"]
-                    title, dc_source, prism_url = toot.split(". ")
+                    title, dc_source, prism_url = toot_split(toot)                    
                     d = dict(zip(keys, [title, dc_source, prism_url]))
                     d = pd.DataFrame.from_records(d, index=[0])
                     log = log.append(pd.DataFrame(data = d))
