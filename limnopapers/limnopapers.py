@@ -65,7 +65,7 @@ def filter_limno(df):
     has_limno_summary = df['summary'].str.contains('|'.join(filter_for),
                                                    case = False)
 
-    # save matching filter_for
+    # save matching filter_for here
 
     is_limno = pd.DataFrame([has_limno_title, has_limno_summary]) \
         .transpose() \
@@ -78,7 +78,10 @@ def filter_limno(df):
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
 
-    # save matching filter_against
+    # save matching filter_against here
+    # filter_against = filter(lambda k: df['summary'] in k, filter_against)
+    # filter_against = [k for k in filter_against if df['summary'] in k]
+    # filter_against = filter_against.where(lambda x: x in df['summary'])
 
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
