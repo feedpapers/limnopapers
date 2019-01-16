@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=27&channel-name=Aquatic+Sciences"
+url = "https://academic.oup.com/rss/site_5266/3132.xml"
 posts = []
 
 feed = fp.parse(url)
