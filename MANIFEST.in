@@ -1,2 +1,6 @@
 include LICENSE README.md limnopapers/journals.csv limnopapers/keywords.csv
 exclude MANIFEST.in
+exclude README_footer.md README_header.md
+exclude log.csv build_dashboard.py
+exclude .travis.yml
+exclude scratch
