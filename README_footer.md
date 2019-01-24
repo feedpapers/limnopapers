@@ -2,15 +2,19 @@
 
 Query papers that came out prior to today without tweeting:
 
-`python limnopapers.py`
+`python limnopapers/limnopapers.py`
+
+Query papers that came out prior to today and open in browser:
+
+`python limnopapers/limnopapers.py --browser`
 
 Manually approve tweeting of papers that came out prior to today:
 
-`python limnopapers.py --tweet --interactive`
+`python limnopapers/limnopapers.py --tweet --interactive`
 
 Unsupervised tweeting of papers that came out prior to today:
 
-`python limnopapers.py --tweet`
+`python limnopapers/limnopapers.py --tweet`
 
 ## Setup
 
