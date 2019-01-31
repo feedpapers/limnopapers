@@ -18,7 +18,11 @@ Unsupervised tweeting of papers that came out prior to today:
 
 ## Setup
 
+### Enable tweeting (optional)
+
 * Create a file named `config.py` that stores your twitter API keys
+
+### Enable unsupervised tweeting (optional)
 
 * Create a _cron_ job. On Linux this can be done with the following commands:
 
