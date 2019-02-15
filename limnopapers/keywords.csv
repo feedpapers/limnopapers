@@ -1,5 +1,5 @@
 filter_for,filter_against
-lake,ocean
+^lake(s*)$,ocean
 reservoir,hydroelectric
 inland waters,hydropower
 stream water,Lake Michigan
@@ -148,3 +148,16 @@ freshwater,estuaries
 , turfs 
 ,fog interception
 ,biosolids
+,bioreactor
+,quenching
+,glacially
+,brine
+,atrazine
+,gizzard shad
+,Pesticide
+,commercialisation
+,customers
+,chronic toxicity
+,handwashing
+,sunfish
+,green infrastucture
