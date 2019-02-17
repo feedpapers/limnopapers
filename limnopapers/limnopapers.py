@@ -216,7 +216,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
             for url in filtered['prism_url']:
                 webbrowser.open(url)
 
-        if(tweet is True):
+        if(tweet is True or interactive is True):
             api = twitter.Api(consumer_key=config.consumer_key,
                               consumer_secret=config.consumer_secret,
                               access_token_key = config.access_token_key,
