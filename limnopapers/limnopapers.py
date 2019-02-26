@@ -79,9 +79,9 @@ def filter_limno(df):
                                                case = False)
 
     # save matching filter_against here
-    # filter_against = filter(lambda k: df['summary'] in k, filter_against)
-    # filter_against = [k for k in filter_against if df['summary'] in k]
-    # filter_against = filter_against.where(lambda x: x in df['summary'])
+    filter_against = keywords['filter_against'][
+        keywords['filter_against'].apply(
+            lambda x: df['summary'].str.contains(x, case = False)).iloc[:, 0]]
 
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
@@ -164,7 +164,7 @@ def get_posts():
 def get_papers(to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)
-    res['updated'] = pd.to_datetime(res['updated'])
+    res['updated'] = pd.to_datetime(res['updated'].astype('datetime64[ns]'))
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
     # rm entries that are also in log
@@ -254,7 +254,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                     # write to log
                     log = pd.read_csv("log.csv")
                     keys = ["title", "dc_source", "prism_url"]
-                    title, dc_source, prism_url = toot_split(toot)                    
+                    title, dc_source, prism_url = toot_split(toot)
                     d = dict(zip(keys, [title, dc_source, prism_url]))
                     d = pd.DataFrame.from_records(d, index=[0])
                     log = log.append(pd.DataFrame(data = d))

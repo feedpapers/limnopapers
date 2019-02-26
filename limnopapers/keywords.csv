@@ -1,11 +1,11 @@
 filter_for,filter_against
-^lake(s*)$,ocean
+lake,ocean
 reservoir,hydroelectric
 inland waters,hydropower
 stream water,Lake Michigan
 water quality,walleye
 freshwater,estuaries
-,cover image
+lakes,cover image
 ,alewife
 ,antibiotic
 ,china
@@ -162,3 +162,12 @@ freshwater,estuaries
 ,sunfish
 ,green infrastucture
 ,fractionation
+,microwave
+,clothing
+,tetrachloroethene
+,water planners
+,cichlid
+,subtidal
+,textile
+,well field
+,xerogel
