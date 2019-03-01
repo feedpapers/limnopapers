@@ -164,7 +164,8 @@ def get_posts():
 def get_papers(to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)
-    res['updated'] = pd.to_datetime(res['updated'].astype('datetime64[ns]'))
+    res['updated'] = pd.to_datetime(res['updated'].astype('datetime64[ns]'),
+                                    utc = True)
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
     # rm entries that are also in log
