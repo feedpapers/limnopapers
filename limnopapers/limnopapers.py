@@ -78,14 +78,11 @@ def filter_limno(df):
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
 
-    # save matching filter_against here
-    # if nrow df > 0
+    # save matching filter_against here    
     if len(df.index) > 0:
         filter_against = keywords['filter_against'][
             keywords['filter_against'].apply(
                 lambda x: df['summary'].str.contains(x, case = False)).iloc[:, 0]]
-    # else:
-    #    filter_against = null
 
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
