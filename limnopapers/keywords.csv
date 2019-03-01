@@ -1,12 +1,12 @@
 filter_for,filter_against
-lake,ocean
+ lake,ocean
 reservoir,hydroelectric
 inland waters,hydropower
 stream water,Lake Michigan
 water quality,walleye
 freshwater,estuaries
-lakes,cover image
-,alewife
+ lakes,cover image
+ river ,alewife
 ,antibiotic
 ,china
 ,capillary tubes
@@ -178,3 +178,18 @@ lakes,cover image
 ,specialty crops
 ,zebrafish
 ,chromatograph
+,Sociohydrology
+,contaminant plume
+,floodplain
+,eddy covariance
+,Neonicotinoid
+,hydrological failure
+,phytoremediation
+,incubating
+,continental shelf
+,nigeria
+,geochronology
+,norovirus
+,enterovirus
+,Hybrid Ensemble
+,china

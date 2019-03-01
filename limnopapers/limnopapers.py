@@ -79,9 +79,13 @@ def filter_limno(df):
                                                case = False)
 
     # save matching filter_against here
-    filter_against = keywords['filter_against'][
-        keywords['filter_against'].apply(
-            lambda x: df['summary'].str.contains(x, case = False)).iloc[:, 0]]
+    # if nrow df > 0
+    if len(df.index) > 0:
+        filter_against = keywords['filter_against'][
+            keywords['filter_against'].apply(
+                lambda x: df['summary'].str.contains(x, case = False)).iloc[:, 0]]
+    # else:
+    #    filter_against = null
 
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
