@@ -260,6 +260,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                     d = pd.DataFrame.from_records(d, index=[0])
                     log = log.append(pd.DataFrame(data = d))
                     log.to_csv("log.csv", index = False)
+                post_toot = "n"
 
 
 def main():
