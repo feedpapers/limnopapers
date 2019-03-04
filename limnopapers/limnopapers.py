@@ -78,11 +78,12 @@ def filter_limno(df):
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
                                                case = False)
 
-    # save matching filter_against here    
+    # save matching filter_against here
     if len(df.index) > 0:
         filter_against = keywords['filter_against'][
             keywords['filter_against'].apply(
-                lambda x: df['summary'].str.contains(x, case = False)).iloc[:, 0]]
+                lambda x: df['summary'].
+                str.contains(x, case = False)).iloc[:, 0]]
 
     not_junk = pd.DataFrame([has_junk_summary, has_junk_title]) \
         .transpose() \
@@ -165,7 +166,8 @@ def get_posts():
 def get_papers(to_csv = False):
     posts = get_posts()
     res = pd.concat(posts)
-    res['updated'] = pd.to_datetime(res['updated'], utc = True).dt.tz_localize(None)
+    res['updated'] = pd.to_datetime(res['updated'],
+                                    utc = True).dt.tz_localize(None)
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
     # rm entries that are also in log
@@ -236,19 +238,20 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                     if(post_toot in ["i"]):
                         posted = "i"
 
-                    # write to log
-                    log = pd.read_csv("log.csv")
-                    keys = ["title", "dc_source", "prism_url", "posted",
-                            "date"]
+                    if(post_toot in ["y", "i"]):
+                        # write to log
+                        log = pd.read_csv("log.csv")
+                        keys = ["title", "dc_source", "prism_url", "posted",
+                                "date"]
 
-                    title, dc_source, prism_url = toot_split(toot)
-                    date = str(datetime.date.today())
-                    d = dict(zip(keys, [title, dc_source, prism_url,
-                                        posted, date]))
-                    d = pd.DataFrame.from_records(d, index=[0])
-                    log = log.append(pd.DataFrame(data = d),
-                                     ignore_index = True)
-                    log.to_csv("log.csv", index = False)
+                        title, dc_source, prism_url = toot_split(toot)
+                        date = str(datetime.date.today())
+                        d = dict(zip(keys, [title, dc_source, prism_url,
+                                            posted, date]))
+                        d = pd.DataFrame.from_records(d, index=[0])
+                        log = log.append(pd.DataFrame(data = d),
+                                         ignore_index = True)
+                        log.to_csv("log.csv", index = False)
                 else:
                     status = api.PostUpdate(toot)
 
