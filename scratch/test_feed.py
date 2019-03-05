@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1365-2486"
+url = "http://feeds.nature.com/nclimate/rss/current"
 posts = []
 
 feed = fp.parse(url)
