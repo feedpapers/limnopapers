@@ -7,10 +7,10 @@ from numpy import nan as Nan
 # get latest tweet date per dc_source
 log_raw = pd.read_csv("log.csv")
 log_raw['date'] = pd.to_datetime(log_raw['date'])
-labels = log_raw.groupby('dc_source').date.idxmax()
-log = log_raw.loc[log_raw.index.intersection(labels)]
+log = log_raw.loc[log_raw['posted'] != "i"]
+labels = log.groupby('dc_source').date.idxmax()
+log = log.loc[log.index.intersection(labels)]  # filter most recent tweets
 log = log.reset_index(drop = True)
-log = log.loc[log['posted'] != "i"]
 log['date'] = log['date'].dt.strftime("%Y-%m-%d")
 
 # get number of tweets per dc_source
