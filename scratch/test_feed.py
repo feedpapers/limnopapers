@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://feeds.nature.com/nclimate/rss/current"
+url = "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tinw20"
 posts = []
 
 feed = fp.parse(url)
@@ -21,6 +21,7 @@ for post in feed.entries:
 res = pd.DataFrame(posts)
 # res = res.rename(columns = {"link": "prism_url"})
 # print(res.columns)
+res.filter(items = ["updated"])
 
 
 def test_fields():

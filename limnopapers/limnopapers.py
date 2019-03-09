@@ -170,15 +170,15 @@ def get_papers(to_csv = False):
                                     utc = True).dt.tz_localize(None)
     res = res.sort_values(by = ['updated'])
     res = res.drop_duplicates(subset = ['title'], keep = 'first')
+    if to_csv is not False:
+        res.to_csv("test.csv")
+
     # rm entries that are also in log
     log = pd.read_csv("log.csv")
-    res = res[~res['title'].isin(log['title'])]
-
-    res_limno = filter_limno(res)['papers']
+    res_limno = filter_limno(res[~res['title'].isin(log['title'])])['papers']
 
     if to_csv is not False:
         res_limno.to_csv("test_limno.csv")
-        res.to_csv("test.csv")
 
     dfs = {}
     dfs['res'] = res
