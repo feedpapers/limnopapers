@@ -6,6 +6,6 @@ Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and [tweet](http
 
 ## Scope
 
-The keywords and journal choices reflect a focus on limnology (the study of inland waters). However, they are meant to exclude related topics such as fisheries ecology, water resources engineering, estuarine/marine ecology, and ecological genetics. 
+The keywords and journal choices reflect a focus on limnology (the study of inland waters). They are also meant to exclude related topics such as fisheries ecology, water resources engineering, estuarine/marine ecology, ecological genetics, and the study of specific "inland seas" like the North American Great Lakes. 
 
 ## Feed status
