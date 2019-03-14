@@ -1,0 +1,10 @@
+name: limnopapers
+channels:
+- conda-forge
+dependencies:
+        - python=3.7.2
+        - pandas
+        - python-twitter
+        - feedparser
+        - colorama
+        - argcomplete
