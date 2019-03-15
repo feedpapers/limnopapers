@@ -177,7 +177,7 @@ def get_papers(to_csv = False):
     log = pd.read_csv("log.csv")
     res_limno = filter_limno(res[~res['title'].isin(log['title'])])['papers']
     res_limno = filter_limno(res_limno[
-        res_limno['title'].str.lower().isin(map(str.lower, log['title']))
+        ~res_limno['title'].str.lower().isin(map(str.lower, log['title']))
     ])['papers']
 
     if to_csv is not False:
