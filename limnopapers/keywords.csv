@@ -8,8 +8,8 @@ freshwater,estuaries
  lakes,cover image
  river ,alewife
  aquatic environments,antibiotic
-,china
-,capillary tubes
+stream baseflow,china
+drainage networks,capillary tubes
 ,"near .{1,17} Lake"
 ,water utility
 ,water distribution systems
@@ -241,3 +241,9 @@ freshwater,estuaries
 , PAH pollution
 ,stormwater management
 ,zoonotic
+, facies 
+,Fish Endocrine
+,CGCM3
+,Lake Taihu
+,Nanoparticles
+,pikeperch
