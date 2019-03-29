@@ -10,7 +10,7 @@ freshwater,estuaries
  aquatic environments,antibiotic
 stream baseflow,china
 drainage networks,capillary tubes
-,"near .{1,17} Lake"
+aquatic ecosystems,"near .{1,17} Lake"
 ,water utility
 ,water distribution systems
 ,emerging technologies
@@ -252,3 +252,6 @@ drainage networks,capillary tubes
 , phenotypic 
 , rainfall products 
 , concrete pavement 
+, critically endangered 
+, Ogallala 
+,\s\d*\)\s
