@@ -11,7 +11,7 @@ freshwater,estuaries
 stream baseflow,china
 drainage networks,capillary tubes
 aquatic ecosystems,"near .{1,17} Lake"
-,water utility
+stream macroinvertebrates,water utility
 ,water distribution systems
 ,emerging technologies
 ,video mapping
@@ -255,3 +255,10 @@ aquatic ecosystems,"near .{1,17} Lake"
 , critically endangered 
 , Ogallala 
 ,\s\d*\)\s
+, remediation 
+,Polycyclic Aromatic Hydrocarbons
+,Micropollutant
+,erratum
+,ecotoxicolog
+,Joaquin River
+,hydrophobicity
