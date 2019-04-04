@@ -8,3 +8,4 @@ dependencies:
         - feedparser
         - colorama
         - argcomplete
+        - pytest
