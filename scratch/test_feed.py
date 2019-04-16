@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "https://journals.plos.org/plosone/feed/atom"
+url = "https://www.schweizerbart.de/services/feeds/papers/fal/en/rss.xml"
 posts = []
 
 feed = fp.parse(url)
