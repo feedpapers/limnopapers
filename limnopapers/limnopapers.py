@@ -59,6 +59,8 @@ def filter_limno(df):
     filter_against = keywords['filter_against'].tolist()
 
     df = df.reset_index()
+    # df = res
+    # df = df.iloc[0:2]
 
     has_limno_title = df['title'].str.contains('|'.join(filter_for),
                                                case = False)
@@ -74,9 +76,9 @@ def filter_limno(df):
     df = df[is_limno]
 
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
-                                                   case = False)
+                                                  case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
-                                               case = False)
+                                              case = False)
 
     # save matching filter_against here
     if len(df.index) > 0:
@@ -109,21 +111,25 @@ def get_posts_(title, url):
     posts = []
     for post in feed.entries:
         try:
-            posts.append((post.title, post.summary, post.link,
+            posts.append((post.title, post.description_encoded, post.link,
                           title, post.updated))
         except AttributeError:
             try:
                 posts.append((post.title, post.summary, post.link,
-                              title, post.published))
+                              title, post.updated))
             except AttributeError:
                 try:
                     posts.append((post.title, post.summary, post.link,
-                                  title, None))
+                                  title, post.published))
                 except AttributeError:
                     try:
-                        posts.append((None, None, None, None, None))
+                        posts.append((post.title, post.summary, post.link,
+                                      title, None))
                     except AttributeError:
-                        pass
+                        try:
+                            posts.append((None, None, None, None, None))
+                        except AttributeError:
+                            pass
 
     res = pd.DataFrame(posts)
     # print(res.columns)
@@ -277,10 +283,12 @@ def main():
                         action='store_true')
     parser.add_argument('--browser', default = False,
                         action='store_true')
+    parser.add_argument('--debug', default = False,
+                        action='store_true')
     args = parser.parse_args()
 
     limnotoots(tweet = args.tweet, interactive = args.interactive,
-               browser = args.browser)
+               browser = args.browser, to_csv = args.debug)
 
 if __name__ == "__main__":
     main()

@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "https://www.schweizerbart.de/services/feeds/papers/fal/en/rss.xml"
+url = "https://www.frontiersin.org/journals/environmental-science/rss"
 posts = []
 
 feed = fp.parse(url)
@@ -19,8 +19,12 @@ for post in feed.entries:
     posts.append(post)
 
 res = pd.DataFrame(posts)
-# res = res.rename(columns = {"link": "prism_url"})
 # print(res.columns)
+# res = res.rename(columns = {"link": "prism_url"})
+#
+# res = res.drop(columns = ["summary"])
+# res = res.rename(columns = {"description_encoded": "summary"})
+
 res.filter(items = ["updated"])
 
 
@@ -34,6 +38,7 @@ def test_fields():
 res.to_csv("test.csv")
 
 print(res)
+print(res['summary'])
 res = limnopapers.filter_limno(res)['papers']
 print(res)
 print(res['title'])
