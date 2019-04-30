@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "http://rss.sciencedirect.com/publication/science/13648152"
+url = "https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles"
 posts = []
 
 feed = fp.parse(url)
