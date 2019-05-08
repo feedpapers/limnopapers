@@ -76,9 +76,9 @@ def filter_limno(df):
     df = df[is_limno]
 
     has_junk_summary = ~df['summary'].str.contains('|'.join(filter_against),
-                                                  case = False)
+                                                   case = False)
     has_junk_title = ~df['title'].str.contains('|'.join(filter_against),
-                                              case = False)
+                                               case = False)
 
     # save matching filter_against here
     if len(df.index) > 0:
