@@ -237,6 +237,8 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
 
             # toots = filtered['title'] + ". " + filtered['dc_source'] + ". " \
             # + filtered['prism_url'] + filtered['updated']
+
+            toots = toots.sample(frac = 1)  # randomize toots order
             for toot in toots:
                 print(toot)
                 if(interactive is True):
