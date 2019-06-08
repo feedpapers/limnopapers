@@ -23,5 +23,5 @@ res = pd.DataFrame(res)
 res_limno = lp.filter_limno(res)
 [statuses[i] for i in res_limno['papers']['index']]
 
-# retweet 
+# retweet
 api.PostRetweet()
