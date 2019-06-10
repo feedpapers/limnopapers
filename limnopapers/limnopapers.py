@@ -1,5 +1,6 @@
 import os
 import sys
+import textwrap
 import inspect
 import pdb
 import feedparser
@@ -219,7 +220,13 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
 
         print(Fore.GREEN + "Filtered: ")
         print()
-        toots = filtered['title'] + ". " + filtered['dc_source'] + ". " + \
+        titles = filtered['title']
+        titles[titles.str.len() > 159] = \
+            titles[titles.str.len() > 159]. \
+            str.slice(0, 159) + "..."
+
+        toots = titles + ". " + \
+            filtered['dc_source'] + ". " + \
             filtered['prism_url']
         for toot in toots:
             print(Fore.GREEN + toot)
@@ -234,9 +241,6 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                               access_token_key = config.access_token_key,
                               access_token_secret=config.access_token_secret)
             # print(api.VerifyCredentials())
-
-            # toots = filtered['title'] + ". " + filtered['dc_source'] + ". " \
-            # + filtered['prism_url'] + filtered['updated']
 
             toots = toots.sample(frac = 1)  # randomize toots order
             for toot in toots:
