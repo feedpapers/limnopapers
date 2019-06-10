@@ -11,7 +11,7 @@ spec = importlib.util.spec_from_file_location("limnopapers",
 limnopapers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(limnopapers)
 
-url = "https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles"
+url = "https://www.tandfonline.com/feed/rss/ulrm20"
 posts = []
 
 feed = fp.parse(url)
@@ -43,6 +43,9 @@ res = limnopapers.filter_limno(res)['papers']
 print(res)
 print(res['title'])
 toots = res['title'] + ". " + res['link']
+
+toots.__class__
+toots.sample(frac = 1)
 
 for toot in toots:
     print(toot)
