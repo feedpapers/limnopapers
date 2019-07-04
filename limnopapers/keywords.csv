@@ -1,6 +1,5 @@
 filter_for,filter_against
  lake,ocean 
-reservoir,hydroelectric
 inland waters,hydropower
 stream water,Lake Michigan
 water quality,walleye
@@ -15,8 +14,8 @@ freshwater,water distribution systems
 forested streams,emerging technologies
 Agricultural Streams,video mapping
 running waters,student monitoring
-,slovenia
-,drinking water
+reservoir,slovenia
+urban pond,drinking water
 ,mud carp
 ,agribusiness
 ,16S rRNA
@@ -381,3 +380,24 @@ running waters,student monitoring
 ,sedimentary pollen
 ,carbon storage reservoirs
 ,acoustic
+,chytridiomycosis
+,green roof
+,Fullerene
+,planetary boundary
+,perchlorate
+,Leptospirosis
+, India
+,micro pollutants
+,radiometer
+,Qinghai
+,Tianchi
+,irrigation water use efficiency
+,livestock disease
+,polar cap
+,parthenogenesis
+, affluence 
+,repatriation potential
+,Asian markets
+,stygofauna
+,temperature reconstructions
+,water withdrawal volume
