@@ -15,7 +15,7 @@ def url_ok(url):
                              " Firefox/67.0")
     try:
         r = requests.head(url, headers = headers)
-        return r.status_code in [200, 301]
+        return r.status_code in [200, 301, 403]
     except:
         print(url)
         return False
