@@ -28,4 +28,5 @@ def test_urls():
     for i in range(len(rawrss.index)):
         url_statuses.append(url_ok(rawrss['rawrss'][i]))
 
+    print(rawrss[[not i for i in url_statuses]]['rawrss'])
     assert all(url_statuses) is True
