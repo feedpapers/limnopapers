@@ -10,9 +10,9 @@ import errno
 def url_ok(url):
     # https://stackoverflow.com/a/43167631/3362993
     headers = requests.utils.default_headers()
-    headers['User-Agent'] = ("Mozilla/5.0 (X11; Linux x86_64)"
-                             " AppleWebKit/537.36 (KHTML, like Gecko)"
-                             " Chrome/56.0.2924.87 Safari/537.36")
+    headers['User-Agent'] = ("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0)"
+                             " Gecko/20100101"
+                             " Firefox/67.0")
     try:
         r = requests.head(url, headers = headers)
         return r.status_code in [200, 301]
