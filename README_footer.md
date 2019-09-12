@@ -10,7 +10,7 @@ Query papers that came out prior to today and open in browser:
 
 Manually approve tweeting of papers that came out prior to today:
 
-`python limnopapers/limnopapers.py --tweet --interactive`
+`python limnopapers/limnopapers.py --interactive`
 
 Unsupervised tweeting of papers that came out prior to today:
 
