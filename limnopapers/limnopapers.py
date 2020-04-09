@@ -231,7 +231,13 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
             titles[titles.str.len() > 159]. \
             str.slice(0, 159) + "..."
 
-        toots = titles + ". " + \
+        # debugging snippet
+        # df = pd.DataFrame(data={'title': ["1?", "none", "kkd"]})
+        # titles = df['title'].copy()
+        no_questionmark = titles.str.contains("[^?]$", regex = True)
+        titles[no_questionmark] = titles[no_questionmark] + ". "
+
+        toots = titles + \
             filtered['dc_source'] + ". " + \
             filtered['prism_url']
         for toot in toots:
@@ -301,6 +307,7 @@ def main():
 
     limnotoots(tweet = args.tweet, interactive = args.interactive,
                browser = args.browser, to_csv = args.debug)
+
 
 if __name__ == "__main__":
     main()
