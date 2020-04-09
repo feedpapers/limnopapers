@@ -235,9 +235,9 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
         # df = pd.DataFrame(data={'title': ["1?", "none", "kkd"]})
         # titles = df['title'].copy()
         no_questionmark = titles.str.contains("[^?]$", regex = True)
-        titles[no_questionmark] = titles[no_questionmark] + ". "
+        titles[no_questionmark] = titles[no_questionmark] + "."
 
-        toots = titles + \
+        toots = titles + " " + \
             filtered['dc_source'] + ". " + \
             filtered['prism_url']
         for toot in toots:
