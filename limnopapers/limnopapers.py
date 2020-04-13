@@ -11,6 +11,7 @@ import twitter
 from colorama import Fore
 import argparse
 import pkg_resources
+import re
 try:
     import httplib
 except:
@@ -41,7 +42,8 @@ def internet():
 
 
 def toot_split(toot):
-    res = toot.split(". ")
+    # toot = "asdf? ddd. ppp"
+    res = re.split(". |\\? ", toot)
     prism_url = res[len(res) - 1]
     dc_source = res[len(res) - 2]
     title = '. '.join(res[0:len(res) - 2])
