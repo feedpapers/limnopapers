@@ -43,7 +43,8 @@ def internet():
 
 def toot_split(toot):
     # toot = "asdf? ddd. ppp"
-    res = re.split(". |\\? ", toot)
+    # toot = "Annual 30-meter Dataset for  Glacial Lakes in High Mountain  Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
+    res = re.split("\\. |\\? ", toot)
     prism_url = res[len(res) - 1]
     dc_source = res[len(res) - 2]
     title = '. '.join(res[0:len(res) - 2])
@@ -273,6 +274,9 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                         keys = ["title", "dc_source", "prism_url", "posted",
                                 "date"]
 
+                        # toot = "title? journal. url"
+                        # toot = "Annual 30-meter Dataset for  Glacial Lakes in High Mountain  Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
+                        # posted = "y"
                         title, dc_source, prism_url = toot_split(toot)
                         date = str(datetime.date.today())
                         d = dict(zip(keys, [title, dc_source, prism_url,
