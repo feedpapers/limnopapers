@@ -54,8 +54,3 @@ table = open("dashboard.md", "a")
 table.write("\n")
 table.close()
 
-f = open("README.md", "w")
-f.write(open("README_header.md", "r").read())
-f.write(open("dashboard.md", "r").read())
-f.write(open("README_footer.md", "r").read())
-f.close()

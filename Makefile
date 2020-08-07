@@ -4,7 +4,7 @@ test:
 dashboard:
 	echo dashboard created
 	python build_dashboard.py
-	pandoc README.md -o index.html
+	pandoc dashboard.md -o dashboard.html	
 
 install:
 	pip install --upgrade -e .
