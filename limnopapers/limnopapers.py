@@ -285,7 +285,7 @@ def limnotoots(tweet, interactive, to_csv = False, browser = False):
                         log = log.append(pd.DataFrame(data = d),
                                          ignore_index = True)
                         log.to_csv("log.csv", index = False)
-                else:
+                else:  # interactive is False
                     status = api.PostUpdate(toot)
 
                     # write to log
