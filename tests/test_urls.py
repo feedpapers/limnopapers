@@ -14,7 +14,7 @@ def url_ok(url):
                              " Gecko/20100101"
                              " Firefox/67.0")
     try:
-        r = requests.head(url, headers = headers, timeout = 5)
+        r = requests.head(url, headers = headers, timeout = 10)
         return r.status_code in [200, 301, 403]
     except:
         print(url)
