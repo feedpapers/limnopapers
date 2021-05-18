@@ -1,3 +1,6 @@
+run:
+	limnopapers --interactive
+
 test:
 	pytest -v --ignore=scratch --ignore=build_dashboard.py
 
