@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="limnopapers",
     version="0.0.1",
-    author="Joseph Stachelek",
+    author="Jemma Stachelek",
     author_email="stachel2@msu.edu",
     description="A package to monitor limnology RSS feeds and tweet new \
                 articles",
