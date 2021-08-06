@@ -251,6 +251,8 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
             # print(api.VerifyCredentials())
 
             toots = toots.sample(frac=1)  # randomize toots order
+            toots_n_max = 5
+            toots_n = 0
             for toot in toots:
                 print(toot)
                 if interactive is True:
@@ -276,16 +278,18 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
                         log = log.append(pd.DataFrame(data=d), ignore_index=True)
                         log.to_csv("log.csv", index=False)
                 else:  # interactive is False
-                    status = api.PostUpdate(toot)
+                    if toots_n < toots_n_max + 1:
+                        status = api.PostUpdate(toot)
+                        toots_n += 1
 
-                    # write to log
-                    log = pd.read_csv("log.csv")
-                    keys = ["title", "dc_source", "prism_url"]
-                    title, dc_source, prism_url = toot_split(toot)
-                    d = dict(zip(keys, [title, dc_source, prism_url]))
-                    d = pd.DataFrame.from_records(d, index=[0])
-                    log = log.append(pd.DataFrame(data=d))
-                    log.to_csv("log.csv", index=False)
+                        # write to log
+                        log = pd.read_csv("log.csv")
+                        keys = ["title", "dc_source", "prism_url"]
+                        title, dc_source, prism_url = toot_split(toot)
+                        d = dict(zip(keys, [title, dc_source, prism_url]))
+                        d = pd.DataFrame.from_records(d, index=[0])
+                        log = log.append(pd.DataFrame(data=d))
+                        log.to_csv("log.csv", index=False)
                 post_toot = "n"
 
 
