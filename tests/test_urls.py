@@ -10,6 +10,7 @@ import errno
 def url_ok(url):
     # https://stackoverflow.com/a/43167631/3362993
     # url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=267&channel-name=Environmental+Management"
+    # url_ok(url)
     headers = requests.utils.default_headers()
     headers["User-Agent"] = (
         "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:90.0)"
@@ -18,6 +19,13 @@ def url_ok(url):
     )
     try:
         r = requests.head(url, headers=headers, timeout=10)
+
+        # https://stackoverflow.com/a/39108261/3362993
+        if r.status_code == 302:
+            jar = r.cookies
+            redirect_URL2 = r.headers["Location"]
+            r = requests.get(redirect_URL2, cookies=jar)
+
         return r.status_code in [200, 301, 403]
         response = requests.get(someurl)
     except:
