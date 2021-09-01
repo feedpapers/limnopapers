@@ -11,3 +11,6 @@ dashboard:
 
 install:
 	pip install --upgrade -e .
+
+keywords:
+	git pull && add limnopapers/keywords.csv && git commit -m "stash keywords [skip ci]" && git push
