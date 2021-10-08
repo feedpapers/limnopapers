@@ -240,8 +240,10 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
                 ]
             ]
         )
+        toots = toots.iloc[0].tolist()
 
         for toot in toots:
+
             print(Fore.RED + toot)
             print()
 
