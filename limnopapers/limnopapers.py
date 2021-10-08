@@ -44,11 +44,23 @@ def internet():
 def toot_split(toot):
     # toot = "asdf? ddd. ppp"
     # toot = "Annual 30-meter Dataset for  Glacial Lakes in High Mountain  Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
+
     res = re.split("\\. |\\? ", toot)
     prism_url = res[len(res) - 1]
     dc_source = res[len(res) - 2]
     title = ". ".join(res[0 : len(res) - 2])
+    if "?" in toot:
+        title = title + "?"
     return [title, dc_source, prism_url]
+
+
+def toot_construct(title, dc_source, prism_url):
+    if "?" in title:
+        res = str(title) + " " + str(dc_source) + ". " + str(prism_url)
+    else:
+        res = str(title) + ". " + str(dc_source) + ". " + str(prism_url)
+
+    return res
 
 
 def filter_limno(df):
@@ -207,6 +219,8 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
     :param to_csv: boolean. Save output to csv for debugging.
     :param browser: boolean. Open limnopapers in browser tabs.
     """
+    # tweet = False
+    # interactive = True
 
     data = get_papers(to_csv)
     filtered = data["res_limno"]
@@ -215,7 +229,18 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
     if len(data.index) != 0 or len(filtered.index) != 0:
         print(Fore.RED + "Excluded: ")
         print()
-        toots = data["title"] + ". " + data["dc_source"] + ". " + data["prism_url"]
+
+        toots = pd.DataFrame(
+            [
+                [
+                    toot_construct(title, dc_source, prism_url)
+                    for title, dc_source, prism_url in zip(
+                        data["title"], data["dc_source"], data["prism_url"]
+                    )
+                ]
+            ]
+        )
+
         for toot in toots:
             print(Fore.RED + toot)
             print()
