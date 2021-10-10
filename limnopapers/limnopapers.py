@@ -49,7 +49,9 @@ def toot_split(toot):
     prism_url = res[len(res) - 1]
     dc_source = res[len(res) - 2]
     title = ". ".join(res[0 : len(res) - 2])
-    if "?" in toot:
+
+    toot_without_url = re.sub(r"http\S+", "", toot)
+    if "?" in toot_without_url:
         title = title + "?"
     return [title, dc_source, prism_url]
 
