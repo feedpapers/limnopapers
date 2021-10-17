@@ -310,12 +310,14 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
                     if toots_n < toots_n_max + 1:
                         status = api.PostUpdate(toot)
                         toots_n += 1
+                        posted = "y"
 
                         # write to log
                         log = pd.read_csv("log.csv")
-                        keys = ["title", "dc_source", "prism_url"]
+                        keys = ["title", "dc_source", "prism_url", "posted", "date"]
                         title, dc_source, prism_url = toot_split(toot)
-                        d = dict(zip(keys, [title, dc_source, prism_url]))
+                        date = str(datetime.date.today())
+                        d = dict(zip(keys, [title, dc_source, prism_url, posted, date]))
                         d = pd.DataFrame.from_records(d, index=[0])
                         log = log.append(pd.DataFrame(data=d))
                         log.to_csv("log.csv", index=False)
