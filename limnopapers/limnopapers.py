@@ -230,7 +230,6 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
     # tweet = False
     # interactive = True
 
-    breakpoint()
     data = get_papers(to_csv)
     filtered = data["res_limno"]
     data = filter_today(data["res"], day=str(datetime.date.today()))
@@ -270,8 +269,6 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
         # titles[no_questionmark] = titles[no_questionmark] + "."
 
         toots = titles + " " + filtered["dc_source"] + ". " + filtered["prism_url"]
-
-        breakpoint()
 
         for toot in toots:
             print(Fore.GREEN + toot)
