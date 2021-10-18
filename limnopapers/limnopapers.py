@@ -51,14 +51,20 @@ def toot_split(toot):
     title = ". ".join(res[0 : len(res) - 2])
 
     toot_without_url = re.sub(r"http\S+", "", toot)
-    if "?" in toot_without_url:
-        title = title + "?"
+    regex_rm_journal = r"(?<=[.?])\s{0,2}(\s{0,2}\w{2,12}){1,5}\."
+    title = re.sub(regex_rm_journal, "", toot_without_url).rstrip()
+
     return [title, dc_source, prism_url]
 
 
 def toot_construct(title, dc_source, prism_url):
+
     if "?" in title:
-        res = str(title) + " " + str(dc_source) + ". " + str(prism_url)
+        # if no ending punctuation, add period
+        if title[len(title) - 1] is not "." or title[len(title) - 1] is not "?":
+            res = str(title) + ". " + str(dc_source) + ". " + str(prism_url)
+        else:
+            res = str(title) + " " + str(dc_source) + ". " + str(prism_url)
     else:
         res = str(title) + ". " + str(dc_source) + ". " + str(prism_url)
 
@@ -224,6 +230,7 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
     # tweet = False
     # interactive = True
 
+    breakpoint()
     data = get_papers(to_csv)
     filtered = data["res_limno"]
     data = filter_today(data["res"], day=str(datetime.date.today()))
@@ -259,10 +266,13 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
         # debugging snippet
         # df = pd.DataFrame(data={'title': ["1?", "none", "kkd"]})
         # titles = df['title'].copy()
-        no_questionmark = titles.str.contains("[^?]$", regex=True)
-        titles[no_questionmark] = titles[no_questionmark] + "."
+        # no_questionmark = titles.str.contains("[^?]$", regex=True)
+        # titles[no_questionmark] = titles[no_questionmark] + "."
 
         toots = titles + " " + filtered["dc_source"] + ". " + filtered["prism_url"]
+
+        breakpoint()
+
         for toot in toots:
             print(Fore.GREEN + toot)
             print()

@@ -8,16 +8,30 @@ spec.loader.exec_module(limnopapers)
 
 
 def test_toot_split():
+
+    # --- two sentence title with leading question mark
+
+    test = limnopapers.toot_split(
+        "Annual 30-meter Dataset? for Glacial Lakes in High Mountain Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57?123"
+    )
+    assert str(test.__class__) == "<class 'list'>"
+    assert (
+        test[0]
+        == "Annual 30-meter Dataset? for Glacial Lakes in High Mountain Asia from 2008 to 2017."
+    )
+
+    # --- regular
+
     test = limnopapers.toot_split(
         "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
     )
     assert str(test.__class__) == "<class 'list'>"
     assert (
         test[0]
-        == "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017"
+        == "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017."
     )
 
-    # ---
+    # --- title w question mark
 
     test = limnopapers.toot_split(
         "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017? Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
@@ -28,7 +42,7 @@ def test_toot_split():
         == "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017?"
     )
 
-    # ---
+    # --- url with question mark
 
     test = limnopapers.toot_split(
         "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57?123"
@@ -36,5 +50,5 @@ def test_toot_split():
     assert str(test.__class__) == "<class 'list'>"
     assert (
         test[0]
-        == "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017"
+        == "Annual 30-meter Dataset for Glacial Lakes in High Mountain Asia from 2008 to 2017."
     )
