@@ -57,6 +57,20 @@ def toot_split(toot):
     return [title, dc_source, prism_url]
 
 
+def add_ending_punctuation(x):
+    # x = titles[0]
+    if "?" in x:
+        # if no ending punctuation, add period
+        if x[len(x) - 1] is not "." or x[len(x) - 1] is not "?":
+            res = str(x) + "."
+        else:
+            res = str(x)
+    else:
+        res = str(x) + "."
+
+    return res
+
+
 def toot_construct(title, dc_source, prism_url):
 
     if "?" in title:
@@ -258,9 +272,16 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
         print(Fore.GREEN + "Filtered: ")
         print()
         titles = filtered["title"].copy()
-        titles[titles.str.len() > 159] = (
-            titles[titles.str.len() > 159].str.slice(0, 159) + "..."
-        )
+        titles = [add_ending_punctuation(title) for title in titles]
+
+        def truncate_title(x):
+            if len(x) > 159:
+                return x[:159] + "..."
+            else:
+                return x
+
+        titles = [truncate_title(title) for title in titles]
+        titles = pd.DataFrame(titles)
 
         # debugging snippet
         # df = pd.DataFrame(data={'title': ["1?", "none", "kkd"]})
@@ -268,7 +289,7 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
         # no_questionmark = titles.str.contains("[^?]$", regex=True)
         # titles[no_questionmark] = titles[no_questionmark] + "."
 
-        toots = titles + " " + filtered["dc_source"] + ". " + filtered["prism_url"]
+        toots = titles[0] + " " + filtered["dc_source"] + ". " + filtered["prism_url"]
 
         for toot in toots:
             print(Fore.GREEN + toot)
