@@ -98,7 +98,11 @@ def filter_limno(df):
     filter_for = [x for x in filter_for if str(x) != "nan"]
     filter_against = keywords["filter_against"].tolist()
 
-    df = df.reset_index()
+    try:
+        df = df.reset_index()
+    except:
+        df = df.drop(["level_0"], axis=1)
+        df = df.reset_index()
     # df = res
     # df = df.iloc[0:2]
 
@@ -128,7 +132,8 @@ def filter_limno(df):
         pd.DataFrame([has_junk_summary, has_junk_title]).transpose().sum(axis=1) == 2
     )
 
-    return {"papers": df[not_junk], "filter_against": filter_against}
+    res = {"papers": df[not_junk], "filter_against": filter_against}
+    return res
 
 
 def filter_today(df, day):
@@ -214,15 +219,29 @@ def get_papers(to_csv=False):
 
     # rm entries that are also in log
     log = pd.read_csv("log.csv")
+
+    # filter out exact matches to log
     res_limno = filter_limno(res[~res["title"].isin(log["title"])])["papers"]
 
+    # filter out partial matches to log
     titles = res_limno["title"].copy()
     titles[titles.str.len() > 159] = (
         titles[titles.str.len() > 159].str.slice(0, 159) + "..."
     )
-
     res_limno = filter_limno(
         res_limno[~titles.str.lower().isin(map(str.lower, log["title"]))]
+    )["papers"]
+
+    # filter out punctuation missing matches to log
+    titles = res_limno["title"].copy()
+    titles_with_periods = titles.copy() + "."
+    is_in_log = ~titles_with_periods.str.lower().isin(map(str.lower, log["title"]))
+    res_limno = filter_limno(res_limno[is_in_log])["papers"]
+
+    titles = res_limno["title"].copy()
+    titles_with_qmarks = titles.copy() + "?"
+    res_limno = filter_limno(
+        res_limno[~titles_with_qmarks.str.lower().isin(map(str.lower, log["title"]))]
     )["papers"]
 
     if to_csv is not False:
