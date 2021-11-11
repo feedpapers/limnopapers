@@ -13,6 +13,7 @@ import argparse
 import pkg_resources
 import re
 
+# pyright: reportMissingImports=false
 try:
     import httplib
 except:
