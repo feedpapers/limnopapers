@@ -13,4 +13,7 @@ install:
 	pip install --upgrade -e .
 
 keywords:
-	git pull && add limnopapers/keywords.csv && git commit -m "stash keywords [skip ci]" && git push
+	git pull && git add limnopapers/keywords.csv && git commit -m "stash keywords [skip ci]" && git push
+
+log:
+	git pull && git add log.csv && git commit -m "stash log [skip ci]" && git push
