@@ -2,9 +2,6 @@
 import requests
 import pkg_resources
 import pandas as pd
-import pytest
-from socket import error as SocketError
-import errno
 
 
 def url_ok(url):
