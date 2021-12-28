@@ -1,13 +1,12 @@
 # pytest -s tests/test_get_posts.py --ignore_cache
 
-import json
 import feedparser
 import limnopapers.limnopapers as lp
 
 import limnopapers.utils as utils
 
 
-cache_path = "fixtures/test_get_posts.json"
+cache_path = "fixtures/test_get_posts_.json"
 
 
 def test_get_posts_(ignore_cache):
@@ -23,5 +22,6 @@ def test_get_posts_(ignore_cache):
         feed_dict = utils.load_dict_from_file(cache_path)
 
     lno = lp.get_posts_(title, url, feed_dict)
+    print(lno.head())
 
     assert str(lno.__class__) == "<class 'pandas.core.frame.DataFrame'>"

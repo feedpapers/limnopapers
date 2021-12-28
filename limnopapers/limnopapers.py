@@ -90,7 +90,49 @@ def filter_today(df, day):
     return res_today
 
 
-def get_posts_(title, url, feed_dict=None):
+def consolidate_dict(posts, post, title):
+
+    post = utils.dotdict(post)
+    # breakpoint()
+
+    try:
+        posts.append(
+            (post.title, post.description_encoded, post.link, title, post.updated)
+        )
+    except (AttributeError, KeyError):
+        try:
+            posts.append((post.title, post.summary, post.link, title, post.updated))
+        except (AttributeError, KeyError):
+            try:
+                posts.append(
+                    (post.title, post.summary, post.link, title, post.published)
+                )
+            except (AttributeError, KeyError):
+                try:
+                    posts.append(
+                        (
+                            post.title,
+                            post.summary,
+                            post.prism_url,
+                            title,
+                            post.updated,
+                        )
+                    )
+                except (AttributeError, KeyError):
+                    try:
+                        posts.append((post.title, post.summary, post.link, title, None))
+                    except (AttributeError, KeyError):
+                        try:
+                            posts.append((None, None, None, None, None))
+                        except (AttributeError, KeyError):
+                            pass
+
+    keys = ["title", "summary", "prism_url", "dc_source", "updated"]
+
+    return (posts, keys)
+
+
+def get_posts_(title, url=None, feed_dict=None):
     """
     title = "Limnology and Oceanography"
     url = "https://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1939-5590"
@@ -98,28 +140,11 @@ def get_posts_(title, url, feed_dict=None):
     # print(url)
     if feed_dict is None:
         feed_dict = feedparser.parse(url)
+    else:
+        feed_dict = utils.dotdict(feed_dict)
     posts = []
     for post in feed_dict.entries:
-        try:
-            posts.append(
-                (post.title, post.description_encoded, post.link, title, post.updated)
-            )
-        except AttributeError:
-            try:
-                posts.append((post.title, post.summary, post.link, title, post.updated))
-            except AttributeError:
-                try:
-                    posts.append(
-                        (post.title, post.summary, post.link, title, post.published)
-                    )
-                except AttributeError:
-                    try:
-                        posts.append((post.title, post.summary, post.link, title, None))
-                    except AttributeError:
-                        try:
-                            posts.append((None, None, None, None, None))
-                        except AttributeError:
-                            pass
+        posts = consolidate_dict(posts, post, title)[0]
 
     res = pd.DataFrame(posts)
     # print(res.columns)
@@ -158,8 +183,9 @@ def get_posts():
     return posts
 
 
-def get_papers(to_csv=False, log_path="log.csv"):
-    posts = get_posts()
+def get_papers(to_csv=False, log_path="log.csv", posts=None):
+    if posts is None:
+        posts = get_posts()
     res = pd.concat(posts)
     res["updated"] = pd.to_datetime(res["updated"], utc=True).dt.tz_localize(None)
     res = res.sort_values(by=["updated"])
@@ -208,16 +234,20 @@ def get_papers(to_csv=False, log_path="log.csv"):
     return dfs
 
 
-def limnotoots(tweet, interactive, to_csv=False, browser=False, ignore_all=False):
+def limnotoots(
+    tweet, interactive, to_csv=False, browser=False, ignore_all=False, data=None
+):
     r"""Filter limnology themed papers from a pandas DataFrame.
     :param tweet: boolean. Post tweets of limnopapers
     :param interactive: boolean. Ask for approval before tweeting.
     :param to_csv: boolean. Save output to csv for debugging.
     :param browser: boolean. Open limnopapers in browser tabs.
     :param ignore_all: boolean. Write all toots to log, don't tweet.
+    :param data: pd DataFrame to manually pass get_papers data
     """
+    if data is None:
+        data = get_papers(to_csv)
 
-    data = get_papers(to_csv)
     filtered = data["res_limno"].reset_index(drop=True)
     data = filter_today(data["res"], day=str(datetime.date.today()))
 

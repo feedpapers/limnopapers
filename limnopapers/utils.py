@@ -1,6 +1,4 @@
 import json
-import feedparser
-import pandas as pd
 import http.client as httplib
 
 
@@ -24,3 +22,10 @@ def save_dict_to_file(data, json_path):
 def load_dict_from_file(json_path):
     with open(json_path, "r") as f:
         data = json.load(f)
+    return data
+
+
+class dotdict(dict):
+    # https://stackoverflow.com/a/9205155/3362993
+    def __getattr__(self, name):
+        return self[name]
