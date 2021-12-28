@@ -48,7 +48,7 @@ def filter_limno(df):
     filter_for = [x for x in filter_for if str(x) != "nan"]
     filter_against = keywords["filter_against"].tolist()
 
-    df = df.reset_index()
+    df = df.reset_index(drop=True)
     # df = res
     # df = df.iloc[0:2]
 
@@ -180,6 +180,7 @@ def get_papers(to_csv=False, log_path="log.csv"):
     )
 
     if os.path.exists(log_path):
+        log = log[[isinstance(x, str) for x in log["title"]]]
         res_limno = res_limno[~titles.str.lower().isin(map(str.lower, log["title"]))]
         res_limno = filter_limno(res_limno)["papers"]
 
