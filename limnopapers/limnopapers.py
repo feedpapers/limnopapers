@@ -2,7 +2,6 @@ import os
 import sys
 import textwrap
 import inspect
-import pdb
 import feedparser
 import webbrowser
 import pandas as pd
@@ -13,11 +12,8 @@ import argparse
 import pkg_resources
 import re
 
-# pyright: reportMissingImports=false
-try:
-    import httplib
-except:
-    import http.client as httplib
+sys.path.append(".")
+import limnopapers.utils as utils
 
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -28,18 +24,6 @@ try:
     import config
 except:
     print("No twitter keys found")
-
-
-def internet():
-    # https://stackoverflow.com/a/29854274/3362993
-    conn = httplib.HTTPConnection("www.google.com", timeout=5)
-    try:
-        conn.request("HEAD", "/")
-        conn.close()
-        return True
-    except:
-        conn.close()
-        return False
 
 
 def toot_split(toot):
@@ -145,11 +129,16 @@ def filter_today(df, day):
     return res_today
 
 
-def get_posts_(title, url):
+def get_posts_(title, url, feed_dict=None):
+    """
+    title = "Limnology and Oceanography"
+    url = "https://onlinelibrary.wiley.com/rss/journal/10.1002/(ISSN)1939-5590"
+    """
     # print(url)
-    feed = feedparser.parse(url)
+    if feed_dict is None:
+        feed_dict = feedparser.parse(url)
     posts = []
-    for post in feed.entries:
+    for post in feed_dict.entries:
         try:
             posts.append(
                 (post.title, post.description_encoded, post.link, title, post.updated)
@@ -183,7 +172,7 @@ def get_posts_(title, url):
 
 def get_posts():
     # check for internet
-    if not internet():
+    if not utils.internet():
         raise Exception("limnopapers requires an internet connection.")
 
     # https://stackoverflow.com/questions/45701053/get-feeds-from-feedparser-and-import-to-pandas-dataframe
@@ -208,7 +197,7 @@ def get_posts():
     return posts
 
 
-def get_papers(to_csv=False):
+def get_papers(to_csv=False, log_path="log.csv"):
     posts = get_posts()
     res = pd.concat(posts)
     res["updated"] = pd.to_datetime(res["updated"], utc=True).dt.tz_localize(None)
@@ -217,32 +206,35 @@ def get_papers(to_csv=False):
     if to_csv is not False:
         res.to_csv("test.csv")
 
-    # rm entries that are also in log
-    log = pd.read_csv("log.csv")
-
-    # filter out exact matches to log
-    res_limno = filter_limno(res[~res["title"].isin(log["title"])])["papers"]
+    if os.path.exists(log_path):
+        # rm entries that are also in log
+        log = pd.read_csv(log_path)
+        # filter out exact matches to log
+        res = res[~res["title"].isin(log["title"])]
+    res_limno = filter_limno(res)["papers"]
 
     # filter out partial matches to log
     titles = res_limno["title"].copy()
     titles[titles.str.len() > 159] = (
         titles[titles.str.len() > 159].str.slice(0, 159) + "..."
     )
-    res_limno = filter_limno(
-        res_limno[~titles.str.lower().isin(map(str.lower, log["title"]))]
-    )["papers"]
+    if os.path.exists(log_path):
+        res_limno = res_limno[~titles.str.lower().isin(map(str.lower, log["title"]))]
+        res_limno = filter_limno(res_limno)["papers"]
 
-    # filter out punctuation missing matches to log
-    titles = res_limno["title"].copy()
-    titles_with_periods = titles.copy() + "."
-    is_in_log = ~titles_with_periods.str.lower().isin(map(str.lower, log["title"]))
-    res_limno = filter_limno(res_limno[is_in_log])["papers"]
+        # filter out punctuation missing matches to log
+        titles = res_limno["title"].copy()
+        titles_with_periods = titles.copy() + "."
+        is_in_log = ~titles_with_periods.str.lower().isin(map(str.lower, log["title"]))
+        res_limno = filter_limno(res_limno[is_in_log])["papers"]
 
-    titles = res_limno["title"].copy()
-    titles_with_qmarks = titles.copy() + "?"
-    res_limno = filter_limno(
-        res_limno[~titles_with_qmarks.str.lower().isin(map(str.lower, log["title"]))]
-    )["papers"]
+        titles = res_limno["title"].copy()
+        titles_with_qmarks = titles.copy() + "?"
+        res_limno = filter_limno(
+            res_limno[
+                ~titles_with_qmarks.str.lower().isin(map(str.lower, log["title"]))
+            ]
+        )["papers"]
 
     if to_csv is not False:
         res_limno.to_csv("test_limno.csv")
@@ -254,18 +246,19 @@ def get_papers(to_csv=False):
     return dfs
 
 
-def limnotoots(tweet, interactive, to_csv=False, browser=False):
+def limnotoots(tweet, interactive, to_csv=False, browser=False, ignore_all=False):
     r"""Filter limnology themed papers from a pandas DataFrame.
     :param tweet: boolean. Post tweets of limnopapers
     :param interactive: boolean. Ask for approval before tweeting.
     :param to_csv: boolean. Save output to csv for debugging.
     :param browser: boolean. Open limnopapers in browser tabs.
+    :param ignore_all: boolean. Write all toots to log, don't tweet.
     """
     # tweet = False
     # interactive = True
 
     data = get_papers(to_csv)
-    filtered = data["res_limno"]
+    filtered = data["res_limno"].reset_index(drop=True)
     data = filter_today(data["res"], day=str(datetime.date.today()))
 
     if len(data.index) != 0 or len(filtered.index) != 0:
@@ -314,6 +307,7 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
         for toot in toots:
             print(Fore.GREEN + toot)
             print()
+
         if browser is True:
             for url in filtered["prism_url"]:
                 webbrowser.open(url)
@@ -333,15 +327,30 @@ def limnotoots(tweet, interactive, to_csv=False, browser=False):
             for toot in toots:
                 print(toot)
                 if interactive is True:
-                    post_toot = input("post limnotoot (y)/n/i? ") or "y"
-                    if post_toot in ["y"]:
-                        status = api.PostUpdate(toot)
-                        posted = "y"
-                    if post_toot in ["i"]:
+                    if ignore_all:
+                        post_toot = "i"
                         posted = "i"
+                    else:
+                        post_toot = input("post limnotoot (y)/n/i? ") or "y"
+                        if post_toot in ["y"]:
+                            status = api.PostUpdate(toot)
+                            posted = "y"
+                        if post_toot in ["i"]:
+                            posted = "i"
 
                     if post_toot in ["y", "i"]:
                         # write to log
+                        if not os.path.exists("log.csv"):
+                            pd.DataFrame(
+                                [["", "", "", "", ""]],
+                                columns=[
+                                    "title",
+                                    "dc_source",
+                                    "prism_url",
+                                    "posted",
+                                    "date",
+                                ],
+                            ).to_csv("log.csv")
                         log = pd.read_csv("log.csv")
                         keys = ["title", "dc_source", "prism_url", "posted", "date"]
 

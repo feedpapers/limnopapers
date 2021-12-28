@@ -1,6 +1,10 @@
 run:
 	limnopapers --interactive
 
+ignore:
+	limnopapers --interactive --ignore_all
+
+# pytest test_foo.py
 test:
 	pytest -v --ignore=scratch --ignore=build_dashboard.py
 
