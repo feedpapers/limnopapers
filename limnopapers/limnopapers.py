@@ -9,6 +9,7 @@ import datetime
 import twitter
 from colorama import Fore
 from colorama import init
+from colorama import Style
 import argparse
 import pkg_resources
 import re
@@ -29,12 +30,20 @@ except:
 
 
 def toot_split(toot):
-    # toot = "asdf? ddd. ppp"
-    # toot = "Annual 30-meter Dataset for  Glacial Lakes in High Mountain  Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
     res = re.split("\\. |\\? ", toot)
+
     prism_url = res[len(res) - 1]
+
     dc_source = res[len(res) - 2]
-    title = ". ".join(res[0 : len(res) - 2])
+
+    if utils.has_q_mark(toot[0 : len(toot) - 20]):
+        if len(res) > 3:  # middle question mark
+            title = toot[0 : toot.find(dc_source) - 2]
+        else:  # ending question mark
+            title = toot[0 : toot.find(dc_source) - 1]
+    else:
+        title = "".join(res[0 : len(res) - 2])
+
     return [title, dc_source, prism_url]
 
 
@@ -254,6 +263,8 @@ def limnotoots(
     :param data: pd DataFrame to manually pass get_papers data
     :param log_path: path to log file
     """
+    tooted = []
+
     if data is None:
         data = get_papers(to_csv)
 
@@ -261,29 +272,26 @@ def limnotoots(
     data = filter_today(data["res"], day=str(datetime.date.today()))
 
     if len(data.index) != 0 or len(filtered.index) != 0:
-        print(Fore.RED + "Excluded: ")
+        print(Fore.RED + "Excluded: " + Style.RESET_ALL)
         print()
         toots = data["title"] + ". " + data["dc_source"] + ". " + data["prism_url"]
         for toot in toots:
-            print(Fore.RED + toot)
+            print(Fore.RED + toot + Style.RESET_ALL)
             print()
 
-        print(Fore.GREEN + "Filtered: ")
+        print(Fore.GREEN + "Filtered: " + Style.RESET_ALL)
         print()
         titles = filtered["title"].copy()
         titles[titles.str.len() > 159] = (
             titles[titles.str.len() > 159].str.slice(0, 159) + "..."
         )
 
-        # debugging snippet
-        # df = pd.DataFrame(data={'title': ["1?", "none", "kkd"]})
-        # titles = df['title'].copy()
-        no_questionmark = titles.str.contains("[^?]$", regex=True)
-        titles[no_questionmark] = titles[no_questionmark] + "."
+        no_ending_questionmark = ~titles.str.endswith("?")
+        titles[no_ending_questionmark] = titles[no_ending_questionmark] + "."
 
         toots = titles + " " + filtered["dc_source"] + ". " + filtered["prism_url"]
         for toot in toots:
-            print(Fore.GREEN + toot)
+            print(Fore.GREEN + toot + Style.RESET_ALL)
             print()
 
         if browser is True:
@@ -303,7 +311,7 @@ def limnotoots(
             toots_n_max = 5
             toots_n = 0
             for toot in toots:
-                print(Fore.GREEN + toot)
+                print(Fore.GREEN + toot + Style.RESET_ALL)
                 if interactive is True:
                     if ignore_all:
                         post_toot = "i"
@@ -332,6 +340,8 @@ def limnotoots(
                         log = pd.read_csv(log_path)
                         keys = ["title", "dc_source", "prism_url", "posted", "date"]
 
+                        tooted.append(toot)
+                        # breakpoint()
                         title, dc_source, prism_url = toot_split(toot)
                         date = str(datetime.date.today())
                         d = dict(zip(keys, [title, dc_source, prism_url, posted, date]))
@@ -352,6 +362,7 @@ def limnotoots(
                         log = log.append(pd.DataFrame(data=d))
                         log.to_csv(log_path, index=False)
                 post_toot = "n"
+    return tooted
 
 
 def main():

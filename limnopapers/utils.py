@@ -29,3 +29,13 @@ class dotdict(dict):
     # https://stackoverflow.com/a/9205155/3362993
     def __getattr__(self, name):
         return self[name]
+
+
+def zip_to_dict(sub_zip, keys):
+    dic = {key: value for (key, value) in sub_zip}
+    dic = {key: dic[key] for key in keys}
+    return dic
+
+
+def has_q_mark(x):
+    return x.find("?") > -1
