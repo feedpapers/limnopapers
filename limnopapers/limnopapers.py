@@ -299,13 +299,16 @@ def limnotoots(
                 webbrowser.open(url)
 
         if tweet is True or interactive is True:
-            api = twitter.Api(
-                consumer_key=config.consumer_key,
-                consumer_secret=config.consumer_secret,
-                access_token_key=config.access_token_key,
-                access_token_secret=config.access_token_secret,
-            )
+            try:
+                api = twitter.Api(
+                    consumer_key=config.consumer_key,
+                    consumer_secret=config.consumer_secret,
+                    access_token_key=config.access_token_key,
+                    access_token_secret=config.access_token_secret,
+                )
             # print(api.VerifyCredentials())
+            except:
+                pass
 
             toots = toots.sample(frac=1)  # randomize toots order
             toots_n_max = 5

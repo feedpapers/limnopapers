@@ -5,7 +5,7 @@ import limnopapers.utils as utils
 import limnopapers.limnopapers as lp
 
 
-def test_q_mark_logging():
+def test_logging():
 
     # read test data from json
     test_data_raw = utils.load_dict_from_file("tests/test_data.json")
