@@ -8,13 +8,15 @@ import pandas as pd
 import datetime
 import twitter
 from colorama import Fore
+from colorama import init
 import argparse
 import pkg_resources
 import re
 
+init(autoreset=True)
+
 sys.path.append(".")
 import limnopapers.utils as utils
-
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -235,7 +237,13 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
 
 
 def limnotoots(
-    tweet, interactive, to_csv=False, browser=False, ignore_all=False, data=None
+    tweet,
+    interactive,
+    to_csv=False,
+    browser=False,
+    ignore_all=False,
+    data=None,
+    log_path="log.csv",
 ):
     r"""Filter limnology themed papers from a pandas DataFrame.
     :param tweet: boolean. Post tweets of limnopapers
@@ -244,6 +252,7 @@ def limnotoots(
     :param browser: boolean. Open limnopapers in browser tabs.
     :param ignore_all: boolean. Write all toots to log, don't tweet.
     :param data: pd DataFrame to manually pass get_papers data
+    :param log_path: path to log file
     """
     if data is None:
         data = get_papers(to_csv)
@@ -294,7 +303,7 @@ def limnotoots(
             toots_n_max = 5
             toots_n = 0
             for toot in toots:
-                print(toot)
+                print(Fore.GREEN + toot)
                 if interactive is True:
                     if ignore_all:
                         post_toot = "i"
@@ -309,7 +318,7 @@ def limnotoots(
 
                     if post_toot in ["y", "i"]:
                         # write to log
-                        if not os.path.exists("log.csv"):
+                        if not os.path.exists(log_path):
                             pd.DataFrame(
                                 [["", "", "", "", ""]],
                                 columns=[
@@ -319,32 +328,29 @@ def limnotoots(
                                     "posted",
                                     "date",
                                 ],
-                            ).to_csv("log.csv")
-                        log = pd.read_csv("log.csv")
+                            ).to_csv(log_path, index=False)
+                        log = pd.read_csv(log_path)
                         keys = ["title", "dc_source", "prism_url", "posted", "date"]
 
-                        # toot = "title? journal. url"
-                        # toot = "Annual 30-meter Dataset for  Glacial Lakes in High Mountain  Asia from 2008 to 2017. Earth System Science Data. https://doi.org/10.5194/essd-2020-57"
-                        # posted = "y"
                         title, dc_source, prism_url = toot_split(toot)
                         date = str(datetime.date.today())
                         d = dict(zip(keys, [title, dc_source, prism_url, posted, date]))
                         d = pd.DataFrame.from_records(d, index=[0])
                         log = log.append(pd.DataFrame(data=d), ignore_index=True)
-                        log.to_csv("log.csv", index=False)
+                        log.to_csv(log_path, index=False)
                 else:  # interactive is False
                     if toots_n < toots_n_max + 1:
                         status = api.PostUpdate(toot)
                         toots_n += 1
 
                         # write to log
-                        log = pd.read_csv("log.csv")
+                        log = pd.read_csv(log_path)
                         keys = ["title", "dc_source", "prism_url"]
                         title, dc_source, prism_url = toot_split(toot)
                         d = dict(zip(keys, [title, dc_source, prism_url]))
                         d = pd.DataFrame.from_records(d, index=[0])
                         log = log.append(pd.DataFrame(data=d))
-                        log.to_csv("log.csv", index=False)
+                        log.to_csv(log_path, index=False)
                 post_toot = "n"
 
 
