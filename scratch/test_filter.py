@@ -1,8 +1,17 @@
-import limnopapers as lp
 import pandas as pd
 import pkg_resources
 
+import limnopapers as lp
+
 # help(lp.filter_limno)
+
+# ---
+
+d = {"title": ["good stuff"], "summary": ["asdf"]}
+df = pd.DataFrame(data=d)
+test = lp.filter_limno(df)
+
+# ---
 
 d = {
     "title": [
@@ -17,6 +26,7 @@ test = lp.filter_limno(df)
 
 print(list(test["filter_against"]))
 
+# ---
 
 keywords = pd.read_csv(pkg_resources.resource_filename("limnopapers", "keywords.csv"))
 filter_for = keywords["filter_for"].tolist()

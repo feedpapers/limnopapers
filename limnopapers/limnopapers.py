@@ -57,6 +57,7 @@ def filter_limno(df):
     )
     filter_for = keywords["filter_for"].tolist()
     filter_for = [x for x in filter_for if str(x) != "nan"]
+    filter_for = [x for x in filter_for if str(x) != " "]
     filter_against = keywords["filter_against"].tolist()
 
     df = df.reset_index(drop=True)
