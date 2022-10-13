@@ -9,3 +9,4 @@ dependencies:
         - colorama
         - argcomplete
         - pytest
+        - black
