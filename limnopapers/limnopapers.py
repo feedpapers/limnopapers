@@ -375,6 +375,7 @@ def main():
     parser.add_argument("--interactive", default=False, action="store_true")
     parser.add_argument("--browser", default=False, action="store_true")
     parser.add_argument("--debug", default=False, action="store_true")
+    parser.add_argument("--ignore_all", default=False, action="store_true")
     args = parser.parse_args()
 
     limnotoots(
@@ -382,6 +383,7 @@ def main():
         interactive=args.interactive,
         browser=args.browser,
         to_csv=args.debug,
+        ignore_all=args.ignore_all,
     )
 
 

@@ -12,19 +12,25 @@ The keywords and journal choices herein aim to focus on limnology (the study of 
 
 Query papers that came out prior to today without tweeting:
 
-`python limnopapers/limnopapers.py`
+`limnopapers`
 
 Query papers that came out prior to today and open in browser:
 
-`python limnopapers/limnopapers.py --browser`
+`limnopapers --browser`
 
 Manually approve tweeting of papers that came out prior to today:
 
-`python limnopapers/limnopapers.py --interactive`
+`limnopapers --interactive`
 
 Unsupervised tweeting of papers that came out prior to today:
 
-`python limnopapers/limnopapers.py --tweet`
+`limnopapers --tweet`
+
+"Reset" the tweet log:
+```shell
+limnopapers --ignore_all
+# manually delete old log entries
+```
 
 ## Setup
 
