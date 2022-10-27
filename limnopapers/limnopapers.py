@@ -208,8 +208,8 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
     if os.path.exists(log_path):
         # rm entries that are also in log
         log = pd.read_csv(log_path)
-        # filter out exact matches to log
-        res = res[~res["title"].isin(log["title"])]
+        # filter out matches to log
+        res = res[~res["title"].str.lower().isin(log["title"].str.lower())]
     res_limno = filter_limno(res)["papers"]
 
     titles = res_limno["title"].copy()
