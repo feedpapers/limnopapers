@@ -209,7 +209,15 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
         # rm entries that are also in log
         log = pd.read_csv(log_path)
         # filter out matches to log
-        res = res[~res["title"].str.lower().isin(log["title"].str.lower())]
+        titles_standardized = [x.replace(". ", "") for x in res["title"].str.lower()]
+        titles_standardized_log = [y for y in log["title"].str.lower()]
+        res = res[
+            [
+                not any([x == y for y in titles_standardized_log])
+                for x in titles_standardized
+            ]
+        ]
+
     res_limno = filter_limno(res)["papers"]
 
     titles = res_limno["title"].copy()
