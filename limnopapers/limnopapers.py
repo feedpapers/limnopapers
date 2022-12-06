@@ -151,7 +151,10 @@ def get_posts_(title, url=None, feed_dict=None):
     """
     # print(url)
     if feed_dict is None:
-        feed_dict = feedparser.parse(url)
+        try:
+            feed_dict = feedparser.parse(url)
+        except Exception:
+            pass
     else:
         feed_dict = utils.dotdict(feed_dict)
     posts = []
