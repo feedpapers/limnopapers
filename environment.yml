@@ -9,3 +9,4 @@ dependencies:
         - argcomplete
         - pytest
         - black
+        - mastodon.py
