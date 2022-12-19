@@ -1,18 +1,19 @@
+import re
 import os
 import sys
-import textwrap
+import twitter
 import inspect
+import datetime
+import argparse
 import feedparser
 import webbrowser
 import pandas as pd
-import datetime
-import twitter
-from colorama import Fore
-from colorama import init
-from colorama import Style
-import argparse
 import pkg_resources
-import re
+from colorama import init
+from colorama import Fore
+from colorama import Style
+from mastodon import Mastodon
+
 
 init(autoreset=True)
 
@@ -318,7 +319,15 @@ def limnotoots(
                     access_token_key=config.access_token_key,
                     access_token_secret=config.access_token_secret,
                 )
-            # print(api.VerifyCredentials())
+                # print(api.VerifyCredentials())
+
+                mastodon = Mastodon(client_id="limnopapers_clientcred.secret")
+                mastodon.log_in(
+                    "cp.manat+limnopapers@gmail.com",
+                    config.mastodon_pw,
+                    to_file="pytooter_usercred.secret",
+                )
+                mastodon = Mastodon(access_token="limnopapers_clientcred.secret")
             except:
                 pass
 
@@ -334,7 +343,8 @@ def limnotoots(
                     else:
                         post_toot = input("post limnotoot (y)/n/i? ") or "y"
                         if post_toot in ["y"]:
-                            status = api.PostUpdate(toot)
+                            status = api.PostUpdate(toot)  # twitter
+                            mastodon.toot(toot)  # mastodon
                             posted = "y"
                         if post_toot in ["i"]:
                             posted = "i"

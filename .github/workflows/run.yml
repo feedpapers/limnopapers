@@ -24,6 +24,7 @@ jobs:
         echo '${{ secrets.ACCESS_TOKEN_SECRET }}' >> config.py
         echo '${{ secrets.CONSUMER_KEY }}' >> config.py
         echo '${{ secrets.CONSUMER_SECRET }}' >> config.py
+        echo '${{ secrets.MASTODON_PW }}' >> config.py
     - name: Install package
       run: |
         pip install -e .    
