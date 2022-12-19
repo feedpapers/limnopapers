@@ -4,3 +4,4 @@ datetime
 feedparser
 colorama
 argcomplete
+mastodon.py
