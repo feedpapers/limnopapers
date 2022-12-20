@@ -372,7 +372,12 @@ def limnotoots(
                         log.to_csv(log_path, index=False)
                 else:  # interactive is False
                     if toots_n < toots_n_max + 1:
-                        status = api.PostUpdate(toot)
+                        try:
+                            status = api.PostUpdate(toot)  # twitter
+                        except:
+                            pass
+                        mastodon.toot(toot)  # mastodon
+
                         toots_n += 1
 
                         # write to log
