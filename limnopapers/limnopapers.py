@@ -319,7 +319,7 @@ def limnotoots(
                     access_token_key=config.access_token_key,
                     access_token_secret=config.access_token_secret,
                 )
-                # print(api.VerifyCredentials())
+                print(api.VerifyCredentials())
 
                 mastodon = Mastodon(client_id="limnopapers_clientcred.secret")
                 mastodon.log_in(
