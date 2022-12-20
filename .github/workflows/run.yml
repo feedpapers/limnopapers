@@ -24,7 +24,8 @@ jobs:
         echo '${{ secrets.ACCESS_TOKEN_SECRET }}' >> config.py
         echo '${{ secrets.CONSUMER_KEY }}' >> config.py
         echo '${{ secrets.CONSUMER_SECRET }}' >> config.py
-        echo '${{ secrets.MASTODON_PW }}' >> config.py
+        echo '${{ secrets.MASTODON_TOKEN }}' >> limnopapers_clientcred.secret
+        echo 'https://fediscience.org' >> limnopapers_clientcred.secret
     - name: Install package
       run: |
         pip install -e .    

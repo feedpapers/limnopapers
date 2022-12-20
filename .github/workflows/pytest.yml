@@ -18,6 +18,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Setup config
+      run: |
+        echo '${{ secrets.ACCESS_TOKEN_KEY }}' >> config.py
+        echo '${{ secrets.ACCESS_TOKEN_SECRET }}' >> config.py
+        echo '${{ secrets.CONSUMER_KEY }}' >> config.py
+        echo '${{ secrets.CONSUMER_SECRET }}' >> config.py
+        echo '${{ secrets.MASTODON_TOKEN }}' >> limnopapers_clientcred.secret
+        echo 'https://fediscience.org' >> limnopapers_clientcred.secret
     - name: Install package
       run: |
         pip install -e .

@@ -13,3 +13,4 @@ test_limno.csv
 test_today.csv
 twitter_api.py
 tests/test_log.csv
+limnopaers_clientcred.secret

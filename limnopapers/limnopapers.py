@@ -319,14 +319,8 @@ def limnotoots(
                     access_token_key=config.access_token_key,
                     access_token_secret=config.access_token_secret,
                 )
-                print(api.VerifyCredentials())
+                # print(api.VerifyCredentials())
 
-                mastodon = Mastodon(client_id="limnopapers_clientcred.secret")
-                mastodon.log_in(
-                    "cp.manat+limnopapers@gmail.com",
-                    config.mastodon_pw,
-                    to_file="pytooter_usercred.secret",
-                )
                 mastodon = Mastodon(access_token="limnopapers_clientcred.secret")
             except:
                 pass
@@ -343,7 +337,10 @@ def limnotoots(
                     else:
                         post_toot = input("post limnotoot (y)/n/i? ") or "y"
                         if post_toot in ["y"]:
-                            status = api.PostUpdate(toot)  # twitter
+                            try:
+                                status = api.PostUpdate(toot)  # twitter
+                            except:
+                                pass
                             mastodon.toot(toot)  # mastodon
                             posted = "y"
                         if post_toot in ["i"]:
