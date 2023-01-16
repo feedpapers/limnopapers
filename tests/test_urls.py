@@ -6,7 +6,7 @@ import pandas as pd
 
 def url_ok(url):
     # https://stackoverflow.com/a/43167631/3362993
-    # url = "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=267&channel-name=Environmental+Management"
+    # url = "https://journals.plos.org/water/feed/atom"
     # url_ok(url)
     headers = requests.utils.default_headers()
     headers["User-Agent"] = (
@@ -27,6 +27,7 @@ def url_ok(url):
         response = requests.get(someurl)
     except:
         print(url)
+        print(r.status_code)
         return False
 
 
