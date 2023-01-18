@@ -1,7 +1,10 @@
 import twitter
 from mastodon import Mastodon
 
-import config
+try:
+    import config
+except:
+    print("No twitter keys found")
 
 
 def test_auth_twitter():

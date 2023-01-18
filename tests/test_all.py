@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 
 import importlib.util
 spec = importlib.util.spec_from_file_location("limnopapers",
