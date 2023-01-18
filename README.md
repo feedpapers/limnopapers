@@ -6,7 +6,7 @@ Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and [tweet](http
 
 ## Scope
 
-The keywords and journal choices herein aim to focus on limnology (the study of inland waters). They are also meant to exclude related topics such as fisheries ecology, water resources engineering, estuarine/marine ecology, ecological genetics, and the study of specific "inland seas" like the North American Great Lakes. Feel free to weigh-in in the repository issues on scope recommendations! 
+The keywords and journal choices herein aim to focus on limnology (the study of inland waters). They are also meant to exclude related topics such as fisheries ecology, water resources engineering, estuarine/marine ecology, ecological genetics, and the study of specific "inland seas" like the North American Great Lakes. Feel free to weigh-in in the repository issues on scope recommendations!
 
 ## Usage
 
@@ -27,6 +27,7 @@ Unsupervised tweeting of papers that came out prior to today:
 `limnopapers --tweet`
 
 "Reset" the tweet log:
+
 ```shell
 limnopapers --ignore_all
 # manually delete old log entries
@@ -42,7 +43,7 @@ limnopapers --ignore_all
 
 * Create a _cron_ job. On Linux this can be done with the following commands:
 
-```
+```shell
 crontab -e 
 0 15 * * * python /path/to/limnopapers.py
 ```
