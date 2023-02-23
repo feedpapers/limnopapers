@@ -2,7 +2,7 @@
 
 ![pytest](https://github.com/jsta/limnopapers/workflows/pytest/badge.svg)
 
-Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and [tweet](https://twitter.com/limno_papers) new articles.
+Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and post new articles to [Twitter](https://twitter.com/limno_papers) and [Mastodon](https://fediscience.org/@limnopapers).
 
 ## Scope
 
@@ -10,7 +10,7 @@ The keywords and journal choices herein aim to focus on limnology (the study of 
 
 ## Usage
 
-Query papers that came out prior to today without tweeting:
+Query papers that came out prior to today without posting:
 
 `limnopapers`
 
@@ -18,11 +18,11 @@ Query papers that came out prior to today and open in browser:
 
 `limnopapers --browser`
 
-Manually approve tweeting of papers that came out prior to today:
+Manually approve posting of papers that came out prior to today:
 
 `limnopapers --interactive`
 
-Unsupervised tweeting of papers that came out prior to today:
+Unsupervised posting of papers that came out prior to today:
 
 `limnopapers --tweet`
 
@@ -35,11 +35,11 @@ limnopapers --ignore_all
 
 ## Setup
 
-### Enable tweeting (optional)
+### Enable posting (optional)
 
-* Create a file named `config.py` that stores your twitter API keys
+* Create a file named `config.py` that stores your Twitter/Mastodon API keys
 
-### Enable unsupervised tweeting (optional)
+### Enable unsupervised posting (optional)
 
 * Create a _cron_ job. On Linux this can be done with the following commands:
 
