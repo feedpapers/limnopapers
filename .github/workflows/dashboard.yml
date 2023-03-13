@@ -13,11 +13,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-
-    # - name: Install X11
-    #   run: |
-    #     sudo apt install x11-apps
+      uses: actions/checkout@v2    
 
     - name: Set up firefox
       uses: browser-actions/setup-firefox@v1        
@@ -31,10 +27,13 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements_dashboard.txt; fi
 
     - name: Run
-      run: |
-        export DISPLAY=:0
-        python dashboard.py &
-        firefox http://127.0.0.1:9050/
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: |
+          Xvfb :0 &          
+          export DISPLAY=:0
+          python dashboard.py &
+          firefox http://127.0.0.1:9050/
 
     - name: Commit and push if changed
       run: |-
