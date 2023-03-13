@@ -38,7 +38,7 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: |          
-          firefox http://127.0.0.1:9050/
+          firefox http://127.0.0.1:9050/ &
 
     - name: Commit and push if changed
       run: |-
