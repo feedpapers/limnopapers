@@ -143,6 +143,8 @@ def main():
     df = df.reset_index(drop=True)
 
     app = Dash(__name__)
+    app.scripts.config.serve_locally = True
+    app.css.config.serve_locally = True
 
     app.layout = html.Div(
         children=[
