@@ -145,7 +145,7 @@ def main():
     app = Dash(__name__)
     app.scripts.config.serve_locally = True
     app.css.config.serve_locally = True
-    app.config.update({"requests_pathname_prefix": "/limnopapers/"})
+    # app.config.update({"requests_pathname_prefix": "/limnopapers/"})
 
     app.layout = html.Div(
         children=[
