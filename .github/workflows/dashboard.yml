@@ -20,9 +20,7 @@ jobs:
     #     sudo apt install x11-apps
 
     - name: Set up firefox
-      uses: browser-actions/setup-firefox@v1
-      run: |
-        export DISPLAY=:0
+      uses: browser-actions/setup-firefox@v1        
 
     - name: Set up Python 3.x
       uses: actions/setup-python@v2    
@@ -34,6 +32,7 @@ jobs:
 
     - name: Run
       run: |
+        export DISPLAY=:0
         python dashboard.py &
         firefox http://127.0.0.1:9050/
 
