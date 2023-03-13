@@ -54,7 +54,7 @@ def patch_file(file_path: str, content: bytes, extra: dict = None) -> bytes:
 def write_file(
     file_path: str,
     content: bytes,
-    target_dir="target",
+    target_dir="docs",
 ):
     target_file_path = os.path.join(target_dir, file_path.lstrip("/").split("?")[0])
     target_leaf_dir = os.path.dirname(target_file_path)
@@ -80,7 +80,7 @@ class ExternalResourceParser(HTMLParser):
                     self.resources.append(v)
 
 
-def make_static(base_url, target_dir="target"):
+def make_static(base_url, target_dir="docs"):
     index_html_bytes = requests.get(base_url).content
     json_paths = [
         "_dash-layout",

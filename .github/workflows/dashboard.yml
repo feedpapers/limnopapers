@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip        
         if [ -f requirements.txt ]; then pip install -r requirements_dashboard.txt; fi
 
-    - name: Run1
+    - name: Run dashboard
       run: |
         python dashboard.py &
 
@@ -43,8 +43,7 @@ jobs:
       run: |-
         git diff
         git config --global user.email "limnopapers-bot@example.com"
-        git config --global user.name "limnopapers-bot"
-        mv target/* docs 
+        git config --global user.name "limnopapers-bot"        
         git add docs docs/index.html
         ls docs
         git commit -m "Updated dashboard" || exit 0
