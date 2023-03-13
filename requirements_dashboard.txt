@@ -1,7 +1,3 @@
 pandas 
 datetime
-dash
 GitPython
-requests
-selenium
-webdriver-manager

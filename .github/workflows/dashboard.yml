@@ -1,52 +1,49 @@
-name: dashboard
+name: archive
 
 on:
   push:
   workflow_dispatch:
   schedule:
-    - cron:  '0 15 * * 1'
+    - cron: '0 0 1 * *'  # every 1st of the month
 
 jobs:
-  dashboard:
-
-    runs-on: ubuntu-latest
-
+  archive:
+    runs-on: macOS-latest    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v2    
+      - uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip        
-        if [ -f requirements.txt ]; then pip install -r requirements_dashboard.txt; fi
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip        
+          if [ -f requirements_dashboard.txt ]; then pip install -r requirements_dashboard.txt; fi
+          python dashboard.py
 
-    - name: Run dashboard
-      run: |
-        python dashboard.py &
+      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Install R packages
+        run: Rscript -e 'install.packages(c("rtweet", "DT", "dplyr", "flexdashboard", "stringr"), dependencies = TRUE)'
 
-    - name: Remove Chrome
-      run: sudo apt purge google-chrome-stable
-    
-    - name: Remove default Chromium
-      run: sudo apt purge chromium-browser
-    
-    - name: Install a new Chromium
-      run: sudo apt install -y chromium-browser
-    
-    - name: Run the scraping script
-      run: python dashboard_render.py
+      - name: Commit and push data if changed
+        run: |-
+          git diff
+          git config --global user.email "limnopapers-bot@example.com"
+          git config --global user.name "limnopapers-bot"
+          git add -A
+          git commit -m "Updated data" || exit 0
+          git push
 
-    - name: Commit and push if changed
-      run: |-
-        git pull
-        git diff
-        git config --global user.email "limnopapers-bot@example.com"
-        git config --global user.name "limnopapers-bot"
-        mv docs/index.html index.html
-        mv docs/_dash-component-suites _dash-component-suites
-        git add index.html _dash-component-suites
-        git commit -m "Updated dashboard" || exit 0
-        git push
+      - name: Render data table
+        if: always()
+        run: Rscript -e "rmarkdown::render('index.Rmd')"
+      
+      - name: Commit and push if changed
+        if: always()
+        run: |-
+          git diff
+          git config --global user.email "limnopapers-bot@example.com"
+          git config --global user.name "limnopapers-bot"
+          git add -A
+          git commit -m "Updated content" || exit 0
+          git push
