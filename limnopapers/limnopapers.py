@@ -215,12 +215,12 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
 
     if os.path.exists(log_path):
         # rm entries that are also in log
-        log = pd.read_csv(log_path)
+        log = pd.read_csv(log_path, dtype={"title": str})
         # filter out matches to log
         titles_standardized = [x.replace(". ", "") for x in res["title"].str.lower()]
         titles_standardized_log = [y for y in log["title"].str.lower()]
 
-        # ---        
+        # ---
         # import numpy as np
         # np.where(
         #     [
@@ -234,7 +234,9 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
 
         res = res[
             [
-                not any([x[0:150] == y[0:150] for y in titles_standardized_log])
+                not any(
+                    [str(x)[0:150] == str(y)[0:150] for y in titles_standardized_log]
+                )
                 for x in titles_standardized
             ]
         ]
