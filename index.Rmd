@@ -21,8 +21,6 @@ dt <- dplyr::select(dt, title, date, source = dc_source, url = prism_url)
 dt$date <- strptime(as.POSIXct(dt$date), format = "%Y-%m-%d")
 dt$date <- format(dt$date, "%Y-%m-%d")
 
-dt$url[1]
-
 create_link <- function(x) {
   # x <- dt$url[1]
   if (is.na(x)) {

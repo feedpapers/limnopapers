@@ -1,4 +1,4 @@
-name: archive
+name: dashboard
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     - cron: '0 0 1 * *'  # every 1st of the month
 
 jobs:
-  archive:
+  dashboard:
     runs-on: macOS-latest    
     steps:
       - uses: actions/checkout@v2
