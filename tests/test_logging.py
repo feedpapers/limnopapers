@@ -51,7 +51,7 @@ def test_logging():
         ignore_all=True,
     )
     # pd.read_csv("tests/test_log.csv").iloc[1:, :].reset_index(drop=True)
-    assert len(tooted) == 2
+    assert len(tooted) == 3
 
     data = lp.get_papers(posts=posts, log_path="tests/test_log.csv")
     tooted = lp.limnotoots(
