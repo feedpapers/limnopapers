@@ -2,6 +2,11 @@ name: pytest
 
 on: 
   push:
+    paths:
+      - 'requirements.txt'
+      - 'tests/**'
+      - 'limopapers/**'
+      - 'bin/**'
   workflow_dispatch:
 
 jobs:
