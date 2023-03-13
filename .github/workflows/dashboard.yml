@@ -41,9 +41,10 @@ jobs:
 
     - name: Commit and push if changed
       run: |-
+        git pull
         git diff
         git config --global user.email "limnopapers-bot@example.com"
-        git config --global user.name "limnopapers-bot"        
+        git config --global user.name "limnopapers-bot"
         git add docs docs/index.html
         ls docs
         git commit -m "Updated dashboard" || exit 0
