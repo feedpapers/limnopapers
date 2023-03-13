@@ -18,7 +18,10 @@ from mastodon import Mastodon
 init(autoreset=True)
 
 sys.path.append(".")
-import limnopapers.utils as utils
+try:
+    import limnopapers.utils as utils
+except:
+    import utils
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -216,9 +219,22 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
         # filter out matches to log
         titles_standardized = [x.replace(". ", "") for x in res["title"].str.lower()]
         titles_standardized_log = [y for y in log["title"].str.lower()]
+
+        # ---        
+        # import numpy as np
+        # np.where(
+        #     [
+        #         titles_standardized[i][0:5] == "hydro"
+        #         for i in range(len(titles_standardized))
+        #     ]
+        # )
+
+        # titles_standardized[1529][0:150] == titles_standardized_log[len(titles_standardized_log) - 1][0:150]
+        # # ---
+
         res = res[
             [
-                not any([x == y for y in titles_standardized_log])
+                not any([x[0:150] == y[0:150] for y in titles_standardized_log])
                 for x in titles_standardized
             ]
         ]
