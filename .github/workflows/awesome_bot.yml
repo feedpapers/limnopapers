@@ -1,10 +1,10 @@
 name: awesome_bot
 
 on:
-  push:
-    branches: [ '*' ]
+  # push:    
   pull_request:
-    branches: [ '*' ]
+  workflow_dispatch:
+
 
 jobs:
   build:
