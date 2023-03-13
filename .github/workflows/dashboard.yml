@@ -45,7 +45,8 @@ jobs:
         git diff
         git config --global user.email "limnopapers-bot@example.com"
         git config --global user.name "limnopapers-bot"
-        git add docs docs/index.html
-        ls docs
+        mv docs/index.html index.html
+        mv docs/_dash-component-suites _dash-component-suites
+        git add index.html _dash-component-suites
         git commit -m "Updated dashboard" || exit 0
         git push
