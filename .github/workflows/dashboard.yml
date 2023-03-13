@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: install X11
+    - run: |
+        sudo apt install x11-apps
     - uses: browser-actions/setup-firefox@v1
     - name: Set up Python 3.x
       uses: actions/setup-python@v2    
