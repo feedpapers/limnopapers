@@ -14,14 +14,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: sys deps
-      run: |
-        sudo apt-get install -y libgl1-mesa-dev libasound2-dev alsa-utils alsa-oss
-
-    - name: Set up firefox
-      uses: browser-actions/setup-firefox@v1        
-
+    
     - name: Set up Python 3.x
       uses: actions/setup-python@v2    
 
@@ -36,12 +29,13 @@ jobs:
 
     - name: Remove Chrome
       run: sudo apt purge google-chrome-stable
+    
     - name: Remove default Chromium
       run: sudo apt purge chromium-browser
+    
     - name: Install a new Chromium
       run: sudo apt install -y chromium-browser
-    - name: Install all necessary packages
-      run: pip install requests beautifulsoup4 pandas webdriver-manager selenium
+    
     - name: Run the scraping script
       run: python dashboard_render.py
 
@@ -51,6 +45,7 @@ jobs:
         git config --global user.email "limnopapers-bot@example.com"
         git config --global user.name "limnopapers-bot"
         mv target/* docs 
-        git add docs
+        git add docs docs/index.html
+        ls docs
         git commit -m "Updated dashboard" || exit 0
         git push
