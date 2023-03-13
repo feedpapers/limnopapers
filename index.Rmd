@@ -1,5 +1,5 @@
 ---
-title: "Papers"
+title: "limnopapers"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
