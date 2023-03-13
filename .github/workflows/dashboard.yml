@@ -15,12 +15,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install X11
-      run: |
-        sudo apt install x11-apps
+    # - name: Install X11
+    #   run: |
+    #     sudo apt install x11-apps
 
     - name: Set up firefox
       uses: browser-actions/setup-firefox@v1
+      run: |
+        export DISPLAY=:0
 
     - name: Set up Python 3.x
       uses: actions/setup-python@v2    
