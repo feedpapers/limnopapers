@@ -5,7 +5,11 @@ from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
-chrome_service = Service(ChromeDriverManager(version="110.0.5481.77", chrome_type=ChromeType.CHROMIUM).install())
+chrome_service = Service(
+    ChromeDriverManager(
+        version="110.0.5481.77", chrome_type=ChromeType.CHROMIUM
+    ).install()
+)
 
 chrome_options = Options()
 options = [
@@ -23,6 +27,6 @@ for option in options:
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 
 driver.get("http://127.0.0.1:9050/")
-time.sleep(5)  # Let the user actually see something!
+time.sleep(10)  # Let the user actually see something!
 print(driver.title)
 driver.quit()
