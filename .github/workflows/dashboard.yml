@@ -30,7 +30,7 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: |
-          nohup Xvfb :0 &          
+          nohup Xvfb :0 &
           export DISPLAY=:0
           python dashboard.py &
           firefox http://127.0.0.1:9050/
