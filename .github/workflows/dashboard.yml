@@ -13,7 +13,11 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2    
+      uses: actions/checkout@v2
+
+    - name: sys deps
+      run: |
+        sudo apt-get install -y libgl1-mesa-dev
 
     - name: Set up firefox
       uses: browser-actions/setup-firefox@v1        
