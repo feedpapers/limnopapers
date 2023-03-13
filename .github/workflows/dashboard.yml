@@ -34,11 +34,16 @@ jobs:
       run: |
         python dashboard.py &
 
-    - name: Run
-      uses: GabrielBB/xvfb-action@v1
-      with:
-        run: |          
-          firefox http://127.0.0.1:9050/ &
+    - name: Remove Chrome
+      run: sudo apt purge google-chrome-stable
+    - name: Remove default Chromium
+      run: sudo apt purge chromium-browser
+    - name: Install a new Chromium
+      run: sudo apt install -y chromium-browser
+    - name: Install all necessary packages
+      run: pip install requests beautifulsoup4 pandas webdriver-manager selenium
+    - name: Run the scraping script
+      run: python dashboard_render.py
 
     - name: Commit and push if changed
       run: |-
