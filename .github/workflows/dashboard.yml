@@ -25,15 +25,6 @@ jobs:
       - name: Install R packages
         run: Rscript -e 'install.packages(c("rtweet", "DT", "dplyr", "flexdashboard", "stringr"), dependencies = TRUE)'
 
-      - name: Commit and push data if changed
-        run: |-
-          git diff
-          git config --global user.email "limnopapers-bot@example.com"
-          git config --global user.name "limnopapers-bot"
-          git add -A
-          git commit -m "Updated data" || exit 0
-          git push
-
       - name: Render data table
         if: always()
         run: Rscript -e "rmarkdown::render('index.Rmd')"
@@ -44,6 +35,6 @@ jobs:
           git diff
           git config --global user.email "limnopapers-bot@example.com"
           git config --global user.name "limnopapers-bot"
-          git add -A
+          git add index.html
           git commit -m "Updated content" || exit 0
           git push

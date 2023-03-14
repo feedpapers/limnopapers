@@ -30,6 +30,7 @@ df = df.drop(columns=["posted"])
 # )
 
 df["date"] = pd.to_datetime(df["git_date"])
-df = df.sort_values("date", ascending=False)
+df = df[::-1]
+# df = df.sort_values("date", ascending=False)
 df = df.reset_index(drop=True)
 df.to_csv("dashboard.csv", index=False)
