@@ -35,9 +35,9 @@ dt$url <- lapply(dt$url, function(x) sapply(x, create_link))
 dt_table <- DT::datatable(dt,
   options = list(
     scrollX = TRUE,
-    autoWidth = TRUE,
-    columnDefs = list(
-      list(width = "30%", targets = c(3)))
+    autoWidth = TRUE# ,
+    # columnDefs = list(
+    #   list(width = "30%", targets = c(3)))
   ),
   rownames = FALSE,
   fillContainer = TRUE,
