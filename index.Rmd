@@ -16,10 +16,10 @@ library(stringr)
 
 ```{r, echo=FALSE, out.width="100%", warning=FALSE}
 dt <- read.csv("dashboard.csv")
-dt <- dplyr::select(dt, title, date, source = dc_source, url = prism_url)
+dt <- dplyr::select(dt, title, source = dc_source, url = prism_url)
 
-dt$date <- strptime(as.POSIXct(dt$date), format = "%Y-%m-%d")
-dt$date <- format(dt$date, "%Y-%m-%d")
+# dt$date <- strptime(as.POSIXct(dt$date), format = "%Y-%m-%d")
+# dt$date <- format(dt$date, "%Y-%m-%d")
 
 create_link <- function(x) {
   # x <- dt$url[1]
@@ -42,7 +42,7 @@ dt_table <- DT::datatable(dt,
   rownames = FALSE,
   fillContainer = TRUE,
   width = "100%",
-  colnames = c("Title", "Date", "Source", "URL"))
+  colnames = c("Title", "Source", "URL"))
 
 dt_table <- formatStyle(dt_table, columns = 1:4, fontSize = "80%")
 dt_table <- formatStyle(dt_table, columns = 1, width = "500px")
