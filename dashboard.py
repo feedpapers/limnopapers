@@ -1,10 +1,10 @@
-import git
-import datetime
 import numpy as np
 import pandas as pd
 
 df = pd.read_csv("log.csv")
 
+# import git
+# import datetime
 # repo = git.Repo()
 # git_dates = [
 #     datetime.datetime.fromtimestamp(x.commit.committed_date).strftime("%Y-%m-%d")
