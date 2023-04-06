@@ -206,7 +206,7 @@ def get_papers(to_csv=False, log_path="log.csv", posts=None):
     if posts is None:
         posts = get_posts()
     res = pd.concat(posts)
-    res["updated"] = pd.to_datetime(res["updated"], utc=True).dt.tz_localize(None)
+    res["updated"] = pd.to_datetime(res["updated"], utc=True, format="mixed").dt.tz_localize(None)
     res = res.sort_values(by=["updated"])
     res = res.drop_duplicates(subset=["title"], keep="first")
     res = res[pd.notna(res["title"])]
