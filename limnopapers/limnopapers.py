@@ -405,7 +405,7 @@ def limnotoots(
                         title, dc_source, prism_url = toot_split(toot)
                         d = dict(zip(keys, [title, dc_source, prism_url]))
                         d = pd.DataFrame.from_records(d, index=[0])
-                        log = log.append(pd.DataFrame(data=d))
+                        log = pd.concat([log, pd.DataFrame(data=d)])
                         log.to_csv(log_path, index=False)
                 post_toot = "n"
     return tooted
