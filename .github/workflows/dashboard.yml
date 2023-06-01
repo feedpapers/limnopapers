@@ -4,9 +4,9 @@ on:
   push:
     paths:
       - "log.csv"
-  # workflow_dispatch:
-  # schedule:
-  #  - cron: '0 0 1 * 1'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 15 * * *'
 
 jobs:
   dashboard:
