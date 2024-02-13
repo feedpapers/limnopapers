@@ -56,6 +56,10 @@ Install these to the activated environment with:
 
 `pip install -r requirements.txt`
 
+or:
+
+`mamba env create -f environment.yml`
+
 ## Contributing
 
 * Please help by adding missing journals to [limnopapers/journals.csv](limnopapers/journals.csv) or filing an [issue](https://github.com/jsta/limnopapers/issues)
