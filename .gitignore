@@ -1,8 +1,10 @@
 __pycache__/
+
 .cache/
 .envrc
 .Rhistory
 .vscode
+
 avg_likes_2019
 config.py
 dashboard.md
@@ -13,3 +15,4 @@ test_today.csv
 twitter_api.py
 tests/test_log.csv
 limnopaers_clientcred.secret
+build
