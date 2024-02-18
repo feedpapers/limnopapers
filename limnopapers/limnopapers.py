@@ -66,9 +66,7 @@ def filter_limno(df):
 
     df = df.reset_index(drop=True)
     # df = res
-    # df = df.iloc[0:2]
-
-    has_limno_title = df["title"].str.contains("|".join(filter_for), case=False)
+    has_limno_title = df["title"].str.replace("-", " ", regex=False).str.replace("‐", " ").str.contains("|".join(filter_for), case=False)
     has_limno_summary = df["summary"].str.contains("|".join(filter_for), case=False)
 
     # save matching filter_for here
@@ -387,7 +385,7 @@ def limnotoots(
                         date = str(datetime.date.today())
                         d = dict(zip(keys, [title, dc_source, prism_url, posted, date]))
                         d = pd.DataFrame.from_records(d, index=[0])
-                        log = log.append(pd.DataFrame(data=d), ignore_index=True)
+                        log = pd.concat([log, pd.DataFrame(data=d)], ignore_index=True)
                         log.to_csv(log_path, index=False)
                 else:  # interactive is False
                     if toots_n < toots_n_max + 1:
