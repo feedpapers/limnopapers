@@ -5,6 +5,9 @@ ignore:
 	limnopapers --interactive --ignore_all
 
 # pytest test_foo.py
+tests/test_data.json: tests/create_test_data.py
+	python $<
+
 test:
 	pytest -v --ignore=scratch --ignore=build_dashboard.py
 

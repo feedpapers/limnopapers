@@ -4,28 +4,42 @@ import limnopapers.utils as utils
 posts = [
     (
         "Zero or not? Causes and consequences of zero‐flow stream gage readings in lakes",
-        "WIREs Water",
-        "https://onlinelibrary.wiley.com/doi/abs/10.1002/wat2.1436?af=R",
         "test",
+        "https://onlinelibrary.wiley.com/doi/abs/10.1002/wat2.1436?af=R",
+        "WIREs Water",
         "2021-12-27T12:30:54-08:00",
     ),
     (
         "Multidecadal climate‐induced changes in Arctic tundra lake geochemistry and geomorphology",
-        "Limnology and Oceanography",
-        "https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.1002/lno.11015?af=R",
         "test",
+        "https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.1002/lno.11015?af=R",
+        "Limnology and Oceanography",
         "2021-12-27T12:30:54-08:00",
     ),
     (
         "Annual 30-meter Dataset for Glacial Lakes in High Mountain from 2008 to 2017?",
-        "Earth System Science Data",
-        "https://doi.org/10.5194/essd-2020-57",
         "test",
+        "https://doi.org/10.5194/essd-2020-57",
+        "Earth System Science Data",
         "2021-12-27T12:30:54-08:00",
+    ),
+    (
+        "Horizontal migration of zooplankton in lake-wetland interfaces. Can temperature-driven surface exchange flows modulate its patterns?",
+        "test",
+        "http://link.springer.com/10.1007/s00027-024-01046-1",
+        "Aquatic Sciences",
+        "2021-12-27T12:30:54-08-00",
+    ),
+    (
+        "This is a paper about nothing.",
+        "test",
+        "http://link.springer.com/10.1007/s00027-024-01046-1",
+        "Nothing",
+        "2021-12-27T12:30:54-08-00",
     ),
 ]
 
-keys = ["title", "summary", "prism_url", "updated"]
+keys = ["title", "summary", "prism_url", "dc_source", "updated"]
 keys_consolidated = ["title", "summary", "prism_url", "dc_source", "updated"]
 
 # re-create feedparser results structure

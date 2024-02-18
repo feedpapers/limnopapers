@@ -42,6 +42,9 @@ def test_logging():
     posts_raw = lp.get_posts_("test", feed_dict=test_data)
     posts.append(posts_raw)
 
+    if os.path.exists("tests/test_log.csv"):
+        os.remove("tests/test_log.csv")
+
     data = lp.get_papers(posts=posts, log_path="tests/test_log.csv")
     tooted = lp.limnotoots(
         tweet=False,
@@ -51,7 +54,7 @@ def test_logging():
         ignore_all=True,
     )
     # pd.read_csv("tests/test_log.csv").iloc[1:, :].reset_index(drop=True)
-    assert len(tooted) == 3
+    assert len(tooted) == 4
 
     data = lp.get_papers(posts=posts, log_path="tests/test_log.csv")
     tooted = lp.limnotoots(
