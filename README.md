@@ -2,7 +2,7 @@
 
 ![pytest](https://github.com/jsta/limnopapers/workflows/pytest/badge.svg)
 
-Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and post new articles to [Twitter](https://twitter.com/limno_papers) and [Mastodon](https://fediscience.org/@limnopapers).
+Code to monitor [limnology RSS feeds](limnopapers/journals.csv) and post new articles to [Mastodon](https://fediscience.org/@limnopapers).
 
 ## Scope
 
