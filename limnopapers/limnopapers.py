@@ -34,19 +34,23 @@ except:
 
 
 def toot_split(toot):
-    res = re.split("\\. |\\? ", toot)
+    toot_raw = toot
+    toot, prism_url = re.split("\\.\\s(?=http)", toot)
+    res = re.split("\\s", toot)
+    dc_source = res[len(res) - 1]
+    title = " ".join([res[i] for i in range(len(res)-1)])
+    title = re.split("\\.$", title)[0]
 
-    prism_url = res[len(res) - 1]
+    # res = re.split("\\.|\\?(?=.)", toot)
+    # ".".join([res[i] for i in range(np.where(["http" in x for x in res])[0][0], len(res))])
 
-    dc_source = res[len(res) - 2]
-
-    if utils.has_q_mark(toot[0 : len(toot) - 20]):
-        if len(res) > 3:  # middle question mark
-            title = toot[0 : toot.find(dc_source) - 2]
-        else:  # ending question mark
-            title = toot[0 : toot.find(dc_source) - 1]
-    else:
-        title = "".join(res[0 : len(res) - 2])
+    # if utils.has_q_mark(toot[0 : len(toot) - 20]):
+    #     if len(res) > 2:  # middle question mark
+    #         title = toot[0 : toot.find(dc_source) - 2]
+    #     else:  # ending question mark
+    #         title = toot[0 : toot.find(dc_source) - 1]
+    # else:
+    #     title = "".join(res[0 : len(res) - 2])
 
     return [title, dc_source, prism_url]
 
